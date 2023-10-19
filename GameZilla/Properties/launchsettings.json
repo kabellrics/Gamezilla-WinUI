@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "GameZilla (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "GameZilla (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}

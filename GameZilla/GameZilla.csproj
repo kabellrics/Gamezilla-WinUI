@@ -1,0 +1,128 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>GameZilla</RootNamespace>
+    <ApplicationIcon>Assets/WindowIcon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64;arm64</Platforms>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\Intro\Intro2.mp4" />
+    <Content Remove="Assets\Intro\Startup.mp4" />
+    <Content Remove="Assets\Intro\Startup2.mp4" />
+    <Content Remove="Assets\Intro\Waiting\AssassinsCreed.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Batman.mp4" />
+    <Content Remove="Assets\Intro\Waiting\CrashBandicoot.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Football-Soccer.mp4" />
+    <Content Remove="Assets\Intro\Waiting\KartRacing.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Lego.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Mario.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Platformers.mp4" />
+    <Content Remove="Assets\Intro\Waiting\SimulationRacing.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Sonic.mp4" />
+    <Content Remove="Assets\Intro\Waiting\SpiderMan.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Sports.mp4" />
+    <Content Remove="Assets\Intro\Waiting\StarWars.mp4" />
+    <Content Remove="Assets\Intro\Waiting\VehicularCarnage.mp4" />
+    <Content Remove="Assets\Intro\Waiting\War.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Wrestling.mp4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230502000" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="WinUIEx" Version="2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameZilla.Core\GameZilla.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Intro2.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Startup.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Startup2.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\AssassinsCreed.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Batman.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\CrashBandicoot.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Football-Soccer.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\KartRacing.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Lego.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Mario.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Platformers.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\SimulationRacing.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Sonic.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\SpiderMan.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Sports.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\StarWars.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\VehicularCarnage.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\War.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Wrestling.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+</Project>
