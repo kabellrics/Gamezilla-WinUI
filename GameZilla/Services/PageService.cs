@@ -20,6 +20,7 @@ public class PageService : IPageService
         Configure<ItemListViewModel, ItemListPage>();
         Configure<ItemListDetailViewModel, ItemListDetailPage>();
         Configure<ItemDetailViewModel, ItemDetailPage>();
+        Configure<SettingsViewModel, SettingsPage>();
     }
 
     public Type GetPageType(string key)

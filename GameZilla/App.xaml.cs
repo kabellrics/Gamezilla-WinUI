@@ -74,6 +74,8 @@ public partial class App : Application
             services.AddSingleton<IEpicGameFinderService, EpicGameFinderService>();
 
             // Views and ViewModels
+            services.AddTransient<SettingsViewModel>();
+            services.AddTransient<SettingsPage>();
             services.AddTransient<ItemDetailViewModel>();
             services.AddTransient<ItemDetailPage>();
             services.AddTransient<ItemListDetailViewModel>();
