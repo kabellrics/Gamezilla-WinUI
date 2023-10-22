@@ -173,9 +173,12 @@ public partial class SplashViewModel : ObservableRecipient
     private async Task LoadEpicGamesAsync()
     {
         var epicgames = await epicGameFinderService.GetEpicGameAsync();
-        foreach (var epicGame in epicgames)
+        if (epicgames !=null)
         {
-            if (epicGame != null) await executableService.CreateExecutable(epicGame);
+            foreach (var epicGame in epicgames)
+            {
+                if (epicGame != null) await executableService.CreateExecutable(epicGame);
+            } 
         }
         //await foreach (var item in epicGameFinderService.GetEpicGame())
         //{
@@ -186,9 +189,12 @@ public partial class SplashViewModel : ObservableRecipient
     private async Task LoadOriginGamesAsync()
     {
         var origingames = await originGameFinderService.GetOriginGameAsync();
-        foreach (var originGame in origingames)
+        if (origingames != null)
         {
-            if (originGame != null) await executableService.CreateExecutable(originGame);
+            foreach (var originGame in origingames)
+            {
+                if (originGame != null) await executableService.CreateExecutable(originGame);
+            } 
         }
         //await foreach (var item in originGameFinderService.GetOriginGame())
         //{
@@ -199,9 +205,12 @@ public partial class SplashViewModel : ObservableRecipient
     private async Task LoadSteamGamesAsync()
     {
         var steamgames = await steamGameFinderService.GetSteamGameAsync();
-        foreach (var steamGame in steamgames)
+        if (steamgames!=null)
         {
-            if (steamGame != null) await executableService.CreateExecutable(steamGame);
+            foreach (var steamGame in steamgames)
+            {
+                if (steamGame != null) await executableService.CreateExecutable(steamGame);
+            } 
         }
         //await foreach(var item in steamGameFinderService.GetSteamGame())
         //{
