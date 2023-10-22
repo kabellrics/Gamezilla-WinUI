@@ -69,7 +69,8 @@ public partial class SplashViewModel : ObservableRecipient
     public void NavigateToHome()
     {
         if(ShowContinuMessage)
-        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
+            //_navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
+            _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
     }
     public async IAsyncEnumerable<StorageFile> GetVideoIntro()
     {

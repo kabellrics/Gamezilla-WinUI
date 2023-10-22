@@ -19,7 +19,7 @@
             Style="{StaticResource PageTitleStyle}" />
 
         <Grid Grid.Row="1">
-            
+            <ContentControl Style="{StaticResource HomePage}"></ContentControl>
         </Grid>
         
     </Grid>

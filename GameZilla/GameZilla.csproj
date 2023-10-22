@@ -15,25 +15,14 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\Intro\Intro2.mp4" />
     <Content Remove="Assets\Intro\Startup.mp4" />
-    <Content Remove="Assets\Intro\Startup2.mp4" />
-    <Content Remove="Assets\Intro\Waiting\AssassinsCreed.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Batman.mp4" />
-    <Content Remove="Assets\Intro\Waiting\CrashBandicoot.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Football-Soccer.mp4" />
-    <Content Remove="Assets\Intro\Waiting\KartRacing.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Lego.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Mario.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Platformers.mp4" />
-    <Content Remove="Assets\Intro\Waiting\SimulationRacing.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Sonic.mp4" />
-    <Content Remove="Assets\Intro\Waiting\SpiderMan.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Sports.mp4" />
-    <Content Remove="Assets\Intro\Waiting\StarWars.mp4" />
-    <Content Remove="Assets\Intro\Waiting\VehicularCarnage.mp4" />
-    <Content Remove="Assets\Intro\Waiting\War.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Wrestling.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Assassins Creed 3 - Trailer E3 officiel [FR].mp4" />
+    <Content Remove="Assets\Intro\Waiting\Battlefield 1 Official Reveal Trailer.mp4" />
+    <Content Remove="Assets\Intro\Waiting\Star Wars Battlefront II Official Gameplay Trailer.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Styles\Skin\Basic.xaml" />
+    <None Remove="Styles\Skin\Hero.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,10 +57,16 @@
     <None Update="Assets\Intro\Startup2.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Intro\Waiting\Assassins Creed 3 - Trailer E3 officiel [FR].mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Intro\Waiting\AssassinsCreed.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Intro\Waiting\Batman.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Intro\Waiting\Battlefield 1 Official Reveal Trailer.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Intro\Waiting\CrashBandicoot.mp4">
@@ -104,6 +99,9 @@
     <None Update="Assets\Intro\Waiting\Sports.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Intro\Waiting\Star Wars Battlefront II Official Gameplay Trailer.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Intro\Waiting\StarWars.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -116,6 +114,12 @@
     <None Update="Assets\Intro\Waiting\Wrestling.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\Skin\Hero.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Skin\Basic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

@@ -125,15 +125,22 @@ public class SteamGameFinderService : ISteamGameFinderService
 
             foreach (var file in appmanifestfiles)
             {
-                dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
-                if (! await executableService.ExistinDatabase(appfile.Value.appid.Value))
+                try
                 {
-                    Executable game = new Executable();
-                    game.StoreId = appfile.Value.appid.Value;
-                    game.Name = appfile.Value.name.Value;
-                    game.PlateformeId = await parameterService.GetParameterValue(ParamEnum.SteamPlateformeId);
-                    game = await GetSteamInfos(game);
-                    result.Add(game);
+                    dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
+                    if (!await executableService.ExistinDatabase(appfile.Value.appid.Value))
+                    {
+                        Executable game = new Executable();
+                        game.StoreId = appfile.Value.appid.Value;
+                        game.Name = appfile.Value.name.Value;
+                        game.PlateformeId = await parameterService.GetParameterValue(ParamEnum.SteamPlateformeId);
+                        game = await GetSteamInfos(game);
+                        result.Add(game);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //throw;
                 }
             }
         }
