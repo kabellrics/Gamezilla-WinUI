@@ -32,3 +32,23 @@
 *.app
 
 *.mp4
+
+GameZilla/obj/x64/Debug/net7.0-windows10.0.19041.0/win10-x64/
+
+.vs/GameZilla/DesignTimeBuild/
+
+.vs/GameZilla/FileContentIndex/
+
+.vs/GameZilla/v17/
+
+.vs/ProjectEvaluation/
+
+GameZilla.Core/bin/Debug/net7.0/
+
+GameZilla.Core/obj/Debug/net7.0/
+
+GameZilla/bin/x64/Debug/net7.0-windows10.0.19041.0/win10-x64/
+
+GameZilla/bin/
+
+GameZilla/obj/
