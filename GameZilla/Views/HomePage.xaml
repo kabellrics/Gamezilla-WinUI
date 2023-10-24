@@ -4,13 +4,35 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:templateselector="using:GameZilla.PageTemplateSelector"
-    xmlns:viewmodel="using:GameZilla.ViewModels"
+    xmlns:views="using:GameZilla.Views.HomeView"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
-    mc:Ignorable="d"
-    DataContext="{x:Bind ViewModel}">
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="Basic">
+            <views:Basic/>
+        </DataTemplate>
+        <DataTemplate x:Key="Hero">
+            <views:Hero/>
+        </DataTemplate>
+        <Style x:Key="ContentStyleSelector" TargetType="ContentPresenter">
+            <Setter Property="ContentTemplate" Value="{StaticResource Basic}"/>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="HomeDisplayState">
+                    <VisualState x:Name="Basic">
+                        <VisualState.Setters>
+                            <Setter Target="ContentPresenter.(ContentPresenter.ContentTemplate)" Value="{StaticResource Basic}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Hero">
+                        <VisualState.Setters>
+                            <Setter Target="ContentPresenter.(ContentPresenter.ContentTemplate)" Value="{StaticResource Hero}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Style>
+    </Page.Resources>
     <Grid x:Name="ContentArea">
-        <Grid>
-        </Grid>
+        <ContentPresenter x:Name="contentpres" Style="{StaticResource ContentStyleSelector}" Content="{Binding}"/>
     </Grid>
 </Page>

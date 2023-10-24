@@ -12,6 +12,8 @@ public partial class HomeViewModel : ObservableRecipient
 {
     private readonly INavigationService _navigationService;
     private readonly IExecutableService _executableService;
+    private readonly IPageSkinService _pageSkinService;
+    private readonly ILocalSettingsService _localSettingsService;
     private ICommand _LoadedCommand;
     private ICommand _GotoFavCommand;
     private ICommand _GotoLastCommand;
@@ -33,13 +35,21 @@ public partial class HomeViewModel : ObservableRecipient
     public ICommand SleepCommand => _SleepCommand ?? (_SleepCommand = new RelayCommand(Sleep));
     public ICommand ShutdownCommand => _ShutdownCommand ?? (_ShutdownCommand = new RelayCommand(Shutdown));
 
-
-    public IEnumerable<GamezillaMenuItem> Menus;
-    public HomeViewModel(INavigationService navigationService, IExecutableService executableService)
+    private String _display;
+    public String Display
     {
+        get => _display;
+        set => SetProperty(ref _display, value);
+    }
+    public IEnumerable<GamezillaMenuItem> Menus;
+    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, ILocalSettingsService localSettingsService)
+    {
+        Display = "Basic";
         _navigationService = navigationService;
         _executableService = executableService;
-        Menus = new List<GamezillaMenuItem>() 
+        _pageSkinService = pageSkinService;
+        _localSettingsService = localSettingsService;
+        Menus = new List<GamezillaMenuItem>()
         {
             new GamezillaMenuItem(){Text="Favoris",IconPath=@"ms-appx:///Assets/specificlogo/auto-favorites.png",Command=GotoFavCommand},
             new GamezillaMenuItem(){Text="Derniers jeux lancés",IconPath=@"ms-appx:///Assets/specificlogo/auto-lastplayed.png",Command=GotoLastCommand},
@@ -51,6 +61,7 @@ public partial class HomeViewModel : ObservableRecipient
             new GamezillaMenuItem(){Text="Mettre en Veille",IconPath="\uE708",Command=SleepCommand},
             new GamezillaMenuItem(){Text="Eteindre",IconPath="\uE7E8",Command=ShutdownCommand},
         };
+        _localSettingsService = localSettingsService;
     }
     public void Loaded()
     {
@@ -59,6 +70,15 @@ public partial class HomeViewModel : ObservableRecipient
 
     private async void InitData()
     {
+        var skin = await _localSettingsService.ReadSettingAsync<String>("HomeSkin");
+        if (string.IsNullOrEmpty(skin))
+        {
+            Display = "Basic";
+        }
+        else
+        {
+            Display = skin;
+        }
     }
     private void GotoFav(bool obj) => throw new NotImplementedException();
     private void GotoLast(bool obj) => throw new NotImplementedException();

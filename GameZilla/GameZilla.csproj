@@ -16,13 +16,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Intro\Startup.mp4" />
-    <Content Remove="Assets\Intro\Waiting\Assassins Creed 3 - Trailer E3 officiel [FR].mp4" />
-    <Content Remove="Assets\Intro\Waiting\Battlefield 1 Official Reveal Trailer.mp4" />
     <Content Remove="Assets\Intro\Waiting\Star Wars Battlefront II Official Gameplay Trailer.mp4" />
     <Content Remove="Assets\specificlogo\auto-allgames.png" />
     <Content Remove="Assets\specificlogo\auto-favorites.png" />
     <Content Remove="Assets\specificlogo\auto-lastplayed.png" />
     <Content Remove="Assets\specificlogo\auto-neverplayed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\HomeView\Basic.xaml" />
+    <None Remove="Views\HomeView\Hero.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -123,6 +125,12 @@
     <None Update="Assets\specificlogo\auto-neverplayed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\HomeView\Hero.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\HomeView\Basic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

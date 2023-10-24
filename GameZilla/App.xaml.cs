@@ -60,6 +60,9 @@ public partial class App : Application
 
             // Other Activation Handlers
 
+            // Configuration
+            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+
             // Services
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
@@ -76,6 +79,7 @@ public partial class App : Application
             services.AddSingleton<ISteamGameFinderService, SteamGameFinderService>();
             services.AddSingleton<IOriginGameFinderService, OriginGameFinderService>();
             services.AddSingleton<IEpicGameFinderService, EpicGameFinderService>();
+            services.AddSingleton<IPageSkinService, PageSkinService>();
 
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
@@ -93,8 +97,6 @@ public partial class App : Application
             services.AddTransient<SplashViewModel>();
             services.AddTransient<SplashPage>();
 
-            // Configuration
-            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
         }).
         Build();
 

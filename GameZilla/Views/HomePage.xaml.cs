@@ -16,5 +16,17 @@ public sealed partial class HomePage : Page
     {
         ViewModel = App.GetService<HomeViewModel>();
         InitializeComponent();
+        ViewModel.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == "Display")
+            {
+                UpdateVisulaState();
+            }
+        };
+    }
+
+    private void UpdateVisulaState()
+    {
+       VisualStateManager.GoToState(this, ViewModel.Display, true);
     }
 }
