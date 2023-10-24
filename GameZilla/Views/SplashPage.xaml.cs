@@ -23,8 +23,15 @@ public sealed partial class SplashPage : Page
         DataContext = ViewModel;
         InitializeComponent();
         this.KeyDown += Page_KeyDown;
+        this.Tapped += SplashPage_Tapped;
         this.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
     }
+
+    private void SplashPage_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+    {
+        ViewModel.NavigateToHome();
+    }
+
     protected async override void OnNavigatedFrom(NavigationEventArgs e)
     {
         player.MediaPlayer.Pause();

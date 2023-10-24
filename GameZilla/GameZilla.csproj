@@ -19,10 +19,10 @@
     <Content Remove="Assets\Intro\Waiting\Assassins Creed 3 - Trailer E3 officiel [FR].mp4" />
     <Content Remove="Assets\Intro\Waiting\Battlefield 1 Official Reveal Trailer.mp4" />
     <Content Remove="Assets\Intro\Waiting\Star Wars Battlefront II Official Gameplay Trailer.mp4" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Styles\Skin\Basic.xaml" />
-    <None Remove="Styles\Skin\Hero.xaml" />
+    <Content Remove="Assets\specificlogo\auto-allgames.png" />
+    <Content Remove="Assets\specificlogo\auto-favorites.png" />
+    <Content Remove="Assets\specificlogo\auto-lastplayed.png" />
+    <Content Remove="Assets\specificlogo\auto-neverplayed.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -111,12 +111,18 @@
     <None Update="Assets\Intro\Waiting\Wrestling.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Update="Styles\Skin\Hero.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles\Skin\Basic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <None Update="Assets\specificlogo\auto-allgames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\specificlogo\auto-favorites.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\specificlogo\auto-lastplayed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\specificlogo\auto-neverplayed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
