@@ -1,4 +1,5 @@
-﻿using GameZilla.Activation;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using GameZilla.Activation;
 using GameZilla.Contracts.Services;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Services;
@@ -40,7 +41,10 @@ public partial class App : Application
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 
-    public static UIElement? AppTitlebar { get; set; }
+    public static UIElement? AppTitlebar
+    {
+        get; set;
+    }
 
     public App()
     {
@@ -108,5 +112,35 @@ public partial class App : Application
         base.OnLaunched(args);
 
         await App.GetService<IActivationService>().ActivateAsync(args);
+        await LoadSkin();
+    }
+
+    private async Task LoadSkin()
+    {
+        var settingsService = App.GetService<ILocalSettingsService>();
+        var skin = await settingsService.ReadSettingAsync<String>("Skin");
+        if (string.IsNullOrEmpty(skin))
+        {
+            skin = "Basic";
+        }
+        await settingsService.SaveSettingAsync("Skin", skin);
+        var appResources = Application.Current.Resources;
+        var mergedDictionaries = appResources.MergedDictionaries.Where(x => x is ResourceDictionary);
+        var basicStyle = mergedDictionaries.FirstOrDefault(x => x.Source.ToString().Contains("Basic"));
+        ResourceDictionary desiredStyle = new ResourceDictionary();
+        if (skin != "Basic")
+            desiredStyle = mergedDictionaries.FirstOrDefault(x => x.Source.ToString().Contains(skin));
+        var dictionariesToRemove = Application.Current.Resources.MergedDictionaries
+        .OfType<ResourceDictionary>()
+        .Where(dictionary => dictionary.Source?.OriginalString.Contains("Skin") == true)
+        .ToList();
+
+        foreach (var dictionary in dictionariesToRemove)
+        {
+            Application.Current.Resources.MergedDictionaries.Remove(dictionary);
+        }
+        Application.Current.Resources.MergedDictionaries.Add(basicStyle);
+        if (skin != "Basic")
+            Application.Current.Resources.MergedDictionaries.Add(desiredStyle);
     }
 }
