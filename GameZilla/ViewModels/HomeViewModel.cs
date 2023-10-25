@@ -44,7 +44,6 @@ public partial class HomeViewModel : ObservableRecipient
     public ObservableCollection<GamezillaMenuItem> Menus;
     public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService)
     {
-        Display = "Basic";
         _navigationService = navigationService;
         _executableService = executableService;
         _pageSkinService = pageSkinService;

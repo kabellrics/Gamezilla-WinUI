@@ -5,39 +5,44 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:GameZilla.Views.HomeView"
-      xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:viewmodel="using:GameZilla.ViewModels"
+    xmlns:pageskinselector="using:GameZilla.PageSkinSelector"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
     <Page.Resources>
-        <DataTemplate x:Key="Basic">
-            <views:Basic/>
+        <DataTemplate x:Key="Basic" x:DataType="viewmodel:HomeViewModel">
+            <views:Basic DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Key="Hero">
-            <views:Hero/>
+        <DataTemplate x:Key="Hero" x:DataType="viewmodel:HomeViewModel">
+            <views:Hero DataContext="{Binding}"/>
         </DataTemplate>
-        <Style x:Key="ContentStyleSelector" TargetType="ContentPresenter">
+        <!--<pageskinselector:DisplayHomeTemplateSelector x:Key="DisplayTemplateSelector"
+        BasicTemplate="{StaticResource Basic}"
+        HeroTemplate="{StaticResource Hero}" />-->
+        <Style x:Key="ContentStyleSelector" TargetType="ContentControl">
             <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
             <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-            <Setter Property="ContentTemplate" Value="{StaticResource Basic}"/>
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="HomeDisplayState">
-                    <VisualState x:Name="Basic">
-                        <VisualState.Setters>
-                            <Setter Target="ContentPresenter.(ContentPresenter.ContentTemplate)" Value="{StaticResource Basic}"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Hero">
-                        <VisualState.Setters>
-                            <Setter Target="ContentPresenter.(ContentPresenter.ContentTemplate)" Value="{StaticResource Hero}"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
+            <Setter Property="DataContext" Value="{x:Bind ViewModel}"/>
         </Style>
     </Page.Resources>
     <Grid x:Name="ContentArea" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ContentPresenter x:Name="contentpres" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}"/>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="HomeDisplayState">
+                <VisualState x:Name="Basic">
+                    <VisualState.Setters>
+                        <Setter Target="contentcontrol.(ContentControl.ContentTemplate)" Value="{StaticResource Basic}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Hero">
+                    <VisualState.Setters>
+                        <Setter Target="contentcontrol.(ContentControl.ContentTemplate)" Value="{StaticResource Hero}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ContentControl x:Name="contentcontrol" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}">
+        </ContentControl>
     </Grid>
 </Page>
