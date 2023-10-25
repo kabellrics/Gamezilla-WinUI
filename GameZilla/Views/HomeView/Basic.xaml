@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
     <Grid Background="Blue">
-        <GridView ItemsSource="{Binding Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Red" Margin="5">
+        <GridView ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Red" Margin="5">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">

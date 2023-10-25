@@ -24,8 +24,14 @@ namespace GameZilla.Views.HomeView
 {
     public sealed partial class Basic : UserControl
     {
+        public HomeViewModel ViewModel
+        {
+            get;
+        }
         public Basic()
         {
+            this.ViewModel = App.GetService<HomeViewModel>();
+            this.DataContext = ViewModel;
             this.InitializeComponent();
         }
     }
