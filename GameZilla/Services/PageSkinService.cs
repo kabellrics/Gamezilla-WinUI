@@ -24,9 +24,38 @@ namespace GameZilla.Services
             _displaydetailgame = new List<String>() { "Basic", "Hero" };
         }
 
-        public IEnumerable<String> GetDisplayForHome() { return _displayhome; }
-        public IEnumerable<String> GetDisplayForSystems() { return _displaysystems; }
-        public IEnumerable<String> GetDisplayForGames() { return _displaygames; }
-        public IEnumerable<String> GetDisplayForGameDetail() { return _displaydetailgame; }
+        public IEnumerable<String> GetDisplaysForHome() { return _displayhome; }
+        public IEnumerable<String> GetDisplaysForSystems() { return _displaysystems; }
+        public IEnumerable<String> GetDisplaysForGames() { return _displaygames; }
+        public IEnumerable<String> GetDisplaysForGameDetail() { return _displaydetailgame; }
+
+        public async Task<string> GetCurrentDisplayHome()
+        {
+            var homeskin = await _options.ReadSettingAsync<string>("homeskin");
+            if (string.IsNullOrEmpty(homeskin))
+                return "Basic";
+            return homeskin;
+        }
+        public async Task<string> GetCurrentDisplaySystems()
+        {
+            var homeskin = await _options.ReadSettingAsync<string>("sysskin");
+            if (string.IsNullOrEmpty(homeskin))
+                return "Basic";
+            return homeskin;
+        }
+        public async Task<string> GetCurrentDisplayGames()
+        {
+            var homeskin = await _options.ReadSettingAsync<string>("gameskin");
+            if (string.IsNullOrEmpty(homeskin))
+                return "Basic";
+            return homeskin;
+        }
+        public async Task<string> GetCurrentDisplayGameDetail()
+        {
+            var homeskin = await _options.ReadSettingAsync<string>("gamedetailskin");
+            if (string.IsNullOrEmpty(homeskin))
+                return "Basic";
+            return homeskin;
+        }
     }
 }

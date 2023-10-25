@@ -2,9 +2,13 @@
 {
     public interface IPageSkinService
     {
-        IEnumerable<string> GetDisplayForGameDetail();
-        IEnumerable<string> GetDisplayForGames();
-        IEnumerable<string> GetDisplayForHome();
-        IEnumerable<string> GetDisplayForSystems();
+        IEnumerable<string> GetDisplaysForGameDetail();
+        IEnumerable<string> GetDisplaysForGames();
+        IEnumerable<string> GetDisplaysForHome();
+        IEnumerable<string> GetDisplaysForSystems();
+        Task<string> GetCurrentDisplayHome();
+        Task<string> GetCurrentDisplaySystems();
+        Task<string> GetCurrentDisplayGames();
+        Task<string> GetCurrentDisplayGameDetail();
     }
 }

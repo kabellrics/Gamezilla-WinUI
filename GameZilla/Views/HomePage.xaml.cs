@@ -15,6 +15,7 @@ public sealed partial class HomePage : Page
     public HomePage()
     {
         ViewModel = App.GetService<HomeViewModel>();
+        this.Loaded += HomePage_Loaded;
         InitializeComponent();
         ViewModel.PropertyChanged += (sender, e) =>
         {
@@ -23,6 +24,11 @@ public sealed partial class HomePage : Page
                 UpdateVisulaState();
             }
         };
+    }
+
+    private void HomePage_Loaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Loaded();
     }
 
     private void UpdateVisulaState()

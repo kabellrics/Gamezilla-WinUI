@@ -82,20 +82,20 @@ public partial class App : Application
             services.AddSingleton<IPageSkinService, PageSkinService>();
 
             // Views and ViewModels
-            services.AddTransient<SettingsViewModel>();
-            services.AddTransient<SettingsPage>();
-            services.AddTransient<ItemDetailViewModel>();
-            services.AddTransient<ItemDetailPage>();
-            services.AddTransient<ItemListDetailViewModel>();
-            services.AddTransient<ItemListDetailPage>();
-            services.AddTransient<ItemListViewModel>();
-            services.AddTransient<ItemListPage>();
-            services.AddTransient<ContainerViewModel>();
-            services.AddTransient<ContainerPage>();
-            services.AddTransient<HomeViewModel>();
-            services.AddTransient<HomePage>();
-            services.AddTransient<SplashViewModel>();
-            services.AddTransient<SplashPage>();
+            services.AddSingleton<SettingsViewModel>();
+            services.AddSingleton<SettingsPage>();
+            services.AddSingleton<ItemDetailViewModel>();
+            services.AddSingleton<ItemDetailPage>();
+            services.AddSingleton<ItemListDetailViewModel>();
+            services.AddSingleton<ItemListDetailPage>();
+            services.AddSingleton<ItemListViewModel>();
+            services.AddSingleton<ItemListPage>();
+            services.AddSingleton<ContainerViewModel>();
+            services.AddSingleton<ContainerPage>();
+            services.AddSingleton<HomeViewModel>();
+            services.AddSingleton<HomePage>();
+            services.AddSingleton<SplashViewModel>();
+            services.AddSingleton<SplashPage>();
 
         }).
         Build();

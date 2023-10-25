@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GameZilla.Contracts.Services;
@@ -13,7 +14,6 @@ public partial class HomeViewModel : ObservableRecipient
     private readonly INavigationService _navigationService;
     private readonly IExecutableService _executableService;
     private readonly IPageSkinService _pageSkinService;
-    private readonly ILocalSettingsService _localSettingsService;
     private ICommand _LoadedCommand;
     private ICommand _GotoFavCommand;
     private ICommand _GotoLastCommand;
@@ -41,27 +41,15 @@ public partial class HomeViewModel : ObservableRecipient
         get => _display;
         set => SetProperty(ref _display, value);
     }
-    public IEnumerable<GamezillaMenuItem> Menus;
-    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, ILocalSettingsService localSettingsService)
+    public ObservableCollection<GamezillaMenuItem> Menus;
+    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService)
     {
         Display = "Basic";
         _navigationService = navigationService;
         _executableService = executableService;
         _pageSkinService = pageSkinService;
-        _localSettingsService = localSettingsService;
-        Menus = new List<GamezillaMenuItem>()
-        {
-            new GamezillaMenuItem(){Text="Favoris",IconPath=@"ms-appx:///Assets/specificlogo/auto-favorites.png",Command=GotoFavCommand},
-            new GamezillaMenuItem(){Text="Derniers jeux lancés",IconPath=@"ms-appx:///Assets/specificlogo/auto-lastplayed.png",Command=GotoLastCommand},
-            new GamezillaMenuItem(){Text="Et si vous essayez ces jeux",IconPath=@"ms-appx:///Assets/specificlogo/auto-neverplayed.png",Command=GotoNoPlayCommand},
-            new GamezillaMenuItem(){Text="Tous les Systemes",IconPath="\uE967",Command=GoSystemsCommand},
-            new GamezillaMenuItem(){Text="Tous les Jeux",IconPath=@"ms-appx:///Assets/specificlogo/auto-allgames.png",Command=GotoFavCommand},
-            new GamezillaMenuItem(){Text="Settings",IconPath="\uE713",Command=GotoFavCommand},
-            new GamezillaMenuItem(){Text="Quitter",IconPath="\uEDAE",Command=QuitCommand},
-            new GamezillaMenuItem(){Text="Mettre en Veille",IconPath="\uE708",Command=SleepCommand},
-            new GamezillaMenuItem(){Text="Eteindre",IconPath="\uE7E8",Command=ShutdownCommand},
-        };
-        _localSettingsService = localSettingsService;
+        Menus = new ObservableCollection<GamezillaMenuItem>();
+        
     }
     public void Loaded()
     {
@@ -70,15 +58,16 @@ public partial class HomeViewModel : ObservableRecipient
 
     private async void InitData()
     {
-        var skin = await _localSettingsService.ReadSettingAsync<String>("HomeSkin");
-        if (string.IsNullOrEmpty(skin))
-        {
-            Display = "Basic";
-        }
-        else
-        {
-            Display = skin;
-        }
+        Display = await _pageSkinService.GetCurrentDisplayHome();
+        Menus.Add(new GamezillaMenuItem() { Text = "Favoris", IconPath = @"ms-appx:///Assets/specificlogo/auto-favorites.png", Command = GotoFavCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Derniers jeux lancés", IconPath = @"ms-appx:///Assets/specificlogo/auto-lastplayed.png", Command = GotoLastCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Et si vous essayez ces jeux", IconPath = @"ms-appx:///Assets/specificlogo/auto-neverplayed.png", Command = GotoNoPlayCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Tous les Systemes", IconPath = "\uE967", Command = GoSystemsCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Tous les Jeux", IconPath = @"ms-appx:///Assets/specificlogo/auto-allgames.png", Command = GotoFavCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Settings", IconPath = "\uE713", Command = GotoFavCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Quitter", IconPath = "\uEDAE", Command = QuitCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Mettre en Veille", IconPath = "\uE708", Command = SleepCommand });
+        Menus.Add(new GamezillaMenuItem() { Text = "Eteindre", IconPath = "\uE7E8", Command = ShutdownCommand });
     }
     private void GotoFav(bool obj) => throw new NotImplementedException();
     private void GotoLast(bool obj) => throw new NotImplementedException();
