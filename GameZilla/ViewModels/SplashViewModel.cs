@@ -3,6 +3,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GameZilla.Contracts.Services;
+using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
 using Microsoft.UI.Dispatching;
@@ -69,8 +70,8 @@ public partial class SplashViewModel : ObservableRecipient
     public void NavigateToHome()
     {
         if(ShowContinuMessage)
-            //_navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
             _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
+        //_navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
     }
     public async IAsyncEnumerable<StorageFile> GetVideoIntro()
     {

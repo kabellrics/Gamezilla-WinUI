@@ -9,17 +9,32 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-    <Grid Background="Blue">
-        <GridView ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Red" Margin="5">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <GridView x:Name="gridview" SelectionMode="Single" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" ItemClick="gridview_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Text}"/>
+                    <Button Tag="{Binding Text}" Style="{StaticResource AccentButtonStyle}"
+                            KeyDown="Button_KeyDown"
+                            IsTabStop="False" Padding="0" Margin="0"
+                            Command="{Binding Command}" CommandParameter="true">
+                    <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                        <Viewbox Stretch="Uniform">
+                            <FontIcon Glyph="{Binding IconPath}" Margin="20"/>
+                        </Viewbox>
+                        <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </StackPanel>
+                    </Button>
                 </DataTemplate>
             </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid x:Name="MaxItemsWrapGrid"
+                           MaximumRowsOrColumns="5" SizeChanged="MaxItemsWrapGrid_SizeChanged"
+                           Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
         </GridView>
     </Grid>
 </UserControl>

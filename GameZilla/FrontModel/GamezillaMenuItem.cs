@@ -12,6 +12,10 @@ public class GamezillaMenuItem
     {
         get;set;
     }
+    public string ImagePath
+    {
+        get;set;
+    }
     public string IconPath
     {
         get;set;

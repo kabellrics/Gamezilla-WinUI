@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using GameZilla.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,9 +24,21 @@ namespace GameZilla.Views.HomeView
 {
     public sealed partial class Hero : UserControl
     {
+        public HomeViewModel ViewModel
+        {
+            get;
+        }
         public Hero()
         {
+            this.ViewModel = App.GetService<HomeViewModel>();
+            this.DataContext = ViewModel;
             this.InitializeComponent();
+        }
+
+        private void MaxItemsWrapGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var wrapgrid = (ItemsWrapGrid)sender;
+            wrapgrid.ItemWidth = this.ActualWidth / 10;
         }
     }
 }

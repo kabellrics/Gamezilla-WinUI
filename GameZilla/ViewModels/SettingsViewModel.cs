@@ -1,10 +1,12 @@
-﻿using System.Reflection;
+﻿using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using GameZilla.Contracts.Services;
+using GameZilla.Contracts.ViewModels;
 using GameZilla.Helpers;
 
 using Microsoft.UI.Xaml;
@@ -13,9 +15,19 @@ using Windows.ApplicationModel;
 
 namespace GameZilla.ViewModels;
 
-public partial class SettingsViewModel : ObservableRecipient
+public partial class SettingsViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IThemeSelectorService _themeSelectorService;
+    private readonly INavigationService _navigationService;
+    private readonly IPageSkinService _pageSkinService;
+    private ICommand _GoBackCommand;
+    public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
+
+    private void GoBack()
+    {
+        _navigationService.GoBack();
+    }
+
 
     [ObservableProperty]
     private ElementTheme _elementTheme;
@@ -27,8 +39,51 @@ public partial class SettingsViewModel : ObservableRecipient
     {
         get;
     }
-
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
+    private String _home;
+    public String Home
+    {
+        get => _home;
+        set
+        {
+            SetProperty(ref _home, value);
+            _pageSkinService.SetCurrentDisplayHome(value);
+        }
+    }
+    private String _systems;
+    public String Systems
+    {
+        get => _systems;
+        set
+        {
+            SetProperty(ref _home, value);
+            _pageSkinService.SetCurrentDisplaySystems(value);
+        }
+    }
+    private String _games;
+    public String Games
+    {
+        get => _games;
+        set
+        {
+            SetProperty(ref _home, value);
+            _pageSkinService.SetCurrentDisplayGames(value);
+        }
+    }
+    private String _gamedetail;
+    public String GameDetail
+    {
+        get => _gamedetail;
+        set
+        {
+            SetProperty(ref _home, value);
+            _pageSkinService.SetCurrentDisplayGameDetail(value);
+        }
+    }
+    public ObservableCollection<string> homedisplays;
+    public ObservableCollection<string> sysdisplays;
+    public ObservableCollection<string> gamesdisplays;
+    public ObservableCollection<string> gamedetaildisplays;
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService)
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
@@ -43,6 +98,8 @@ public partial class SettingsViewModel : ObservableRecipient
                     await _themeSelectorService.SetThemeAsync(param);
                 }
             });
+        _navigationService = navigationService;
+        _pageSkinService = pageSkinService;
     }
 
     private static string GetVersionDescription()
@@ -61,5 +118,23 @@ public partial class SettingsViewModel : ObservableRecipient
         }
 
         return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+    }
+    public async void OnNavigatedTo(object parameter)
+    {
+        homedisplays = new ObservableCollection<string>();
+        foreach(var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
+        Home = await _pageSkinService.GetCurrentDisplayHome();
+        sysdisplays = new ObservableCollection<string>();
+        foreach (var skin in _pageSkinService.GetDisplaysForSystems()) { sysdisplays.Add(skin); }
+        Systems = await _pageSkinService.GetCurrentDisplaySystems();
+        gamesdisplays = new ObservableCollection<string>();
+        foreach (var skin in _pageSkinService.GetDisplaysForGames()) { gamesdisplays.Add(skin); }
+        Games = await _pageSkinService.GetCurrentDisplayGames();
+        gamedetaildisplays = new ObservableCollection<string>();
+        foreach (var skin in _pageSkinService.GetDisplaysForGameDetail()) { gamedetaildisplays.Add(skin); }
+        GameDetail = await _pageSkinService.GetCurrentDisplayGameDetail();
+    }
+    public void OnNavigatedFrom()
+    {
     }
 }

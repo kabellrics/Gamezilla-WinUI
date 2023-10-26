@@ -10,5 +10,9 @@
         Task<string> GetCurrentDisplaySystems();
         Task<string> GetCurrentDisplayGames();
         Task<string> GetCurrentDisplayGameDetail();
+        void SetCurrentDisplayHome(string value);
+        void SetCurrentDisplaySystems(string value);
+        void SetCurrentDisplayGames(string value);
+        void SetCurrentDisplayGameDetail(string value);
     }
 }

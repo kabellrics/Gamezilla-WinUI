@@ -42,7 +42,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <ContentControl x:Name="contentcontrol" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}">
+        <ContentControl x:Name="contentcontrol" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}">
         </ContentControl>
     </Grid>
 </Page>

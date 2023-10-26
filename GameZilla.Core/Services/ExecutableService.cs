@@ -31,6 +31,14 @@ public class ExecutableService : IExecutableService
         return executables;
     }
 
+    public async Task<IEnumerable<Executable>> GetExecutablesNeverStarted()
+    {
+        if (executables == null)
+        {
+            await InitValue();
+        }
+        return executables.Where(x => x.IsActif == "1" && int.Parse(x.NbStart) == 0).OrderByDescending(x=>x.NbStart);
+    }
     public async Task<IEnumerable<Executable>> GetExecutablesMostStarted()
     {
         if (executables == null)

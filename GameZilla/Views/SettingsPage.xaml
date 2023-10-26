@@ -15,63 +15,103 @@
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button  Margin="25 0 0 0" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.GoBackCommand}">
+                <SymbolIcon Symbol="Back" />
+            </Button>
+            <Viewbox>
+                <TextBlock Text="Paramètres" Margin="50 0 0 0"></TextBlock>
+            </Viewbox>
+        </StackPanel>
+        <Pivot Grid.Row="1">
+        <PivotItem Header="Affichage">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-        <TextBlock
+                <TextBlock
             Grid.Row="0"
             x:Uid="Settings_Title"
             Style="{StaticResource PageTitleStyle}" />
-        <StackPanel
+                <StackPanel
             Grid.Row="1" 
             x:Name="ContentArea">
-            <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
-            <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
-                <TextBlock x:Uid="Settings_Theme" />
+                    <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                    <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                        <TextBlock x:Uid="Settings_Theme" />
 
-                <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                    <RadioButton
+                        <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                            <RadioButton
                         x:Uid="Settings_Theme_Light"
                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
                         FontSize="15"
                         GroupName="AppTheme">
-                        <RadioButton.CommandParameter>
-                            <xaml:ElementTheme>Light</xaml:ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
-                    <RadioButton
+                                <RadioButton.CommandParameter>
+                                    <xaml:ElementTheme>Light</xaml:ElementTheme>
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                            <RadioButton
                         x:Uid="Settings_Theme_Dark"
                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
                         FontSize="15"
                         GroupName="AppTheme">
-                        <RadioButton.CommandParameter>
-                            <xaml:ElementTheme>Dark</xaml:ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
-                    <RadioButton
+                                <RadioButton.CommandParameter>
+                                    <xaml:ElementTheme>Dark</xaml:ElementTheme>
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                            <RadioButton
                         x:Uid="Settings_Theme_Default"
                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
                         FontSize="15"
                         GroupName="AppTheme">
-                        <RadioButton.CommandParameter>
-                            <xaml:ElementTheme>Default</xaml:ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
-                </StackPanel>
-            </StackPanel>
+                                <RadioButton.CommandParameter>
+                                    <xaml:ElementTheme>Default</xaml:ElementTheme>
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                        </StackPanel>
+                    </StackPanel>
 
-            <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                    <!--<TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-            <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" />
+                    <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                        <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" />
 
-                <TextBlock
+                        <TextBlock
                     x:Uid="Settings_AboutDescription"
                     Margin="{StaticResource XSmallTopMargin}"
                     Style="{ThemeResource BodyTextBlockStyle}" />
-                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
-            </StackPanel>
-        </StackPanel>
+                        <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+                    </StackPanel>-->
+                </StackPanel>
+                    <Grid
+            Grid.Row="2" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Skin de la page Home" TextAlignment="Center" TextWrapping="WrapWholeWords" FontSize="20"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Skin de la page Systèmes" TextAlignment="Center" TextWrapping="WrapWholeWords" FontSize="20"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Skin de la page Jeux" TextAlignment="Center" TextWrapping="WrapWholeWords" FontSize="20"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="Skin de la page Détail d'un Jeux" TextAlignment="Center" TextWrapping="WrapWholeWords" FontSize="20"></TextBlock>
+                        <RadioButtons ItemsSource="{x:Bind ViewModel.homedisplays}" Grid.Row="1" Grid.Column="0" SelectedItem="{x:Bind ViewModel.Home,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></RadioButtons>
+                        <RadioButtons ItemsSource="{x:Bind ViewModel.sysdisplays}" Grid.Row="1" Grid.Column="1" SelectedItem="{x:Bind ViewModel.Systems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></RadioButtons>
+                        <RadioButtons ItemsSource="{x:Bind ViewModel.gamesdisplays}" Grid.Row="1" Grid.Column="2" SelectedItem="{x:Bind ViewModel.Games,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></RadioButtons>
+                        <RadioButtons ItemsSource="{x:Bind ViewModel.gamedetaildisplays}" Grid.Row="1" Grid.Column="3" SelectedItem="{x:Bind ViewModel.GameDetail,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></RadioButtons>
+                    </Grid>
+            </Grid>
+        </PivotItem>
+    </Pivot>
     </Grid>
 </Page>

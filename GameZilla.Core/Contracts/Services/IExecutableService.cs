@@ -10,4 +10,5 @@ public interface IExecutableService
     Task CreateExecutable(Executable item);
     Task<IEnumerable<Executable>> GetExecutablesMostStarted();
     Task<IEnumerable<Executable>> GetExecutablesFavorite();
+    Task<IEnumerable<Executable>> GetExecutablesNeverStarted();
 }

@@ -10,7 +10,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="Red">
-
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg"></ImageBrush>            
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <GridView Grid.Row="1" SelectionMode="Single" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Button Tag="{Binding Text}" Background="Transparent"
+                            IsTabStop="False" Padding="0" Margin="5 0"
+                            Command="{Binding Command}" CommandParameter="true">
+                        <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                            <!--<Viewbox Stretch="Uniform">-->
+                                <FontIcon Glyph="{Binding IconPath}"/>
+                            <!--</Viewbox>-->
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid x:Name="MaxItemsWrapGrid"
+                           MaximumRowsOrColumns="10" SizeChanged="MaxItemsWrapGrid_SizeChanged"
+                           Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
     </Grid>
 </UserControl>
