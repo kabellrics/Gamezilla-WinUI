@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameZilla.ViewModels.Object;
-public interface Item
+namespace GameZilla.Core.Services;
+public class ItemBuilder
 {
 }

@@ -12,20 +12,27 @@
     mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <GridView x:Name="gridview" SelectionMode="Single" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" ItemClick="gridview_ItemClick">
+        <Border>
+            <Border.Background>
+                <ImageBrush ImageSource="ms-appx:///Assets/splash.jpg" Opacity="0.2"></ImageBrush> 
+            </Border.Background>
+        </Border>
+        <GridView x:Name="gridview" SelectionMode="Single"
+                  IsTabStop="True"
+                  ItemsSource="{x:Bind ViewModel.Menus}"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Margin="5"
+                  IsDoubleTapEnabled="True"
+                  DoubleTapped="gridview_DoubleTapped"
+                  KeyDown="gridview_KeyDown">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Button Tag="{Binding Text}" Style="{StaticResource AccentButtonStyle}"
-                            KeyDown="Button_KeyDown"
-                            IsTabStop="False" Padding="0" Margin="0"
-                            Command="{Binding Command}" CommandParameter="true">
-                    <StackPanel Orientation="Vertical" Padding="0" Margin="0">
-                        <Viewbox Stretch="Uniform">
-                            <FontIcon Glyph="{Binding IconPath}" Margin="20"/>
-                        </Viewbox>
-                        <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                    </StackPanel>
-                    </Button>
+                        <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                            <Viewbox Stretch="Uniform">
+                                <FontIcon Glyph="{Binding IconPath}" Margin="20"/>
+                            </Viewbox>
+                            <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>

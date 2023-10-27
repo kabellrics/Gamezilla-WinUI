@@ -50,43 +50,29 @@ namespace GameZilla.Views.HomeView
             wrapgrid.ItemWidth = this.ActualWidth / 5.5;
         }
 
-        private void Button_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                var bt = (Button)sender;
-                switch (bt.Tag.ToString())
-                {
-                    case "Favoris":ViewModel.GotoFav("true");
-                        break;
-                    case "Derniers jeux lancés":ViewModel.GotoLast("true");
-                        break;
-                    case "Et si vous essayez ces jeux":ViewModel.GotoNoPlay("true");
-                        break;
-                    case "Tous les Systemes":ViewModel.GoSystems();
-                        break;
-                    case "Tous les Jeux":ViewModel.GoAllGames();
-                        break;
-                    case "Settings":ViewModel.GoSettings();
-                        break;
-                    case "Quitter":ViewModel.Quit();
-                        break;
-                    case "Mettre en Veille":ViewModel.Sleep();
-                        break;
-                    case "Redémarrage":ViewModel.ReStart();
-                        break;
-                    case "Eteindre":ViewModel.Shutdown();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
 
         private void gridview_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = (GamezillaMenuItem)this.gridview.SelectedItem;
+            if(item != null)
             item.Command.Execute("true");
+        }
+
+        private void gridview_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            var item = (GamezillaMenuItem)this.gridview.SelectedItem;
+            if (item != null)
+                item.Command.Execute("true");
+        }
+
+        private void gridview_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA ||  e.Key == VirtualKey.Space)
+            {
+                var item = (GamezillaMenuItem)this.gridview.SelectedItem;
+                if (item != null)
+                    item.Command.Execute("true");
+            }
         }
     }
 }
