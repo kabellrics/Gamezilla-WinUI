@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
+using GameZilla.Core.Models;
 using GameZilla.FrontModel;
 using Microsoft.UI.Xaml.Controls;
 
@@ -15,6 +16,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IExecutableService _executableService;
     private readonly IPageSkinService _pageSkinService;
+    private readonly IItemBuilder _itemBuilder;
     private ICommand _LoadedCommand;
     private ICommand _GotoFavCommand;
     private ICommand _GotoLastCommand;
@@ -45,13 +47,14 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         set => SetProperty(ref _display, value);
     }
     public ObservableCollection<GamezillaMenuItem> Menus;
-    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService)
+    public ObservableCollection<Item> CurrentDisplayList;
+    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, IItemBuilder itemBuilder)
     {
         _navigationService = navigationService;
         _executableService = executableService;
         _pageSkinService = pageSkinService;
         Menus = new ObservableCollection<GamezillaMenuItem>();
-        
+        _itemBuilder = itemBuilder;
     }
     public void Loaded()
     {

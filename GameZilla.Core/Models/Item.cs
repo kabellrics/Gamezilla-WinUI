@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GameZilla.Core.Models;
 public class Item
 {
-    public int Id
+    public string Id
     {
         get; set;
     }
@@ -44,6 +44,10 @@ public class Item
         get; set;
     }
     public string LastStart
+    {
+        get; set;
+    }
+    public bool IsExecutable
     {
         get; set;
     }

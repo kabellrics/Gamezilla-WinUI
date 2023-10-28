@@ -12,23 +12,121 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg"></ImageBrush>            
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg"></ImageBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <GridView Grid.Row="1" SelectionMode="Single" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Tag="{x:Bind ViewModel.Menus[0].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[0].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[0].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[1].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="1"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[1].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[1].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[2].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="2"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[2].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[2].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[3].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="3"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[3].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[3].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[4].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="4"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[4].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[4].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[5].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="5"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[5].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[5].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[6].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="6"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[6].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[6].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[7].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="7"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[7].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[7].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[8].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="8"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[8].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[8].IconPath}"/>
+                </StackPanel>
+            </Button>
+            <Button Tag="{x:Bind ViewModel.Menus[9].Text}" Background="Transparent"
+                            IsTabStop="True" Padding="0" Margin="5 0" Grid.Column="9"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.Menus[9].Command}" CommandParameter="false">
+                <StackPanel Orientation="Vertical" Padding="0" Margin="0">
+                    <FontIcon Glyph="{x:Bind ViewModel.Menus[9].IconPath}"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <!--<GridView Grid.Row="1" SelectionMode="Single" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Button Tag="{Binding Text}" Background="Transparent"
                             IsTabStop="False" Padding="0" Margin="5 0"
                             Command="{Binding Command}" CommandParameter="true">
                         <StackPanel Orientation="Vertical" Padding="0" Margin="0">
-                            <!--<Viewbox Stretch="Uniform">-->
+                            -->
+        <!--<Viewbox Stretch="Uniform">-->
+        <!--
                                 <FontIcon Glyph="{Binding IconPath}"/>
-                            <!--</Viewbox>-->
+                            -->
+        <!--</Viewbox>-->
+        <!--
                         </StackPanel>
                     </Button>
                 </DataTemplate>
@@ -40,6 +138,6 @@
                            Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-        </GridView>
+        </GridView>-->
     </Grid>
 </UserControl>
