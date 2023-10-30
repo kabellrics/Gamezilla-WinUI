@@ -145,10 +145,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public async void OnNavigatedTo(object parameter)
     {
+        CurrentDisplayList.Clear();
         var favlist = await _executableService.GetExecutablesFavorite();
         foreach(var favitem in favlist)
         {
             FavorisDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
+            CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
         }
         var lastlist = await _executableService.GetExecutablesLastStarted();
         foreach(var lastitem in lastlist)
@@ -160,9 +162,6 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         {
             NeverPlayedDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(neveritem)));
         }
-        CurrentDisplayList.Clear();
-        foreach (var item in FavorisDisplayList)
-            CurrentDisplayList.Add(item);
     }
     public void OnNavigatedFrom()
     {

@@ -81,6 +81,7 @@ public partial class App : Application
             services.AddSingleton<IEpicGameFinderService, EpicGameFinderService>();
             services.AddSingleton<IPageSkinService, PageSkinService>();
             services.AddSingleton<IItemBuilder, ItemBuilder>();
+            services.AddSingleton<IContainerBuilder, ContainerBuilder>();
 
             // Views and ViewModels
             services.AddSingleton<SettingsViewModel>();
