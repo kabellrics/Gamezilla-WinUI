@@ -45,7 +45,15 @@ public class ExecutableService : IExecutableService
         {
             await InitValue();
         }
-        return executables.Where(x => x.IsActif == "1" && int.Parse(x.NbStart) > 0).OrderByDescending(x=>x.NbStart);
+        return executables.Where(x => x.IsActif == "1" && int.Parse(x.NbStart) > 0).OrderByDescending(x => x.NbStart).Take(10);
+    }
+    public async Task<IEnumerable<Executable>> GetExecutablesLastStarted()
+    {
+        if (executables == null)
+        {
+            await InitValue();
+        }
+        return executables.Where(x => x.IsActif == "1").OrderByDescending(x=>x.LastStartDate).Take(10);
     }
     public async Task<IEnumerable<Executable>> GetExecutablesFavorite()
     {

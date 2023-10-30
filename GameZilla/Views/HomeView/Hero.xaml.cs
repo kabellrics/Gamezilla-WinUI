@@ -16,6 +16,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WindowsInput.Native;
+using WindowsInput;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,12 +35,24 @@ namespace GameZilla.Views.HomeView
             this.ViewModel = App.GetService<HomeViewModel>();
             this.DataContext = ViewModel;
             this.InitializeComponent();
+            gridview.Focus(FocusState.Programmatic);
+            this.gridview.SelectedIndex = 0;
+            this.itemListView.SelectedIndex = 0;
+            if (gridview.Items.Count > 0)
+            {
+                var selected = gridview.SelectedItem as GridViewItem;
+                selected.Focus(FocusState.Programmatic);
+                selected.Focus(FocusState.Keyboard);
+                var simulator = new InputSimulator();
+                simulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
+            }
         }
-
+        
         private void MaxItemsWrapGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             var wrapgrid = (ItemsWrapGrid)sender;
             wrapgrid.ItemWidth = this.ActualWidth / 10;
         }
+
     }
 }

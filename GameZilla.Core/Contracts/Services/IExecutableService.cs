@@ -11,4 +11,5 @@ public interface IExecutableService
     Task<IEnumerable<Executable>> GetExecutablesMostStarted();
     Task<IEnumerable<Executable>> GetExecutablesFavorite();
     Task<IEnumerable<Executable>> GetExecutablesNeverStarted();
+    Task<IEnumerable<Executable>> GetExecutablesLastStarted();
 }

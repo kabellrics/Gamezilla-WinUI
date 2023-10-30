@@ -39,8 +39,14 @@ namespace GameZilla.Views.HomeView
             this.InitializeComponent();
             gridview.Focus(FocusState.Programmatic);
             this.gridview.SelectedIndex = 0;
-            var simulator = new InputSimulator();
-            simulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
+            if(gridview.Items.Count > 0 )
+            {
+                var selected = gridview.SelectedItem as GridViewItem;
+                selected.Focus(FocusState.Programmatic);
+                selected.Focus(FocusState.Keyboard);
+                var simulator = new InputSimulator();
+                simulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
+            }
         }
 
         private void MaxItemsWrapGrid_SizeChanged(object sender, SizeChangedEventArgs e)

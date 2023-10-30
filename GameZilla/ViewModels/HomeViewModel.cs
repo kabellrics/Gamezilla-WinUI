@@ -7,6 +7,7 @@ using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
 using GameZilla.FrontModel;
+using GameZilla.ViewModels.Object;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GameZilla.ViewModels;
@@ -47,13 +48,20 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         set => SetProperty(ref _display, value);
     }
     public ObservableCollection<GamezillaMenuItem> Menus;
-    public ObservableCollection<Item> CurrentDisplayList;
+    public ObservableCollection<ObsItem> CurrentDisplayList;
+    public ObservableCollection<ObsItem> FavorisDisplayList;
+    public ObservableCollection<ObsItem> LastPlayedDisplayList;
+    public ObservableCollection<ObsItem> NeverPlayedDisplayList;
     public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, IItemBuilder itemBuilder)
     {
         _navigationService = navigationService;
         _executableService = executableService;
         _pageSkinService = pageSkinService;
         Menus = new ObservableCollection<GamezillaMenuItem>();
+        CurrentDisplayList = new ObservableCollection<ObsItem>();
+        FavorisDisplayList = new ObservableCollection<ObsItem>();
+        LastPlayedDisplayList = new ObservableCollection<ObsItem>();
+        NeverPlayedDisplayList = new ObservableCollection<ObsItem>();
         _itemBuilder = itemBuilder;
     }
     public void Loaded()
@@ -78,12 +86,33 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public void GotoFav(string obj)
     {
+        if(obj == "true") { }
+        else
+        {
+            CurrentDisplayList.Clear();
+            foreach (var item in FavorisDisplayList)
+                CurrentDisplayList.Add(item);
+        }
     }
     public void GotoLast(string obj)
     {
+        if (obj == "true") { }
+        else
+        {
+            CurrentDisplayList.Clear();
+            foreach(var item in LastPlayedDisplayList)
+                CurrentDisplayList.Add(item);
+        }
     }
     public void GotoNoPlay(string obj)
     {
+        if (obj == "true") { }
+        else
+        {
+            CurrentDisplayList.Clear();
+            foreach (var item in NeverPlayedDisplayList)
+                CurrentDisplayList.Add(item);
+        }
     }
     public void GoSystems()
     {
@@ -114,8 +143,26 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     public void ReStart()
     {
     }
-    public void OnNavigatedTo(object parameter)
+    public async void OnNavigatedTo(object parameter)
     {
+        var favlist = await _executableService.GetExecutablesFavorite();
+        foreach(var favitem in favlist)
+        {
+            FavorisDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
+        }
+        var lastlist = await _executableService.GetExecutablesLastStarted();
+        foreach(var lastitem in lastlist)
+        {
+            LastPlayedDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(lastitem)));
+        }
+        var neverlist = await _executableService.GetExecutablesNeverStarted();
+        foreach(var neveritem in neverlist)
+        {
+            NeverPlayedDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(neveritem)));
+        }
+        CurrentDisplayList.Clear();
+        foreach (var item in FavorisDisplayList)
+            CurrentDisplayList.Add(item);
     }
     public void OnNavigatedFrom()
     {

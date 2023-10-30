@@ -8,6 +8,8 @@
     xmlns:local="using:GameZilla.Views.HomeView"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+
     mc:Ignorable="d">
 
     <Grid>
@@ -16,10 +18,10 @@
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
+        <!--<Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -112,21 +114,19 @@
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[9].IconPath}"/>
                 </StackPanel>
             </Button>
-        </Grid>
-        <!--<GridView Grid.Row="1" SelectionMode="Single" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </Grid>-->
+        <!--<controls:ConstrainedBox AspectRatio="1920:620" Grid.Row="0">-->
+            <Image Grid.Row="0" Source="{Binding SelectedItem.Hero, ElementName=itemListView}" Stretch="Fill"/>
+        <!--</controls:ConstrainedBox>-->
+        <GridView Grid.Row="1" x:Name="gridview" SelectionMode="Single" Margin="0" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Button Tag="{Binding Text}" Background="Transparent"
-                            IsTabStop="False" Padding="0" Margin="5 0"
-                            Command="{Binding Command}" CommandParameter="true">
+                            IsTabStop="False" Padding="0"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{Binding Command}" CommandParameter="false">
                         <StackPanel Orientation="Vertical" Padding="0" Margin="0">
-                            -->
-        <!--<Viewbox Stretch="Uniform">-->
-        <!--
                                 <FontIcon Glyph="{Binding IconPath}"/>
-                            -->
-        <!--</Viewbox>-->
-        <!--
                         </StackPanel>
                     </Button>
                 </DataTemplate>
@@ -138,6 +138,28 @@
                            Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-        </GridView>-->
+        </GridView>
+        <ListView Grid.Row="2" x:Name="itemListView" SelectionMode="Single" Margin="0"
+                      ScrollViewer.HorizontalScrollMode="Enabled"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollMode="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                    <ItemsStackPanel
+                           Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<Grid>-->
+                            <controls:ConstrainedBox AspectRatio="2:3">
+                                <Image Source="{Binding Cover}" Stretch="Fill"/>
+                            </controls:ConstrainedBox>
+                        <!--</Grid>-->
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
     </Grid>
 </UserControl>
