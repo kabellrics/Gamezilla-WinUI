@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GameZilla.ViewModels;
+using GameZilla.ViewModels.Object;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -36,5 +37,12 @@ public sealed partial class Grid : UserControl
 
         var wrap = (ItemsWrapGrid)sender;
         wrap.ItemWidth = wrap.ActualWidth / 6.2;
+    }
+
+    private void StyledGrid_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        var item = StyledGrid.SelectedItem as ObsItem;
+        ViewModel.GoToDetail(item.Id);
+
     }
 }

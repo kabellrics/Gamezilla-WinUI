@@ -47,6 +47,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         get => _display;
         set => SetProperty(ref _display, value);
     }
+    private int _selectedIndex;
+    public int SelectedIndex
+    {
+        get => _selectedIndex;
+        set => SetProperty(ref _selectedIndex, value);
+    }
     public ObservableCollection<GamezillaMenuItem> Menus;
     public ObservableCollection<ObsItem> CurrentDisplayList;
     public ObservableCollection<ObsItem> FavorisDisplayList;

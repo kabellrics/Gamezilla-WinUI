@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GameZilla.ViewModels;
-using GameZilla.ViewModels.Object;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -18,23 +17,17 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace GameZilla.Views.GamesView;
-public sealed partial class Hero : UserControl
+namespace GameZilla.Views.GameDetail;
+public sealed partial class Basic : UserControl
 {
-    public ItemListViewModel ViewModel
+    public ItemDetailViewModel ViewModel
     {
         get;
     }
-    public Hero()
+    public Basic()
     {
-        this.ViewModel = App.GetService<ItemListViewModel>();
+        this.ViewModel = App.GetService<ItemDetailViewModel>();
         this.DataContext = ViewModel;
         this.InitializeComponent();
-    }
-
-    private void itemListView_ItemClick(object sender, ItemClickEventArgs e)
-    {
-        var item = itemListView.SelectedItem as ObsItem;
-        ViewModel.GoToDetail(item.Id);
     }
 }

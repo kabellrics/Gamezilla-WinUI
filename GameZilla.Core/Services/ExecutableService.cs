@@ -72,6 +72,14 @@ public class ExecutableService : IExecutableService
         }
         return executables.Where(x => x.IsActif == "1" && x.PlateformeId == plateformeId);
     }
+    public async Task<Executable> GetExecutablesByID(string Id)
+    {
+        if (executables == null)
+        {
+            await InitValue();
+        }
+        return executables.First(x => x.IsActif == "1" && x.Id == Id);
+    }
     public async Task<bool> ExistinDatabase(string storeId)
     {
         if (executables == null)

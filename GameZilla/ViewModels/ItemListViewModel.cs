@@ -114,10 +114,8 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
     public void OnNavigatedFrom()
     {
     }
-
-    [RelayCommand]
-    private void OnItemClick(SampleOrder? clickedItem)
+    public async void GoToDetail(string Id)
     {
-
+        _navigationService.NavigateTo(typeof(ItemDetailViewModel).FullName!, Id);
     }
 }

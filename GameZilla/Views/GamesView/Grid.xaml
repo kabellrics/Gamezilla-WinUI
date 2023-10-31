@@ -15,7 +15,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <GridView Grid.Row="0" Grid.RowSpan="2" Margin="75 75 0 0" ItemsSource="{x:Bind ViewModel.CurrentDisplayList}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <GridView Grid.Row="0" Grid.RowSpan="2" Margin="75 75 0 0" ItemsSource="{x:Bind ViewModel.CurrentDisplayList}"
+                  IsItemClickEnabled="True"
+                  ItemClick="StyledGrid_ItemClick"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
     x:Name="StyledGrid">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:ObsItem">

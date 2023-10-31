@@ -30,6 +30,7 @@
     <Content Remove="Assets\specificlogo\Xbox.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Views\GameDetail\Basic.xaml" />
     <None Remove="Views\GamesView\Grid.xaml" />
     <None Remove="Views\GamesView\Hero.xaml" />
     <None Remove="Views\HomeView\Basic.xaml" />
@@ -47,6 +48,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.230907" />
+    <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.0.230907" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
@@ -159,6 +161,9 @@
     <None Update="Assets\specificlogo\Xbox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\GameDetail\Basic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\GamesView\Hero.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

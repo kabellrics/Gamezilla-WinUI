@@ -80,5 +80,10 @@ namespace GameZilla.Views.HomeView
                     item.Command.Execute("true");
             }
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

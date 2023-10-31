@@ -5,22 +5,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+    xmlns:views="using:GameZilla.Views.GameDetail"
+    xmlns:viewmodel="using:GameZilla.ViewModels"
     mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="Basic" x:DataType="viewmodel:ItemDetailViewModel">
+            <views:Basic DataContext="{Binding}"/>
+        </DataTemplate>
+        <Style x:Key="ContentStyleSelector" TargetType="ContentControl">
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="DataContext" Value="{x:Bind ViewModel}"/>
+        </Style>
+    </Page.Resources>
 
     <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <TextBlock
-            Grid.Row="0"
-            x:Uid="ItemDetail_Title"
-            Style="{StaticResource PageTitleStyle}" />
-
-        <Grid Grid.Row="1">
-            
-        </Grid>
-        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ContainerDisplayState">
+                <VisualState x:Name="Basic">
+                    <VisualState.Setters>
+                        <Setter Target="contentcontrol.(ContentControl.ContentTemplate)" Value="{StaticResource Basic}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ContentControl x:Name="contentcontrol" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}">
+        </ContentControl>
     </Grid>
 </Page>

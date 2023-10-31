@@ -12,4 +12,5 @@ public interface IExecutableService
     Task<IEnumerable<Executable>> GetExecutablesFavorite();
     Task<IEnumerable<Executable>> GetExecutablesNeverStarted();
     Task<IEnumerable<Executable>> GetExecutablesLastStarted();
+    Task<Executable> GetExecutablesByID(string plateformeId);
 }

@@ -7,11 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
     mc:Ignorable="d">
-
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg"></ImageBrush>
+            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding SelectedItem.Hero, ElementName=fliphero}">
+            </ImageBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -23,12 +24,12 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <FlipView Grid.Row="0" IsTabStop="False" Background="Transparent"
+            <FlipView Grid.Row="0" IsTabStop="False" Background="Transparent" x:Name="fliphero"
                       SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <FlipView.ItemTemplate>
                     <DataTemplate>
-                        <Image Grid.Row="0" Source="{Binding Hero}" Stretch="Fill"/>
+                        <Image Grid.Row="0" Source="{Binding Hero}" Stretch="Fill"></Image>
                     </DataTemplate>
                 </FlipView.ItemTemplate>
             </FlipView>
@@ -37,6 +38,8 @@
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollMode="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      IsItemClickEnabled="True"
+                      ItemClick="itemListView_ItemClick"
                       SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <ListView.ItemsPanel>
@@ -47,7 +50,7 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <controls:ConstrainedBox AspectRatio="2:3">
+                        <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10">
                             <Image Source="{Binding Cover}" Stretch="Fill"/>
                         </controls:ConstrainedBox>
                     </DataTemplate>

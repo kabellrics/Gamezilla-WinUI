@@ -191,7 +191,7 @@ public class SteamGameFinderService : ISteamGameFinderService
         }
         catch (Exception ex)
         {
-            throw new Exception();
+            //throw new Exception();
         }
         return game;
     }

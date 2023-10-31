@@ -114,9 +114,15 @@
                 </StackPanel>
             </Button>
         </Grid>-->
-        <!--<controls:ConstrainedBox AspectRatio="1920:620" Grid.Row="0">-->
-            <Image Grid.Row="0" Source="{Binding SelectedItem.Hero, ElementName=itemListView}" Stretch="Fill"/>
-        <!--</controls:ConstrainedBox>-->
+        <FlipView Grid.Row="0" IsTabStop="False" Background="Transparent"
+                      SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <Image Grid.Row="0" Source="{Binding Hero}" Stretch="Fill"/>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
         <GridView Grid.Row="1" x:Name="gridview" SelectionMode="Single" Margin="0" IsTabStop="True" ItemsSource="{x:Bind ViewModel.Menus}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GridView.ItemTemplate>
                 <DataTemplate>
@@ -143,6 +149,7 @@
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollMode="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
