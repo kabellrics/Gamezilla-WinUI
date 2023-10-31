@@ -30,8 +30,12 @@
     <Content Remove="Assets\specificlogo\Xbox.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Views\GamesView\Grid.xaml" />
+    <None Remove="Views\GamesView\Hero.xaml" />
     <None Remove="Views\HomeView\Basic.xaml" />
     <None Remove="Views\HomeView\Hero.xaml" />
+    <None Remove="Views\PlateformeView\Flipview.xaml" />
+    <None Remove="Views\PlateformeView\GridView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -155,6 +159,18 @@
     <None Update="Assets\specificlogo\Xbox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\GamesView\Hero.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\GamesView\Grid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\PlateformeView\GridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\PlateformeView\Flipview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\HomeView\Hero.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

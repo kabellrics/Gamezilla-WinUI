@@ -18,7 +18,6 @@ public class PageService : IPageService
         Configure<HomeViewModel, HomePage>();
         Configure<ContainerViewModel, ContainerPage>();
         Configure<ItemListViewModel, ItemListPage>();
-        Configure<ItemListDetailViewModel, ItemListDetailPage>();
         Configure<ItemDetailViewModel, ItemDetailPage>();
         Configure<SettingsViewModel, SettingsPage>();
     }

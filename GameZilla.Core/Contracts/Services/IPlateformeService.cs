@@ -3,5 +3,5 @@
 namespace GameZilla.Core.Contracts.Services;
 public interface IPlateformeService
 {
-    IEnumerable<Plateforme> GetPlateformes();
+    Task<IEnumerable<Plateforme>> GetPlateformes();
 }

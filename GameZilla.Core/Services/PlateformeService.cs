@@ -18,16 +18,16 @@ public class PlateformeService : IPlateformeService
         InitValue();
     }
 
-    private async void InitValue()
+    private async Task InitValue()
     {
         if (plateformes == null) { plateformes = await plateformeClient.GetPlateformes(); }
     }
-    public IEnumerable<Plateforme> GetPlateformes()
+    public async Task<IEnumerable<Plateforme>> GetPlateformes()
     {
         if (plateformes == null)
         {
-            InitValue();
+            await InitValue();
         }
-        return plateformes;
+        return plateformes.Where(x=>x.IsActif == "1");
     }
 }

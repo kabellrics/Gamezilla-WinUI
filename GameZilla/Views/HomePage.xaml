@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:GameZilla.Views.HomeView"
     xmlns:viewmodel="using:GameZilla.ViewModels"
-    xmlns:pageskinselector="using:GameZilla.PageSkinSelector"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
     <Page.Resources>
@@ -16,9 +15,6 @@
         <DataTemplate x:Key="Hero" x:DataType="viewmodel:HomeViewModel">
             <views:Hero DataContext="{Binding}"/>
         </DataTemplate>
-        <!--<pageskinselector:DisplayHomeTemplateSelector x:Key="DisplayTemplateSelector"
-        BasicTemplate="{StaticResource Basic}"
-        HeroTemplate="{StaticResource Hero}" />-->
         <Style x:Key="ContentStyleSelector" TargetType="ContentControl">
             <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

@@ -28,7 +28,7 @@ public class ExecutableService : IExecutableService
         {
             await InitValue();
         }
-        return executables;
+        return executables.Where(x => x.IsActif == "1");
     }
 
     public async Task<IEnumerable<Executable>> GetExecutablesNeverStarted()

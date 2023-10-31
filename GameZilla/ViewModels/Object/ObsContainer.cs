@@ -33,7 +33,7 @@ public class ObsContainer : ObservableObject
     }
     public string Logo
     {
-        get => $"http://192.168.1.17:900{Container.Logo}";
+        get => $"http://192.168.1.17:900/{Container.Logo.Replace('\\', '/')}";
         set
         {
             SetProperty(Container.Logo, value, Container, (syteme, item) => Container.Logo = item);
@@ -41,7 +41,7 @@ public class ObsContainer : ObservableObject
     }
     public string Fanart
     {
-        get => $"http://192.168.1.17:900{Container.Fanart}";
+        get => $"http://192.168.1.17:900/{Container.Fanart.Replace('\\', '/')}";
         set
         {
             SetProperty(Container.Fanart, value, Container, (syteme, item) => Container.Fanart = item);

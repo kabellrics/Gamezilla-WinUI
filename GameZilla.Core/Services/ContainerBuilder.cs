@@ -32,6 +32,7 @@ public class ContainerBuilder : IContainerBuilder
         {
             container.Items.Add(_itemBuilder.FromExecutable(exeitem));
         }
+        if(container.Items.Count == 0) { container.IsActif = "0"; }
         return container;
     }
 }

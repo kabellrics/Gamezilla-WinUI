@@ -20,7 +20,7 @@ namespace GameZilla.Services
             _options = options;
             _displayhome = new List<String>() { "Basic", "Hero" };
             _displaysystems = new List<String>() { "Flip", "Grid" };
-            _displaygames = new List<String>() { "Basic", "Hero" };
+            _displaygames = new List<String>() { "Hero", "Grid" };
             _displaydetailgame = new List<String>() { "Basic", "Hero" };
         }
 
@@ -55,7 +55,7 @@ namespace GameZilla.Services
         {
             var homeskin = await _options.ReadSettingAsync<string>("gameskin");
             if (string.IsNullOrEmpty(homeskin))
-                return "Basic";
+                return "Grid";
             return homeskin;
         }
         public async void SetCurrentDisplayGames(string value)

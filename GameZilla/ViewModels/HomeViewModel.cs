@@ -86,7 +86,17 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public void GotoFav(string obj)
     {
-        if(obj == "true") { }
+        if(obj == "true") {
+            try
+            {
+                var param = new NavigateToListGameParameter() { Id = "-1", typeListGame = TypeListGame.Favorite };
+                _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
         else
         {
             CurrentDisplayList.Clear();
@@ -96,7 +106,18 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public void GotoLast(string obj)
     {
-        if (obj == "true") { }
+        if (obj == "true")
+        {
+            try
+            {
+                var param = new NavigateToListGameParameter() { Id = "-1", typeListGame = TypeListGame.LastPlayed };
+                _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
         else
         {
             CurrentDisplayList.Clear();
@@ -106,7 +127,18 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public void GotoNoPlay(string obj)
     {
-        if (obj == "true") { }
+        if (obj == "true")
+        {
+            try
+            {
+                var param = new NavigateToListGameParameter() { Id = "-1", typeListGame = TypeListGame.NeverPlayed };
+                _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
         else
         {
             CurrentDisplayList.Clear();
@@ -116,9 +148,26 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public void GoSystems()
     {
+        try
+        {
+            _navigationService.NavigateTo(typeof(ContainerViewModel).FullName!);
+        }
+        catch (Exception ex)
+        {
+            //throw;
+        }
     }
     public void GoAllGames()
     {
+        try
+        {
+            var param = new NavigateToListGameParameter() { Id = "-1", typeListGame = TypeListGame.AllGames };
+            _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
+        }
+        catch (Exception ex)
+        {
+            //throw;
+        }
     }
     public void GoSettings()
     {

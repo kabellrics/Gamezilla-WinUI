@@ -88,8 +88,6 @@ public partial class App : Application
             services.AddSingleton<SettingsPage>();
             services.AddSingleton<ItemDetailViewModel>();
             services.AddSingleton<ItemDetailPage>();
-            services.AddSingleton<ItemListDetailViewModel>();
-            services.AddSingleton<ItemListDetailPage>();
             services.AddSingleton<ItemListViewModel>();
             services.AddSingleton<ItemListPage>();
             services.AddSingleton<ContainerViewModel>();
