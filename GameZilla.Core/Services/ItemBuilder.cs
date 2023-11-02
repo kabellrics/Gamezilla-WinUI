@@ -14,7 +14,7 @@ public class ItemBuilder : IItemBuilder
         Item item = new Item();
         item.Name = exe.Name;
         item.Id = exe.Id;
-        item.Favori = exe.Favorite == "true" ? true : false;
+        item.Favori = exe.Favorite == "1" ? true : false;
         item.NbStart = exe.NbStart;
         item.LastStart = exe.LastStartDate;
         item.Cover = exe.Cover;

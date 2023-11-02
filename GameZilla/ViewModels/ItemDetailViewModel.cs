@@ -14,6 +14,9 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     private readonly IPageSkinService _pageSkinService;
     private readonly IItemBuilder _itemBuilder;
     private readonly IExecutableService _executableService;
+    private ICommand _ToggleFavoriteCommand;
+    public ICommand ToggleFavoriteCommand => _ToggleFavoriteCommand ?? (_ToggleFavoriteCommand = new RelayCommand(ToggleFavorite));
+
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
 
@@ -39,6 +42,10 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
         _pageSkinService = pageSkinService;
         _itemBuilder = itemBuilder;
         _executableService = executableService;
+    }
+    private void ToggleFavorite()
+    {
+        Item.Favori = Item.Favori  ? false : true;
     }
     public async void OnNavigatedTo(object parameter)
     {

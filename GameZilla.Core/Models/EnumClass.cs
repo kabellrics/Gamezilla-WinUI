@@ -21,4 +21,9 @@ public enum ParamEnum
     EmulateurPlateformeId = 11,
     ApplicationPlateformeId = 12,
     SteamVideoPath=13,
+    SteamGridDBAPIKey=14,
+    AssetSplashScreenFolder=15,
+    AssetSplashVideosFolder=16,
+    AssetVideoWaitFolder=17,
+    AssetBackgroundFolder=18,
 }

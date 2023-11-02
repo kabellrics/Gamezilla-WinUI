@@ -116,6 +116,14 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
     }
     public async void GoToDetail(string Id)
     {
-        _navigationService.NavigateTo(typeof(ItemDetailViewModel).FullName!, Id);
+        try
+        {
+
+            _navigationService.NavigateTo(typeof(ItemDetailViewModel).FullName!, Id);
+        }
+        catch (Exception ex)
+        {
+            //throw;
+        }
     }
 }

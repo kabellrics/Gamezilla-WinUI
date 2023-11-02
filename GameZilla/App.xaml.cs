@@ -82,6 +82,7 @@ public partial class App : Application
             services.AddSingleton<IPageSkinService, PageSkinService>();
             services.AddSingleton<IItemBuilder, ItemBuilder>();
             services.AddSingleton<IContainerBuilder, ContainerBuilder>();
+            services.AddSingleton<IAssetService, AssetService>();
 
             // Views and ViewModels
             services.AddSingleton<SettingsViewModel>();

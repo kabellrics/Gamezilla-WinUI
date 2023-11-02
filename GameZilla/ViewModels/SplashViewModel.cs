@@ -6,6 +6,7 @@ using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
+using GameZilla.Services;
 using Microsoft.UI.Dispatching;
 using Windows.Storage;
 
@@ -19,6 +20,7 @@ public partial class SplashViewModel : ObservableRecipient
     private readonly IOriginGameFinderService originGameFinderService;
     private readonly IEpicGameFinderService epicGameFinderService;
     private readonly INavigationService _navigationService;
+    private readonly IAssetService _assetService;
     private ICommand _LoadedCommand;
 
     private Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
@@ -49,7 +51,8 @@ public partial class SplashViewModel : ObservableRecipient
     }
     public ICommand LoadedCommand => _LoadedCommand ?? (_LoadedCommand = new RelayCommand(Loaded));
 
-    public SplashViewModel(INavigationService navigationService,IExecutableService executableService, ISteamGameFinderService steamGameFinderService, IOriginGameFinderService originGameFinderService, IEpicGameFinderService epicGameFinderService)
+    public SplashViewModel(INavigationService navigationService,IExecutableService executableService, ISteamGameFinderService steamGameFinderService,
+        IOriginGameFinderService originGameFinderService, IEpicGameFinderService epicGameFinderService, IAssetService assetService)
     {
         LabelTraitement = "Traitement en cours";
         _navigationService = navigationService;
@@ -57,6 +60,7 @@ public partial class SplashViewModel : ObservableRecipient
         this.steamGameFinderService = steamGameFinderService;
         this.originGameFinderService = originGameFinderService;
         this.epicGameFinderService = epicGameFinderService;
+        _assetService = assetService;
         IsFirstVideoFinish = false;
         IsLoadingFinish = false;
         ShowContinuMessage = false;

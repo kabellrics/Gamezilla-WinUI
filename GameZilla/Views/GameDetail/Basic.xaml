@@ -7,8 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:helper="using:GameZilla.Helpers"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <helper:FavoriteToSymbolConverter x:Key="FavoriteToSymbolConverter"></helper:FavoriteToSymbolConverter>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -40,6 +43,36 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="{x:Bind ViewModel.Item.Logo}" Stretch="Uniform"/>
+                <Grid Grid.Column="1">
+                    <StackPanel Orientation="Vertical" Padding="25">
+                        <Button CornerRadius="10" Background="Green" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox>
+                                    <TextBlock Text="Jouer " FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                                </Viewbox>
+                                <Viewbox>
+                                    <FontIcon Glyph="&#xE768;" FontSize="40" Foreground="White" HorizontalAlignment="Right" />
+                                </Viewbox>
+                            </StackPanel>
+                        </Button>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent">
+                                <Viewbox>
+                                    <FontIcon FontSize="40" Glyph="{x:Bind ViewModel.Item.Favori, Mode=OneWay, Converter={StaticResource FavoriteToSymbolConverter}}" />
+                                </Viewbox>
+                            </Button>
+                            <TextBlock Text="Favori" FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Nombre de lancement: " FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="{x:Bind ViewModel.Item.NbStart}" FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Dernier lancement :" FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="{x:Bind ViewModel.Item.LastStart}" FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
         <Button Grid.Row="0" Margin="25 0 0 0" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.GoBackCommand}">
