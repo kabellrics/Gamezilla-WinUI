@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameZilla.Contracts.Services;
 using GameZilla.Core.Contracts.Services;
+using Windows.Storage;
 
 namespace GameZilla.Services;
 public class AssetService : IAssetService
@@ -78,5 +79,62 @@ public class AssetService : IAssetService
     public async void SetBackgroundFolder(string value)
     {
         await _options.SaveSettingAsync<string>("backgroundfolder", value);
+    }
+
+    public async Task<StorageFile> GetRandomIntroVidéo()
+    {
+        var folderpath = await GetSplashvideoFolder();
+        StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(folderpath);
+        Random random = new Random();
+        IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
+        if (introVideos.Count > 0)
+        {
+            int randomIntroVideoIndex = random.Next(introVideos.Count);
+            StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
+            return randomIntroVideo;
+        }
+        return null;
+    }
+    public async Task<StorageFile> GetRandomSplashscreen()
+    {
+        var folderpath = await GetSplashscreenFolder();
+        StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(folderpath);
+        Random random = new Random();
+        IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
+        if (introVideos.Count > 0)
+        {
+            int randomIntroVideoIndex = random.Next(introVideos.Count);
+            StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
+            return randomIntroVideo;
+        }
+        return null;
+    }
+    public async Task<StorageFile> GetRandomBackground()
+    {
+        var folderpath = await GetBackgroundFolder();
+        StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(folderpath);
+        Random random = new Random();
+        IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
+        if (introVideos.Count > 0)
+        {
+            int randomIntroVideoIndex = random.Next(introVideos.Count);
+            StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
+            return randomIntroVideo;
+        }
+        return null;
+    }
+    public async Task<IEnumerable<StorageFile>> GetWaitingVideo()
+    {
+        var result = new List<StorageFile>();
+        var folderpath = await GetVideoWaitFolder();
+        StorageFolder waitingFolder = await StorageFolder.GetFolderFromPathAsync(folderpath);
+        Random random = new Random();
+        // Récupérer tous les fichiers vidéos du dossier "Waiting"
+        IReadOnlyList<StorageFile> waitingVideos = await waitingFolder.GetFilesAsync();
+        if (waitingVideos.Count > 0)
+        {
+            return waitingVideos.OrderBy(v => random.Next()).ToList();
+        }
+        return null;
     }
 }

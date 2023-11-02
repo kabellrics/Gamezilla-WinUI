@@ -31,6 +31,12 @@ public partial class SplashViewModel : ObservableRecipient
         get => _labelTraitement;
         set => SetProperty(ref _labelTraitement, value);
     }
+    private StorageFile _splashscreen;
+    public StorageFile Splashscreen
+    {
+        get => _splashscreen;
+        set => SetProperty(ref _splashscreen, value);
+    }
     private bool _isLoadingFinish;
     public bool IsLoadingFinish
     {
@@ -79,70 +85,77 @@ public partial class SplashViewModel : ObservableRecipient
     }
     public async IAsyncEnumerable<StorageFile> GetVideoIntro()
     {
-        string fullPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath,"Assets");
-        string introPath = Path.Combine(fullPath, "Intro");
-        string waitingPath = Path.Combine(introPath, "Waiting");
-        StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(introPath);
-        StorageFolder waitingFolder = await StorageFolder.GetFolderFromPathAsync(waitingPath);
-        Random random = new Random();
+        yield return await _assetService.GetRandomIntroVidéo();
+        foreach (var item in await _assetService.GetWaitingVideo())
+            yield return item;
 
-        // Récupérer tous les fichiers vidéos du dossier "Intro"
-        IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
-
-        // Sélectionner une vidéo aléatoire du dossier "Intro" (s'il y en a)
-        if (introVideos.Count > 0)
-        {
-            int randomIntroVideoIndex = random.Next(introVideos.Count);
-            StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
-            yield return randomIntroVideo;
-        }
-
-        // Récupérer tous les fichiers vidéos du dossier "Waiting"
-        IReadOnlyList<StorageFile> waitingVideos = await waitingFolder.GetFilesAsync();
-
-        // Mélanger les fichiers vidéos du dossier "Waiting" dans un ordre aléatoire
-        waitingVideos = waitingVideos.OrderBy(v => random.Next()).ToList();
-
-        // Ajouter les fichiers vidéos du dossier "Waiting" à la séquence
-        foreach (var video in waitingVideos)
-        {
-            yield return video;
-        }
     }
-    public async Task<IEnumerable<StorageFile>> GetVideoIntroAsync()
-    {
-        var result = new List<StorageFile>();
-        string fullPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath,"Assets");
-        string introPath = Path.Combine(fullPath, "Intro");
-        string waitingPath = Path.Combine(introPath, "Waiting");
-        StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(introPath);
-        StorageFolder waitingFolder = await StorageFolder.GetFolderFromPathAsync(waitingPath);
-        Random random = new Random();
+    //public async IAsyncEnumerable<StorageFile> GetVideoIntro()
+    //{
+    //    string fullPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath,"Assets");
+    //    string introPath = Path.Combine(fullPath, "Intro");
+    //    string waitingPath = Path.Combine(introPath, "Waiting");
+    //    StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(introPath);
+    //    StorageFolder waitingFolder = await StorageFolder.GetFolderFromPathAsync(waitingPath);
+    //    Random random = new Random();
 
-        // Récupérer tous les fichiers vidéos du dossier "Intro"
-        IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
+    //    // Récupérer tous les fichiers vidéos du dossier "Intro"
+    //    IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
 
-        // Sélectionner une vidéo aléatoire du dossier "Intro" (s'il y en a)
-        if (introVideos.Count > 0)
-        {
-            int randomIntroVideoIndex = random.Next(introVideos.Count);
-            StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
-            result.Add(randomIntroVideo);
-        }
+    //    // Sélectionner une vidéo aléatoire du dossier "Intro" (s'il y en a)
+    //    if (introVideos.Count > 0)
+    //    {
+    //        int randomIntroVideoIndex = random.Next(introVideos.Count);
+    //        StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
+    //        yield return randomIntroVideo;
+    //    }
 
-        // Récupérer tous les fichiers vidéos du dossier "Waiting"
-        IReadOnlyList<StorageFile> waitingVideos = await waitingFolder.GetFilesAsync();
+    //    // Récupérer tous les fichiers vidéos du dossier "Waiting"
+    //    IReadOnlyList<StorageFile> waitingVideos = await waitingFolder.GetFilesAsync();
 
-        // Mélanger les fichiers vidéos du dossier "Waiting" dans un ordre aléatoire
-        waitingVideos = waitingVideos.OrderBy(v => random.Next()).ToList();
+    //    // Mélanger les fichiers vidéos du dossier "Waiting" dans un ordre aléatoire
+    //    waitingVideos = waitingVideos.OrderBy(v => random.Next()).ToList();
 
-        // Ajouter les fichiers vidéos du dossier "Waiting" à la séquence
-        foreach (var video in waitingVideos)
-        {
-            result.Add(video);
-        }
-        return result;
-    }
+    //    // Ajouter les fichiers vidéos du dossier "Waiting" à la séquence
+    //    foreach (var video in waitingVideos)
+    //    {
+    //        yield return video;
+    //    }
+    //}
+    //public async Task<IEnumerable<StorageFile>> GetVideoIntroAsync()
+    //{
+    //    var result = new List<StorageFile>();
+    //    string fullPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath,"Assets");
+    //    string introPath = Path.Combine(fullPath, "Intro");
+    //    string waitingPath = Path.Combine(introPath, "Waiting");
+    //    StorageFolder introFolder = await StorageFolder.GetFolderFromPathAsync(introPath);
+    //    StorageFolder waitingFolder = await StorageFolder.GetFolderFromPathAsync(waitingPath);
+    //    Random random = new Random();
+
+    //    // Récupérer tous les fichiers vidéos du dossier "Intro"
+    //    IReadOnlyList<StorageFile> introVideos = await introFolder.GetFilesAsync();
+
+    //    // Sélectionner une vidéo aléatoire du dossier "Intro" (s'il y en a)
+    //    if (introVideos.Count > 0)
+    //    {
+    //        int randomIntroVideoIndex = random.Next(introVideos.Count);
+    //        StorageFile randomIntroVideo = introVideos[randomIntroVideoIndex];
+    //        result.Add(randomIntroVideo);
+    //    }
+
+    //    // Récupérer tous les fichiers vidéos du dossier "Waiting"
+    //    IReadOnlyList<StorageFile> waitingVideos = await waitingFolder.GetFilesAsync();
+
+    //    // Mélanger les fichiers vidéos du dossier "Waiting" dans un ordre aléatoire
+    //    waitingVideos = waitingVideos.OrderBy(v => random.Next()).ToList();
+
+    //    // Ajouter les fichiers vidéos du dossier "Waiting" à la séquence
+    //    foreach (var video in waitingVideos)
+    //    {
+    //        result.Add(video);
+    //    }
+    //    return result;
+    //}
     public void IntroVideoFinish()
     {
         IsFirstVideoFinish = true;
@@ -159,6 +172,7 @@ public partial class SplashViewModel : ObservableRecipient
 
     private async void InitStoreData()
     {
+        Splashscreen = await _assetService.GetRandomSplashscreen();
         var task = LoadStoreGamesAsync();
         await Task.WhenAll(task);
         IsLoadingFinish = true;

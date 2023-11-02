@@ -1,4 +1,6 @@
-﻿namespace GameZilla.Services;
+﻿using Windows.Storage;
+
+namespace GameZilla.Services;
 
 public interface IAssetService
 {
@@ -10,4 +12,8 @@ public interface IAssetService
     void SetSplashscreenFolder(string value);
     void SetSplashvideoFolder(string value);
     void SetVideoWaitFolder(string value);
+    Task<StorageFile> GetRandomIntroVidéo();
+    Task<StorageFile> GetRandomSplashscreen();
+    Task<StorageFile> GetRandomBackground();
+    Task<IEnumerable<StorageFile>> GetWaitingVideo();
 }

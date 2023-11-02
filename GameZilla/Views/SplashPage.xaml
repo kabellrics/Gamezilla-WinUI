@@ -25,7 +25,8 @@
         </Grid.ColumnDefinitions>
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2">
             <Border.Background>
-                <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg">
+                <!--<ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg">-->
+                <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Splashscreen,Mode=OneWay}">
                 </ImageBrush>
             </Border.Background>
             <Viewbox Stretch="Fill">               
