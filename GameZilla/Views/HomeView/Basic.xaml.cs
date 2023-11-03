@@ -81,9 +81,11 @@ namespace GameZilla.Views.HomeView
             }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void gridview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var newItem = e.AddedItems.FirstOrDefault();
+            if(newItem != null)
+            gridview.SelectedItem = newItem;
         }
     }
 }

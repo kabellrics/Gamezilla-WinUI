@@ -24,17 +24,17 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <FlipView Grid.Row="0" IsTabStop="False" IsTapEnabled="False" Background="Transparent" x:Name="fliphero"
+            <!--<FlipView Grid.Row="0" IsEnabled="False" IsTabStop="False" IsTapEnabled="False" Background="Transparent" x:Name="fliphero"
                       SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <FlipView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid CornerRadius="25">
-                            <Image Grid.Row="0" Source="{Binding Hero}" Stretch="Fill"></Image>
+                    <DataTemplate>-->
+            <Grid CornerRadius="25" Grid.Row="0">
+                <Image Grid.Row="0" Source="{Binding SelectedItem.Hero,ElementName=itemListView,Mode=OneWay}" Stretch="Fill"></Image>
                         </Grid>
-                    </DataTemplate>
+                    <!--</DataTemplate>
                 </FlipView.ItemTemplate>
-            </FlipView>
+            </FlipView>-->
             <ListView Grid.Row="1" x:Name="itemListView" SelectionMode="Single" Margin="0"
                       ScrollViewer.HorizontalScrollMode="Enabled"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -42,6 +42,7 @@
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       IsItemClickEnabled="True"
                       ItemClick="itemListView_ItemClick"
+                      SelectionChanged="itemListView_SelectionChanged"
                       SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <ListView.ItemsPanel>
@@ -53,7 +54,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10">
-                            <Image Source="{Binding Cover}" Stretch="Fill"/>
+                            <Image Source="{Binding Cover,Mode=OneWay}" Stretch="Fill"/>
                         </controls:ConstrainedBox>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -30,11 +30,21 @@ public sealed partial class Hero : UserControl
         this.ViewModel = App.GetService<ItemListViewModel>();
         this.DataContext = ViewModel;
         this.InitializeComponent();
+        itemListView.SelectedIndex = 0;
     }
 
     private void itemListView_ItemClick(object sender, ItemClickEventArgs e)
     {
         var item = itemListView.SelectedItem as ObsItem;
-        ViewModel.GoToDetail(item.Id);
+        if (item != null)
+        {
+            ViewModel.GoToDetail(item.Id); 
+        }
+    }
+
+    private void itemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var newItem = e.AddedItems.FirstOrDefault();
+        itemListView.SelectedItem = newItem;
     }
 }

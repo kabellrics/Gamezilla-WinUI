@@ -9,7 +9,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Loaded="UserControl_Loaded">
+    mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <!--<Border>
@@ -22,6 +22,9 @@
                   ItemsSource="{x:Bind ViewModel.Menus}"
                   HorizontalAlignment="Center" VerticalAlignment="Center"
                   Margin="5"
+                  IsItemClickEnabled="True"
+                  ItemClick="gridview_ItemClick"
+                    SelectionChanged="gridview_SelectionChanged"
                   IsDoubleTapEnabled="True"
                   DoubleTapped="gridview_DoubleTapped"
                   KeyDown="gridview_KeyDown">

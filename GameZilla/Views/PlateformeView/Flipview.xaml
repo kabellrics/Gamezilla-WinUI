@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <FlipView Grid.Row="0" Grid.RowSpan="2" ItemsSource="{x:Bind ViewModel.CurrentDisplayList}"
+        <FlipView Grid.Row="0" Grid.RowSpan="2" ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=OneWay}"
                   Tapped="FlipView_Tapped"
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <FlipView.ItemTemplate>
@@ -25,8 +25,8 @@
                             <RowDefinition Height="2*"></RowDefinition>
                             <RowDefinition Height="2*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="0" Grid.RowSpan="3" Source="{x:Bind Fanart}" Stretch="Fill"/>
-                        <Image Grid.Row="1" Source="{x:Bind Logo}" Stretch="Uniform" HorizontalAlignment="Center"/>
+                        <Image Grid.Row="0" Grid.RowSpan="3" Source="{x:Bind Fanart,Mode=OneWay}" Stretch="Fill"/>
+                        <Image Grid.Row="1" Source="{x:Bind Logo,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </FlipView.ItemTemplate>
