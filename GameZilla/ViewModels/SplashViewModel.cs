@@ -207,6 +207,7 @@ public partial class SplashViewModel : ObservableRecipient
 
     private async Task LoadOriginGamesAsync()
     {
+        var eaApplistgame = await originGameFinderService.GetEADesktopGameAsync();
         var origingames = await originGameFinderService.GetOriginGameAsync();
         if (origingames != null)
         {

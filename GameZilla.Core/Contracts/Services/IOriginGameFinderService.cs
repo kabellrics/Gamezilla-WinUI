@@ -5,4 +5,5 @@ public interface IOriginGameFinderService
 {
     IAsyncEnumerable<Executable> GetOriginGame();
     Task<IEnumerable<Executable>> GetOriginGameAsync();
+    Task<IEnumerable<Executable>> GetEADesktopGameAsync();
 }

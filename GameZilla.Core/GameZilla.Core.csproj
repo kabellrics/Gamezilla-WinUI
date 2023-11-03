@@ -8,12 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Common" Version="8.2.1" />
+    <PackageReference Include="GameFinder.StoreHandlers.EADesktop" Version="4.0.0" />
     <PackageReference Include="Gameloop.Vdf" Version="0.6.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Origin\" />
   </ItemGroup>
 </Project>

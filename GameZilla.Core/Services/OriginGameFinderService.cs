@@ -6,10 +6,15 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using GameFinder.StoreHandlers.EADesktop.Crypto.Windows;
+using GameFinder.StoreHandlers.EADesktop;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
 using GameZilla.Core.Models.Origin;
 using Newtonsoft.Json;
+using NexusMods.Paths;
+using GameFinder.Common;
+using System.Xml.Serialization;
 
 namespace GameZilla.Core.Services;
 public class OriginGameFinderService : IOriginGameFinderService
@@ -100,6 +105,85 @@ public class OriginGameFinderService : IOriginGameFinderService
             }
         }
         return result;
+    }
+
+    //public async Task<IEnumerable<Executable>> GetEADesktopGameAsync()
+    public async Task<IEnumerable<Executable>> GetEADesktopGameAsync()
+    {
+        var resultlist = new List<Executable>();
+        var handler = new EADesktopHandler(FileSystem.Shared, new HardwareInfoProvider());
+        var results = handler.FindAllGames();
+        var gamesfind = new List<EADesktopGame>();
+        foreach (var result in results)
+        {
+            // using the switch method
+            result.Switch(game =>
+            {
+                Console.WriteLine($"Found {game}");
+            }, error =>
+            {
+                Console.WriteLine(error);
+            });
+
+            // using the provided extension functions
+            if (result.TryGetGame(out var game))
+            {
+                Console.WriteLine($"Found {game}");
+                gamesfind.Add(game);
+            }
+            else
+            {
+                Console.WriteLine(result.AsError());
+            }
+        }
+        if(gamesfind.Count > 0)
+        {
+            foreach (var item in gamesfind)
+            {
+                var ManifestgamePath = Path.Combine(item.BaseInstallPath.GetFullPath(), "__Installer", "installerdata.xml");
+                XmlSerializer serializer = new XmlSerializer(typeof(DiPManifest));
+                try
+                {
+                    using (FileStream fs = new FileStream(ManifestgamePath, FileMode.Open))
+                    {
+                        var ManifestContent = (DiPManifest)serializer.Deserialize(fs);
+                        var exe = new Executable();
+                        exe.Name = ManifestContent.GameTitles.GameTitle.FirstOrDefault(x => x.Locale == "fr_FR").Text;
+                        //exe.Name = dipManifest.gameTitles.gameTitle.FirstOrDefault(x => x.Locale == "fr_FR")?.Value;
+                        var notrialexe = ManifestContent.Runtime.Launcher.FirstOrDefault(x => x.Trial == 0);
+                        //var notrialexe = dipManifest.runtime.launcher.FirstOrDefault(x => x.trial == 0);
+                        exe.Path = Path.Combine(item.BaseInstallPath.GetFullPath(), getExeName(notrialexe.FilePath));
+                        exe.StoreId = item.EADesktopGameId.Value;
+                        resultlist.Add(exe);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                }
+            }
+        }
+        return resultlist;
+    }
+
+    private string getExeName(string path)
+    {
+        int indexOfBracket = path.IndexOf("]");
+
+        if (indexOfBracket >= 0)
+        {
+            // Extraire le texte après "]"
+            string textAfterBracket = path.Substring(indexOfBracket + 1);
+
+            // Maintenant, textAfterBracket contient "bfv.exe"
+            return textAfterBracket;
+        }
+        else
+        {
+            // La chaîne d'entrée ne contient pas de "]"
+            return path;
+        }
+
     }
     private OriginGame GetGameLocalData(string gameId)
     {
