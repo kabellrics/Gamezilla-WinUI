@@ -140,26 +140,30 @@ public class OriginGameFinderService : IOriginGameFinderService
         {
             foreach (var item in gamesfind)
             {
-                var ManifestgamePath = Path.Combine(item.BaseInstallPath.GetFullPath(), "__Installer", "installerdata.xml");
-                XmlSerializer serializer = new XmlSerializer(typeof(DiPManifest));
-                try
+                if (!await executableService.ExistinDatabase(item.EADesktopGameId.Value))
                 {
-                    using (FileStream fs = new FileStream(ManifestgamePath, FileMode.Open))
+                    var ManifestgamePath = Path.Combine(item.BaseInstallPath.GetFullPath(), "__Installer", "installerdata.xml");
+                    XmlSerializer serializer = new XmlSerializer(typeof(DiPManifest));
+                    try
                     {
-                        var ManifestContent = (DiPManifest)serializer.Deserialize(fs);
-                        var exe = new Executable();
-                        exe.Name = ManifestContent.GameTitles.GameTitle.FirstOrDefault(x => x.Locale == "fr_FR").Text;
-                        //exe.Name = dipManifest.gameTitles.gameTitle.FirstOrDefault(x => x.Locale == "fr_FR")?.Value;
-                        var notrialexe = ManifestContent.Runtime.Launcher.FirstOrDefault(x => x.Trial == 0);
-                        //var notrialexe = dipManifest.runtime.launcher.FirstOrDefault(x => x.trial == 0);
-                        exe.Path = Path.Combine(item.BaseInstallPath.GetFullPath(), getExeName(notrialexe.FilePath));
-                        exe.StoreId = item.EADesktopGameId.Value;
-                        resultlist.Add(exe);
+                        using (FileStream fs = new FileStream(ManifestgamePath, FileMode.Open))
+                        {
+                            var ManifestContent = (DiPManifest)serializer.Deserialize(fs);
+                            var exe = new Executable();
+                            exe.Name = ManifestContent.gameTitles.FirstOrDefault(x => x.locale == "fr_FR").Value;
+                            //exe.Name = dipManifest.gameTitles.gameTitle.FirstOrDefault(x => x.Locale == "fr_FR")?.Value;
+                            var notrialexe = ManifestContent.runtime.FirstOrDefault(x => x.trial == 0);
+                            //var notrialexe = dipManifest.runtime.launcher.FirstOrDefault(x => x.trial == 0);
+                            exe.Path = $"{item.BaseInstallPath.GetFullPath()}/{getExeName(notrialexe.filePath)}";
+                            exe.StoreId = item.EADesktopGameId.Value;
+                            exe.PlateformeId = await parameterService.GetParameterValue(ParamEnum.OriginPlateformeId);
+                            resultlist.Add(exe);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    //throw;
+                    catch (Exception ex)
+                    {
+                        //throw;
+                    } 
                 }
             }
         }
