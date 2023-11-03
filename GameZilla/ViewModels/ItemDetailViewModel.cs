@@ -4,7 +4,9 @@ using CommunityToolkit.Mvvm.Input;
 using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
+using GameZilla.Services;
 using GameZilla.ViewModels.Object;
+using Windows.Storage;
 
 namespace GameZilla.ViewModels;
 
@@ -14,6 +16,7 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     private readonly IPageSkinService _pageSkinService;
     private readonly IItemBuilder _itemBuilder;
     private readonly IExecutableService _executableService;
+    private readonly IAssetService _assetService;
     private ICommand _ToggleFavoriteCommand;
     public ICommand ToggleFavoriteCommand => _ToggleFavoriteCommand ?? (_ToggleFavoriteCommand = new RelayCommand(ToggleFavorite));
 
@@ -36,12 +39,19 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
         get => _item;
         set => SetProperty(ref _item, value);
     }
-    public ItemDetailViewModel(INavigationService navigationService, IPageSkinService pageSkinService, IItemBuilder itemBuilder, IExecutableService executableService)
+    private StorageFile _bck;
+    public StorageFile Bck
+    {
+        get => _bck;
+        set => SetProperty(ref _bck, value);
+    }
+    public ItemDetailViewModel(INavigationService navigationService, IPageSkinService pageSkinService, IItemBuilder itemBuilder, IExecutableService executableService,IAssetService assetService)
     {
         _navigationService = navigationService;
         _pageSkinService = pageSkinService;
         _itemBuilder = itemBuilder;
         _executableService = executableService;
+        _assetService = assetService;
     }
     private void ToggleFavorite()
     {
@@ -50,6 +60,7 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     public async void OnNavigatedTo(object parameter)
     {
         Display = await _pageSkinService.GetCurrentDisplayGameDetail();
+        Bck = await _assetService.GetRandomBackground();
         if (parameter != null)
         {
             var currentexe = await _executableService.GetExecutablesByID(parameter.ToString());

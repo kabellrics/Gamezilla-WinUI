@@ -72,7 +72,7 @@ public class AssetService : IAssetService
         {
             value = Path.Combine(GamezillaDocFolder, "Background");
         }
-        SetVideoWaitFolder(value);
+        SetBackgroundFolder(value);
         Directory.CreateDirectory(value);
         return value;
     }

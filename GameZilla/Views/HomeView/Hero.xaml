@@ -12,9 +12,9 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid.Background>
+        <!--<Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/splash.jpg"></ImageBrush>
-        </Grid.Background>
+        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
             <RowDefinition Height="1*"/>

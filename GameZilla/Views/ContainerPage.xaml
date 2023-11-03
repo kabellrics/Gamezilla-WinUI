@@ -24,6 +24,9 @@
         </Style>
     </Page.Resources>
     <Grid x:Name="ContentArea">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Bck.Path,Mode=OneWay}"></ImageBrush>
+        </Grid.Background>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ContainerDisplayState">
                 <VisualState x:Name="Flip">
@@ -38,7 +41,14 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <ContentControl x:Name="contentcontrol" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*">
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0">
+            <Rectangle Fill="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" Opacity="0.8" />
+        </Border>
+        <ContentControl Grid.Row="0" x:Name="contentcontrol" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource ContentStyleSelector}" Content="{Binding}" DataContext="{x:Bind ViewModel}">
         </ContentControl>
     </Grid>
 </Page>

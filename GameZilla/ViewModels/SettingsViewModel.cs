@@ -8,10 +8,11 @@ using CommunityToolkit.Mvvm.Input;
 using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Helpers;
-
+using GameZilla.Services;
 using Microsoft.UI.Xaml;
 
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace GameZilla.ViewModels;
 
@@ -20,6 +21,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly IThemeSelectorService _themeSelectorService;
     private readonly INavigationService _navigationService;
     private readonly IPageSkinService _pageSkinService;
+    private readonly IAssetService _assetService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
 
@@ -79,11 +81,17 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             _pageSkinService.SetCurrentDisplayGameDetail(value);
         }
     }
+    private StorageFile _bck;
+    public StorageFile Bck
+    {
+        get => _bck;
+        set => SetProperty(ref _bck, value);
+    }
     public ObservableCollection<string> homedisplays;
     public ObservableCollection<string> sysdisplays;
     public ObservableCollection<string> gamesdisplays;
     public ObservableCollection<string> gamedetaildisplays;
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService)
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IAssetService assetService)
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
@@ -100,6 +108,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             });
         _navigationService = navigationService;
         _pageSkinService = pageSkinService;
+        _assetService = assetService;
     }
 
     private static string GetVersionDescription()
@@ -121,6 +130,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     }
     public async void OnNavigatedTo(object parameter)
     {
+        Bck = await _assetService.GetRandomBackground();
         homedisplays = new ObservableCollection<string>();
         foreach(var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
         Home = await _pageSkinService.GetCurrentDisplayHome();

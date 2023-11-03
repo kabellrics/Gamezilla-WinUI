@@ -11,10 +11,16 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Bck.Path,Mode=OneWay}"></ImageBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.RowSpan="2">
+            <Rectangle Fill="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" Opacity="0.8" />
+        </Border>
         <StackPanel Orientation="Horizontal">
             <Button  Margin="25 0 0 0" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.GoBackCommand}">
                 <SymbolIcon Symbol="Back" />

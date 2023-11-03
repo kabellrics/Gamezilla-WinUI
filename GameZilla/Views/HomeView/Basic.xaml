@@ -12,11 +12,11 @@
     mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Loaded="UserControl_Loaded">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Border>
+        <!--<Border>
             <Border.Background>
                 <ImageBrush ImageSource="ms-appx:///Assets/splash.jpg" Opacity="0.2"></ImageBrush> 
             </Border.Background>
-        </Border>
+        </Border>-->
         <GridView x:Name="gridview" SelectionMode="Single"
                   IsTabStop="True"
                   ItemsSource="{x:Bind ViewModel.Menus}"

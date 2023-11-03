@@ -8,7 +8,9 @@ using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
+using GameZilla.Services;
 using GameZilla.ViewModels.Object;
+using Windows.Storage;
 
 namespace GameZilla.ViewModels;
 
@@ -18,6 +20,7 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
     private readonly IPageSkinService _pageSkinService;
     private readonly IItemBuilder _itemBuilder;
     private readonly IExecutableService _executableService;
+    private readonly IAssetService _assetService;
     private readonly IPlateformeService _plateformeService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
@@ -38,20 +41,29 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         get => _selectedIndex;
         set => SetProperty(ref _selectedIndex, value);
     }
+    private StorageFile _bck;
+    public StorageFile Bck
+    {
+        get => _bck;
+        set => SetProperty(ref _bck, value);
+    }
     public ObservableCollection<ObsItem> CurrentDisplayList;
 
-    public ItemListViewModel(INavigationService navigationService, IPageSkinService pageSkinService, IItemBuilder itemBuilder, IExecutableService executableService, IPlateformeService plateformeService)
+    public ItemListViewModel(INavigationService navigationService, IPageSkinService pageSkinService,
+        IItemBuilder itemBuilder, IExecutableService executableService, IPlateformeService plateformeService, IAssetService assetService)
     {
         _navigationService = navigationService;
         _pageSkinService = pageSkinService;
         _itemBuilder = itemBuilder;
         _executableService = executableService;
         _plateformeService = plateformeService;
+        _assetService = assetService;
     }
 
     public async void OnNavigatedTo(object parameter)
     {
         Display = await _pageSkinService.GetCurrentDisplayGames();
+        Bck = await _assetService.GetRandomBackground();
         CurrentDisplayList = new ObservableCollection<ObsItem>();
         if(parameter != null)
         {

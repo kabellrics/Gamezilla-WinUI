@@ -7,8 +7,10 @@ using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
 using GameZilla.FrontModel;
+using GameZilla.Services;
 using GameZilla.ViewModels.Object;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Storage;
 
 namespace GameZilla.ViewModels;
 
@@ -17,6 +19,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IExecutableService _executableService;
     private readonly IPageSkinService _pageSkinService;
+    private readonly IAssetService _assetService;
     private readonly IItemBuilder _itemBuilder;
     private ICommand _LoadedCommand;
     private ICommand _GotoFavCommand;
@@ -41,6 +44,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     public ICommand ShutdownCommand => _ShutdownCommand ?? (_ShutdownCommand = new RelayCommand(Shutdown));
     public ICommand ReStartCommand => _ReStartCommand ?? (_ReStartCommand = new RelayCommand(ReStart));
 
+    private StorageFile _bck;
+    public StorageFile Bck
+    {
+        get => _bck;
+        set => SetProperty(ref _bck, value);
+    }
     private String _display;
     public String Display
     {
@@ -58,11 +67,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<ObsItem> FavorisDisplayList;
     public ObservableCollection<ObsItem> LastPlayedDisplayList;
     public ObservableCollection<ObsItem> NeverPlayedDisplayList;
-    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, IItemBuilder itemBuilder)
+    public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, IItemBuilder itemBuilder,IAssetService assetService)
     {
         _navigationService = navigationService;
         _executableService = executableService;
         _pageSkinService = pageSkinService;
+        _assetService = assetService;
         Menus = new ObservableCollection<GamezillaMenuItem>();
         CurrentDisplayList = new ObservableCollection<ObsItem>();
         FavorisDisplayList = new ObservableCollection<ObsItem>();
@@ -78,6 +88,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     private async void InitData()
     {
         Display = await _pageSkinService.GetCurrentDisplayHome();
+        Bck = await _assetService.GetRandomBackground();
         Menus.Clear();
         Menus.Add(new GamezillaMenuItem() { Text = "Favoris", IconPath= "\uE735", ImagePath = @"ms-appx:///Assets/specificlogo/auto-favorites-fr.png", Command = GotoFavCommand });
         Menus.Add(new GamezillaMenuItem() { Text = "Derniers jeux lancés", IconPath= "\uE81C", ImagePath = @"ms-appx:///Assets/specificlogo/auto-lastplayed-fr.png", Command = GotoLastCommand });
