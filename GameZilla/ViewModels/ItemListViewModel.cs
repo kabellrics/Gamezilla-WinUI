@@ -29,6 +29,13 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
     {
         _navigationService.GoBack();
     }
+    private ICommand _GoHomeCommand;
+    public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
+
+    private void GoHome()
+    {
+        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
+    }
     private String _display;
     public String Display
     {
@@ -58,14 +65,20 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         _executableService = executableService;
         _plateformeService = plateformeService;
         _assetService = assetService;
+        CurrentDisplayList = new ObservableCollection<ObsItem>();
     }
 
-    public async void OnNavigatedTo(object parameter)
+    public void OnNavigatedTo(object parameter)
+    {
+        InitializeData(parameter);
+    }
+
+    public async void InitializeData(object parameter)
     {
         Display = await _pageSkinService.GetCurrentDisplayGames();
         Bck = await _assetService.GetRandomBackground();
-        CurrentDisplayList = new ObservableCollection<ObsItem>();
-        if(parameter != null)
+        CurrentDisplayList.Clear();
+        if (parameter != null)
         {
             var param = parameter as NavigateToListGameParameter;
             switch (param.typeListGame)
@@ -74,10 +87,11 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
                 case TypeListGame.Favorite: LoadFavGames(); break;
                 case TypeListGame.LastPlayed: LoadLastGames(); break;
                 case TypeListGame.NeverPlayed: LoadNevaGames(); break;
-                default: LoadPlateformeGames(param.Id);break;
+                default: LoadPlateformeGames(param.Id); break;
             }
         }
     }
+
     private async Task LoadAllGames()
     {
         CurrentDisplayList.Clear();

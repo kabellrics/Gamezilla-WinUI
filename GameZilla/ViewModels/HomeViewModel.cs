@@ -62,6 +62,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         get => _selectedIndex;
         set => SetProperty(ref _selectedIndex, value);
     }
+    private int _selectedMenuIndex;
+    public int SelectedMenuIndex
+    {
+        get => _selectedMenuIndex;
+        set => SetProperty(ref _selectedMenuIndex, value);
+    }
     public ObservableCollection<GamezillaMenuItem> Menus;
     public ObservableCollection<ObsItem> CurrentDisplayList;
     public ObservableCollection<ObsItem> FavorisDisplayList;
@@ -100,6 +106,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         Menus.Add(new GamezillaMenuItem() { Text = "Mettre en Veille", IconPath = "\uE708", ImagePath = @"ms-appx:///Assets/specificlogo/Veille.png", Command = SleepCommand });
         Menus.Add(new GamezillaMenuItem() { Text = "Redémarrage", IconPath = "\uF83E", ImagePath = @"ms-appx:///Assets/specificlogo/Redemarrer.png", Command = ReStartCommand });
         Menus.Add(new GamezillaMenuItem() { Text = "Eteindre", IconPath = "\uE7E8", ImagePath = @"ms-appx:///Assets/specificlogo/Shutdown.png", Command = ShutdownCommand });
+        SelectedMenuIndex = 0;
     }
     public void GotoFav(string obj)
     {
@@ -211,6 +218,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     }
     public async void OnNavigatedTo(object parameter)
     {
+        SelectedMenuIndex = 0;
         CurrentDisplayList.Clear();
         var favlist = await _executableService.GetExecutablesFavorite();
         foreach(var favitem in favlist)

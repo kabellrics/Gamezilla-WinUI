@@ -27,6 +27,13 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     {
         _navigationService.GoBack();
     }
+    private ICommand _GoHomeCommand;
+    public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
+
+    private void GoHome()
+    {
+        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
+    }
     private String _display;
     public String Display
     {
@@ -57,7 +64,12 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     {
         Item.Favori = Item.Favori  ? false : true;
     }
-    public async void OnNavigatedTo(object parameter)
+    public void OnNavigatedTo(object parameter)
+    {
+         InitializeData(parameter);
+    }
+
+    public async void InitializeData(object parameter)
     {
         Display = await _pageSkinService.GetCurrentDisplayGameDetail();
         Bck = await _assetService.GetRandomBackground();
@@ -67,6 +79,7 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
             Item = new ObsItem(_itemBuilder.FromExecutable(currentexe));
         }
     }
+
     public void OnNavigatedFrom()
     {
     }

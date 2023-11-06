@@ -12,18 +12,17 @@
     mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <!--<Border>
-            <Border.Background>
-                <ImageBrush ImageSource="ms-appx:///Assets/splash.jpg" Opacity="0.2"></ImageBrush> 
-            </Border.Background>
-        </Border>-->
         <GridView x:Name="gridview" SelectionMode="Single"
+                  AllowFocusOnInteraction="True"
+                  SingleSelectionFollowsFocus="True"
+                  XYFocusKeyboardNavigation="Enabled"
                   IsTabStop="True"
                   ItemsSource="{x:Bind ViewModel.Menus}"
                   HorizontalAlignment="Center" VerticalAlignment="Center"
                   Margin="5"
                   IsItemClickEnabled="True"
                   ItemClick="gridview_ItemClick"
+                  SelectedIndex="{x:Bind ViewModel.SelectedMenuIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     SelectionChanged="gridview_SelectionChanged"
                   IsDoubleTapEnabled="True"
                   DoubleTapped="gridview_DoubleTapped"

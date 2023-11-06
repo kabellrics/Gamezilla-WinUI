@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GameZilla.ViewModels;
 using GameZilla.ViewModels.Object;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -30,6 +31,30 @@ public sealed partial class Grid : UserControl
         this.ViewModel = App.GetService<ItemListViewModel>();
         this.DataContext = ViewModel;
         this.InitializeComponent();
+        SetFocusToFirstGridViewItem();
+    }
+
+    private void SetFocusToFirstGridViewItem()
+    {
+        GridViewItem gvi = this.StyledGrid.ContainerFromIndex(0) as GridViewItem;
+        if (gvi != null)
+        {
+            gvi.IsSelected = true;
+            gvi.Focus(FocusState.Programmatic);
+        }
+        else
+        {
+            var dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+            dispatcherQueue.TryEnqueue((Microsoft.UI.Dispatching.DispatcherQueuePriority)DispatcherQueuePriority.Low,
+                    () => {
+                        gvi = this.StyledGrid.ContainerFromIndex(0) as GridViewItem;
+                        if (gvi != null)
+                        {
+                            gvi.IsSelected = true;
+                            gvi.Focus(FocusState.Programmatic);
+                        }
+                    });
+        }
     }
 
     private void MaxItemsWrapGrid_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -8,6 +8,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:views="using:GameZilla.Views.GamesView"
     xmlns:viewmodel="using:GameZilla.ViewModels"
+    KeyDown="Page_KeyDown"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="Grid" x:DataType="viewmodel:ItemListViewModel">

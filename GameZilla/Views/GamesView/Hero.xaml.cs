@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GameZilla.ViewModels;
 using GameZilla.ViewModels.Object;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -31,6 +32,30 @@ public sealed partial class Hero : UserControl
         this.DataContext = ViewModel;
         this.InitializeComponent();
         itemListView.SelectedIndex = 0;
+        SetFocusToFirstGridViewItem();
+    }
+
+    private void SetFocusToFirstGridViewItem()
+    {
+        ListViewItem gvi = this.itemListView.ContainerFromIndex(0) as ListViewItem;
+        if (gvi != null)
+        {
+            gvi.IsSelected = true;
+            gvi.Focus(FocusState.Programmatic);
+        }
+        else
+        {
+            var dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+            dispatcherQueue.TryEnqueue((Microsoft.UI.Dispatching.DispatcherQueuePriority)DispatcherQueuePriority.Low,
+                    () => {
+                        gvi = this.itemListView.ContainerFromIndex(0) as ListViewItem;
+                        if (gvi != null)
+                        {
+                            gvi.IsSelected = true;
+                            gvi.Focus(FocusState.Programmatic);
+                        }
+                    });
+        }
     }
 
     private void itemListView_ItemClick(object sender, ItemClickEventArgs e)

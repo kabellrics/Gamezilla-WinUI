@@ -29,6 +29,14 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     {
         _navigationService.GoBack();
     }
+    
+    private ICommand _GoHomeCommand;
+    public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
+
+    private void GoHome()
+    {
+        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
+    }
 
 
     [ObservableProperty]

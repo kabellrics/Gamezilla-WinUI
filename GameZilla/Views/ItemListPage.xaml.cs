@@ -27,6 +27,18 @@ public sealed partial class ItemListPage : Page
     }
     private void UpdateVisulaState()
     {
-        var transit = VisualStateManager.GoToState(this, ViewModel.Display, false);
+        if (string.IsNullOrEmpty(ViewModel.Display))
+            VisualStateManager.GoToState(this, "Hero", false);
+        else
+            VisualStateManager.GoToState(this, ViewModel.Display, false);
+    }
+
+    private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.Back || e.Key == Windows.System.VirtualKey.Escape || e.Key == Windows.System.VirtualKey.GamepadB)
+        {
+            ViewModel.GoBackCommand.Execute(null);
+        }
+        else if (e.Key == Windows.System.VirtualKey.GamepadMenu) { ViewModel.GoHomeCommand.Execute(null); }
     }
 }

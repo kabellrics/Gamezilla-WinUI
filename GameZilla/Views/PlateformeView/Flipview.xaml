@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="using:GameZilla.ViewModels.Object"
+    Background="Red"
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -14,8 +15,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <FlipView Grid.Row="0" Grid.RowSpan="2" ItemsSource="{x:Bind ViewModel.CurrentDisplayList,Mode=OneWay}"
-                  Tapped="FlipView_Tapped"
+        <FlipView Grid.Row="0" Grid.RowSpan="2" ItemsSource="{x:Bind ViewModel.CurrentDisplayList}"
+                  Tapped="FlipView_Tapped" x:Name="flipview"
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <FlipView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:ObsContainer">

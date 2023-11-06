@@ -25,6 +25,13 @@ public partial class ContainerViewModel : ObservableRecipient, INavigationAware
     {
         _navigationService.GoBack();
     }
+    private ICommand _GoHomeCommand;
+    public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
+
+    private void GoHome()
+    {
+        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
+    }
     private String _display;
     public String Display
     {
@@ -47,19 +54,25 @@ public partial class ContainerViewModel : ObservableRecipient, INavigationAware
         _plateformeService = plateformeService;
         _assetService = assetService;
     }
-    public async void OnNavigatedTo(object parameter)
+    public void OnNavigatedTo(object parameter)
+    {
+        //InitializeData();
+    }
+
+    public async void InitializeData()
     {
         Display = await _pageSkinService.GetCurrentDisplaySystems();
         Bck = await _assetService.GetRandomBackground();
-        CurrentDisplayList = new ObservableCollection<ObsContainer>();
+        CurrentDisplayList.Clear();
         var sys = await _plateformeService.GetPlateformes();
-        foreach(var item in sys.OrderBy(x=>x.ShowOrder))
+        foreach (var item in sys.OrderBy(x => x.ShowOrder))
         {
             var container = await _containerBuilder.FromPlateforme(item);
-            if(container.IsActif == "1")
-            CurrentDisplayList.Add(new ObsContainer(container));
+            if (container.IsActif == "1")
+                CurrentDisplayList.Add(new ObsContainer(container));
         }
     }
+
     public void GotoGameList(int selectedIndex)
     {
         var plate = CurrentDisplayList[selectedIndex];

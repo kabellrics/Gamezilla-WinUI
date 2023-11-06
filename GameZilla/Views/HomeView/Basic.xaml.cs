@@ -39,13 +39,29 @@ namespace GameZilla.Views.HomeView
             this.InitializeComponent();
             gridview.Focus(FocusState.Programmatic);
             this.gridview.SelectedIndex = 0;
-            if(gridview.Items.Count > 0 )
+            SetFocusToFirstGridViewItem();
+        }
+
+        private void SetFocusToFirstGridViewItem()
+        {
+            GridViewItem gvi = this.gridview.ContainerFromIndex(0) as GridViewItem;
+            if (gvi != null)
             {
-                var selected = gridview.SelectedItem as GridViewItem;
-                selected.Focus(FocusState.Programmatic);
-                selected.Focus(FocusState.Keyboard);
-                var simulator = new InputSimulator();
-                simulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
+                gvi.IsSelected = true;
+                gvi.Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                var dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+                dispatcherQueue.TryEnqueue((Microsoft.UI.Dispatching.DispatcherQueuePriority)DispatcherQueuePriority.Low,
+                        () => {
+                            gvi = this.gridview.ContainerFromIndex(0) as GridViewItem;
+                            if (gvi != null)
+                            {
+                                gvi.IsSelected = true;
+                                gvi.Focus(FocusState.Programmatic);
+                            }
+                        });
             }
         }
 
