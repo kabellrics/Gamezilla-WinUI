@@ -41,6 +41,7 @@ namespace GameZilla.Views.HomeView
             this.gridview.SelectedIndex = 0;
             SetFocusToFirstGridViewItem();
         }
+        
 
         private void SetFocusToFirstGridViewItem()
         {

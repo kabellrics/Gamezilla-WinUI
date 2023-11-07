@@ -88,6 +88,14 @@ public class ExecutableService : IExecutableService
         }
         return executables.Any(x => x.StoreId == storeId);
     }
+    public async Task<bool> ExistinDatabaseByPath(string path)
+    {
+        if (executables == null)
+        {
+            await InitValue();
+        }
+        return executables.Any(x => x.Path == path);
+    }
     public async Task<String> DownloadUrlasset(string url, string type, string namefilewithoutextension)
     {
         return await executableClient.DownloadUrlasset(url, type, namefilewithoutextension);

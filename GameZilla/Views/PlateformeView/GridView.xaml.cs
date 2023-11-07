@@ -32,7 +32,7 @@ public sealed partial class GridView : UserControl
         this.InitializeComponent();
         SetFocusToFirstGridViewItem();
     }
-
+    
     private void SetFocusToFirstGridViewItem()
     {
         GridViewItem gvi = this.StyledGrid.ContainerFromIndex(0) as GridViewItem;

@@ -157,7 +157,8 @@ public class OriginGameFinderService : IOriginGameFinderService
                             exe.Path = $"{item.BaseInstallPath.GetFullPath()}/{getExeName(notrialexe.filePath)}";
                             exe.StoreId = item.EADesktopGameId.Value;
                             exe.PlateformeId = await parameterService.GetParameterValue(ParamEnum.OriginPlateformeId);
-                            resultlist.Add(exe);
+                            if (!await executableService.ExistinDatabaseByPath(exe.Path))
+                                resultlist.Add(exe);
                         }
                     }
                     catch (Exception ex)
