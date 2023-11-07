@@ -20,6 +20,9 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     private ICommand _ToggleFavoriteCommand;
     public ICommand ToggleFavoriteCommand => _ToggleFavoriteCommand ?? (_ToggleFavoriteCommand = new RelayCommand(ToggleFavorite));
 
+    private ICommand _StartCommand;
+    public ICommand StartCommand => _StartCommand ?? (_StartCommand = new RelayCommand(Start));
+
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
 
@@ -59,6 +62,12 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
         _itemBuilder = itemBuilder;
         _executableService = executableService;
         _assetService = assetService;
+    }
+    private async void Start()
+    {
+        Item.LastStart = DateTime.Now.ToString();
+        Item.NbStart += 1;
+        
     }
     private void ToggleFavorite()
     {

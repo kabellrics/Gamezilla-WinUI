@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 namespace GameZilla.Core.Services;
 public class ItemBuilder : IItemBuilder
 {
+    private readonly IExecutableService _executableService;
+    public ItemBuilder(IExecutableService executableService)
+    {
+        _executableService = executableService;
+    }
     public Item FromExecutable(Executable exe)
     {
         Item item = new Item();
@@ -24,5 +29,14 @@ public class ItemBuilder : IItemBuilder
         item.IsExecutable = true;
         item.StartingCommand = $"{exe.Path} {exe.StartParam}";
         return item;
+    }
+
+    public async Task<Executable> FromItem(Item item)
+    {
+        Executable exe = await _executableService.GetExecutablesByID(item.Id);
+        exe.Favorite = item.Favori.ToString();
+        exe.LastStartDate = item.LastStart;
+        exe.NbStart = item.NbStart;        
+        return exe;
     }
 }
