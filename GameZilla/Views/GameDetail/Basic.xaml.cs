@@ -30,4 +30,14 @@ public sealed partial class Basic : UserControl
         this.DataContext = ViewModel;
         this.InitializeComponent();
     }
+
+    private void PlayBT_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if(e.Key == Windows.System.VirtualKey.Down || e.Key == Windows.System.VirtualKey.GamepadDPadDown) { FavBT.Focus(FocusState.Programmatic); }
+    }
+
+    private void FavBT_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.Up || e.Key == Windows.System.VirtualKey.GamepadDPadUp) { PlayBT.Focus(FocusState.Programmatic); }
+    }
 }

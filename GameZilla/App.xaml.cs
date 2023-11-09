@@ -83,6 +83,7 @@ public partial class App : Application
             services.AddSingleton<IItemBuilder, ItemBuilder>();
             services.AddSingleton<IContainerBuilder, ContainerBuilder>();
             services.AddSingleton<IAssetService, AssetService>();
+            services.AddSingleton<IStartProcessService, StartProcessService>();
 
             // Views and ViewModels
             services.AddSingleton<SettingsViewModel>();

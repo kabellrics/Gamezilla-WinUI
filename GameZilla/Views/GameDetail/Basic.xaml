@@ -45,7 +45,8 @@
                 <Image Source="{x:Bind ViewModel.Item.Logo,Mode=OneWay}" Stretch="Uniform"/>
                 <Grid Grid.Column="1">
                     <StackPanel Orientation="Vertical" Padding="25">
-                        <Button CornerRadius="10" Background="Green" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.GoBackCommand}">
+                        <Button CornerRadius="10" Background="Green" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.StartCommand}"
+                                x:Name="PlayBT" KeyDown="PlayBT_KeyDown">
                             <StackPanel Orientation="Horizontal">
                                 <Viewbox>
                                     <TextBlock Text="Jouer " FontSize="40" HorizontalAlignment="Left"></TextBlock>
@@ -56,7 +57,8 @@
                             </StackPanel>
                         </Button>
                         <StackPanel Orientation="Horizontal">
-                            <Button Background="Transparent" Command="{x:Bind ViewModel.ToggleFavoriteCommand}">
+                            <Button Background="Transparent" Command="{x:Bind ViewModel.ToggleFavoriteCommand}"
+                                    x:Name="FavBT" KeyDown="FavBT_KeyDown">
                                 <Viewbox>
                                     <FontIcon FontSize="40" Glyph="{x:Bind ViewModel.Item.Favori, Mode=OneWay, Converter={StaticResource FavoriteToSymbolConverter}}" />
                                 </Viewbox>

@@ -17,6 +17,7 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
     private readonly IItemBuilder _itemBuilder;
     private readonly IExecutableService _executableService;
     private readonly IAssetService _assetService;
+    private readonly IStartProcessService _startProcessService;
     private ICommand _ToggleFavoriteCommand;
     public ICommand ToggleFavoriteCommand => _ToggleFavoriteCommand ?? (_ToggleFavoriteCommand = new RelayCommand(ToggleFavorite));
 
@@ -55,23 +56,28 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
         get => _bck;
         set => SetProperty(ref _bck, value);
     }
-    public ItemDetailViewModel(INavigationService navigationService, IPageSkinService pageSkinService, IItemBuilder itemBuilder, IExecutableService executableService,IAssetService assetService)
+    public ItemDetailViewModel(INavigationService navigationService, IPageSkinService pageSkinService, IItemBuilder itemBuilder, IExecutableService executableService,IAssetService assetService, IStartProcessService startProcessService)
     {
         _navigationService = navigationService;
         _pageSkinService = pageSkinService;
         _itemBuilder = itemBuilder;
         _executableService = executableService;
         _assetService = assetService;
+        _startProcessService = startProcessService;
     }
     private async void Start()
     {
         Item.LastStart = DateTime.Now.ToString();
         Item.NbStart += 1;
+        await _executableService.UpdateExecutable(await _itemBuilder.ExecutableFromItem(Item.Item));
+        _startProcessService.Init(Item.StartingCommand);
+        _startProcessService.Start();
         
     }
-    private void ToggleFavorite()
+    private async void ToggleFavorite()
     {
         Item.Favori = Item.Favori  ? false : true;
+        await _executableService.UpdateExecutable(await _itemBuilder.ExecutableFromItem(Item.Item));
     }
     public void OnNavigatedTo(object parameter)
     {

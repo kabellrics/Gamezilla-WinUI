@@ -31,10 +31,10 @@ public class ItemBuilder : IItemBuilder
         return item;
     }
 
-    public async Task<Executable> FromItem(Item item)
+    public async Task<Executable> ExecutableFromItem(Item item)
     {
         Executable exe = await _executableService.GetExecutablesByID(item.Id);
-        exe.Favorite = item.Favori.ToString();
+        exe.Favorite = item.Favori ? "1":"0";
         exe.LastStartDate = item.LastStart;
         exe.NbStart = item.NbStart;        
         return exe;

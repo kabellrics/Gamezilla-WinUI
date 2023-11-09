@@ -14,4 +14,5 @@ public interface IExecutableService
     Task<IEnumerable<Executable>> GetExecutablesLastStarted();
     Task<Executable> GetExecutablesByID(string plateformeId);
     Task<bool> ExistinDatabaseByPath(string path);
+    Task UpdateExecutable(Executable item);
 }

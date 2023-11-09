@@ -49,4 +49,15 @@ public class ExecutableClient
         request.AddParameter("text/plain", jsonItem, ParameterType.RequestBody);
         await client.ExecuteAsync(request);
     }
+
+    public async Task UpdateExecutable(Executable item)
+    {
+        var jsonItem = JsonConvert.SerializeObject(item);
+        var client = new RestClient(restClientOptions);
+        var request = new RestRequest("/api/executable/update.php", Method.Post);
+        request.AddHeader("Content-Type", "text/plain");
+        request.AddParameter("text/plain", jsonItem, ParameterType.RequestBody);
+        await client.ExecuteAsync(request);
+
+    }
 }

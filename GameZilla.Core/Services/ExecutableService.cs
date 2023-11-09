@@ -104,4 +104,8 @@ public class ExecutableService : IExecutableService
     {
         await executableClient.CreateExecutable(item);
     }
+    public async Task UpdateExecutable(Executable item)
+    {
+        await executableClient.UpdateExecutable(item);
+    }
 }

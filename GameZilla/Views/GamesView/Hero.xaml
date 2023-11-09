@@ -54,7 +54,13 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10">
-                            <Image Source="{Binding Cover,Mode=OneWay}" Stretch="Fill"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding Name,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap" FontSize="60"/>
+                                <Image Grid.Row="0" Source="{Binding Cover,Mode=OneWay}" Stretch="Fill"/>
+                            </Grid>
                         </controls:ConstrainedBox>
                     </DataTemplate>
                 </ListView.ItemTemplate>
