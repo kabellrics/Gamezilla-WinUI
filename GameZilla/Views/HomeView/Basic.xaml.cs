@@ -63,6 +63,7 @@ namespace GameZilla.Views.HomeView
                 btlast.Focus(FocusState.Programmatic);
                 btlast.Focus(FocusState.Keyboard);
             }
+            //else if(e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.GotoFav("true"); }
         }
 
         private void btlast_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -82,6 +83,7 @@ namespace GameZilla.Views.HomeView
                 btfav.Focus(FocusState.Programmatic);
                 btfav.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.GotoLast("true"); }
         }
 
         private void btnever_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -102,6 +104,7 @@ namespace GameZilla.Views.HomeView
                 btlast.Focus(FocusState.Programmatic);
                 btlast.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.GotoNoPlay("true"); }
         }
 
         private void btallsys_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -123,6 +126,7 @@ namespace GameZilla.Views.HomeView
                 btnever.Focus(FocusState.Programmatic);
                 btnever.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.GoSystems(); }
         }
 
         private void btgames_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -138,6 +142,7 @@ namespace GameZilla.Views.HomeView
                 btallsys.Focus(FocusState.Programmatic);
                 btallsys.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.GoAllGames(); }
         }
 
         private void btsettings_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -152,6 +157,7 @@ namespace GameZilla.Views.HomeView
                 btquit.Focus(FocusState.Programmatic);
                 btquit.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.GoSettings(); }
         }
 
         private void btquit_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -171,6 +177,7 @@ namespace GameZilla.Views.HomeView
                 btveille.Focus(FocusState.Programmatic);
                 btveille.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.Quit(); }
         }
 
         private void btveille_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -191,6 +198,7 @@ namespace GameZilla.Views.HomeView
                 btrestart.Focus(FocusState.Programmatic);
                 btrestart.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.Sleep(); }
         }
 
         private void btrestart_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -211,6 +219,7 @@ namespace GameZilla.Views.HomeView
                 btshutdown.Focus(FocusState.Programmatic);
                 btshutdown.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.ReStart(); }
         }
 
         private void btshutdown_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -226,6 +235,7 @@ namespace GameZilla.Views.HomeView
                 btrestart.Focus(FocusState.Programmatic);
                 btrestart.Focus(FocusState.Keyboard);
             }
+            //else if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.GamepadA) { ViewModel.Shutdown(); }
         }
 
 

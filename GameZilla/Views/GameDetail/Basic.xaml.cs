@@ -29,6 +29,8 @@ public sealed partial class Basic : UserControl
         this.ViewModel = App.GetService<ItemDetailViewModel>();
         this.DataContext = ViewModel;
         this.InitializeComponent();
+        PlayBT.Focus(FocusState.Programmatic);
+        PlayBT.Focus(FocusState.Keyboard);
     }
 
     private void PlayBT_KeyDown(object sender, KeyRoutedEventArgs e)

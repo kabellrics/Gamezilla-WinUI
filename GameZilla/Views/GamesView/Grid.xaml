@@ -24,7 +24,13 @@
                 <DataTemplate x:DataType="viewmodel:ObsItem">
                     <controls:ConstrainedBox AspectRatio="600:900">
                         <Grid>
-                            <Image Source="{x:Bind Cover}" Stretch="Fill"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding Name,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap" FontSize="60"/>
+                                <Image Grid.Row="0" Source="{Binding Cover,Mode=OneWay}" Stretch="Fill"/>
+                            </Grid>
                         </Grid>
                     </controls:ConstrainedBox>
                 </DataTemplate>

@@ -66,12 +66,12 @@
                             <TextBlock Text="Favori" FontSize="40" HorizontalAlignment="Left"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Nombre de lancement: " FontSize="40" HorizontalAlignment="Left"></TextBlock>
-                            <TextBlock Text="{x:Bind ViewModel.Item.NbStart}" FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="Nombre de lancement : " FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="{x:Bind ViewModel.Item.NbStart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="40" HorizontalAlignment="Left"></TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Text="Dernier lancement :" FontSize="40" HorizontalAlignment="Left"></TextBlock>
-                            <TextBlock Text="{x:Bind ViewModel.Item.LastStart}" FontSize="40" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="{x:Bind ViewModel.Item.LastStart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="40" HorizontalAlignment="Left"></TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

@@ -33,7 +33,7 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="1" Grid.Row="1" x:Name="btfav" KeyDown="btfav_KeyDown">
+        <Button Grid.Column="1" Grid.Row="1" x:Name="btfav" KeyDown="btfav_KeyDown" Command="{x:Bind ViewModel.Menus[0].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[0].IconPath}" Margin="20"/>
@@ -41,7 +41,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[0].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="3" Grid.Row="1" x:Name="btlast" KeyDown="btlast_KeyDown">
+        <Button Grid.Column="3" Grid.Row="1" x:Name="btlast" KeyDown="btlast_KeyDown" Command="{x:Bind ViewModel.Menus[1].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[1].IconPath}" Margin="20"/>
@@ -49,7 +49,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[1].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="5" Grid.Row="1" x:Name="btnever" KeyDown="btnever_KeyDown">
+        <Button Grid.Column="5" Grid.Row="1" x:Name="btnever" KeyDown="btnever_KeyDown" Command="{x:Bind ViewModel.Menus[2].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[2].IconPath}" Margin="20"/>
@@ -57,7 +57,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[2].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="7" Grid.Row="1" x:Name="btallsys" KeyDown="btallsys_KeyDown">
+        <Button Grid.Column="7" Grid.Row="1" x:Name="btallsys" KeyDown="btallsys_KeyDown" Command="{x:Bind ViewModel.Menus[3].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[3].IconPath}" Margin="20"/>
@@ -65,7 +65,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[3].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="9" Grid.Row="1" x:Name="btgames" KeyDown="btgames_KeyDown">
+        <Button Grid.Column="9" Grid.Row="1" x:Name="btgames" KeyDown="btgames_KeyDown" Command="{x:Bind ViewModel.Menus[4].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[4].IconPath}" Margin="20"/>
@@ -73,7 +73,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[4].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="1" Grid.Row="3" x:Name="btsettings" KeyDown="btsettings_KeyDown">
+        <Button Grid.Column="1" Grid.Row="3" x:Name="btsettings" KeyDown="btsettings_KeyDown" Command="{x:Bind ViewModel.Menus[5].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[5].IconPath}" Margin="20"/>
@@ -81,7 +81,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[5].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="3" Grid.Row="3" x:Name="btquit" KeyDown="btquit_KeyDown">
+        <Button Grid.Column="3" Grid.Row="3" x:Name="btquit" KeyDown="btquit_KeyDown" Command="{x:Bind ViewModel.Menus[6].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[6].IconPath}" Margin="20"/>
@@ -89,7 +89,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[6].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="5" Grid.Row="3" x:Name="btveille" KeyDown="btveille_KeyDown">
+        <Button Grid.Column="5" Grid.Row="3" x:Name="btveille" KeyDown="btveille_KeyDown" Command="{x:Bind ViewModel.Menus[7].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[7].IconPath}" Margin="20"/>
@@ -97,7 +97,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[7].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="7" Grid.Row="3" x:Name="btrestart" KeyDown="btrestart_KeyDown">
+        <Button Grid.Column="7" Grid.Row="3" x:Name="btrestart" KeyDown="btrestart_KeyDown" Command="{x:Bind ViewModel.Menus[8].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[8].IconPath}" Margin="20"/>
@@ -105,7 +105,7 @@
                 <TextBlock Text="{x:Bind ViewModel.Menus[8].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Button>
-        <Button Grid.Column="9" Grid.Row="3" x:Name="btshutdown" KeyDown="btshutdown_KeyDown">
+        <Button Grid.Column="9" Grid.Row="3" x:Name="btshutdown" KeyDown="btshutdown_KeyDown" Command="{x:Bind ViewModel.Menus[9].Command}" CommandParameter="true">
             <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                 <Viewbox Stretch="Uniform">
                     <FontIcon Glyph="{x:Bind ViewModel.Menus[9].IconPath}" Margin="20"/>
