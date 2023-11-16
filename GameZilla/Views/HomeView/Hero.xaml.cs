@@ -18,6 +18,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WindowsInput.Native;
 using WindowsInput;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,24 +36,239 @@ namespace GameZilla.Views.HomeView
             this.ViewModel = App.GetService<HomeViewModel>();
             this.DataContext = ViewModel;
             this.InitializeComponent();
-            gridview.Focus(FocusState.Programmatic);
-            this.gridview.SelectedIndex = 0;
-            this.itemListView.SelectedIndex = 0;
-            if (gridview.Items.Count > 0)
-            {
-                var selected = gridview.SelectedItem as GridViewItem;
-                selected.Focus(FocusState.Programmatic);
-                selected.Focus(FocusState.Keyboard);
-                var simulator = new InputSimulator();
-                simulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
-            }
-        }
-        
-        private void MaxItemsWrapGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var wrapgrid = (ItemsWrapGrid)sender;
-            wrapgrid.ItemWidth = this.ActualWidth / 10;
+            btfav.Focus(FocusState.Programmatic);
+            btfav.Focus(FocusState.Keyboard);
         }
 
+        private void btsettings_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btquit.Focus(FocusState.Programmatic);
+                btquit.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                btnever.Focus(FocusState.Programmatic);
+                btnever.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btquit_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btsettings.Focus(FocusState.Programmatic);
+                btsettings.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btveille.Focus(FocusState.Programmatic);
+                btveille.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                btallsys.Focus(FocusState.Programmatic);
+                btallsys.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btveille_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btquit.Focus(FocusState.Programmatic);
+                btquit.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btrestart.Focus(FocusState.Programmatic);
+                btrestart.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                btallsys.Focus(FocusState.Programmatic);
+                btallsys.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btrestart_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btveille.Focus(FocusState.Programmatic);
+                btveille.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btshutdown.Focus(FocusState.Programmatic);
+                btshutdown.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                btgames.Focus(FocusState.Programmatic);
+                btgames.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btshutdown_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btrestart.Focus(FocusState.Programmatic);
+                btrestart.Focus(FocusState.Keyboard);
+            }
+            else if(e.Key == VirtualKey.Down|| e.Key == VirtualKey.GamepadDPadDown)
+            {
+                btgames.Focus(FocusState.Programmatic);
+                btgames.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btfav_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btlast.Focus(FocusState.Programmatic);
+                btlast.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                bt2Display.Focus(FocusState.Programmatic);
+                bt2Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btlast_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btnever.Focus(FocusState.Programmatic);
+                btnever.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btfav.Focus(FocusState.Programmatic);
+                btfav.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                bt2Display.Focus(FocusState.Programmatic);
+                bt2Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btnever_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btallsys.Focus(FocusState.Programmatic);
+                btallsys.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btlast.Focus(FocusState.Programmatic);
+                btlast.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                bt3Display.Focus(FocusState.Programmatic);
+                bt3Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btallsys_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                btgames.Focus(FocusState.Programmatic);
+                btgames.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btnever.Focus(FocusState.Programmatic);
+                btnever.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                bt4Display.Focus(FocusState.Programmatic);
+                bt4Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void btgames_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                btallsys.Focus(FocusState.Programmatic);
+                btallsys.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
+            {
+                bt4Display.Focus(FocusState.Programmatic);
+                bt4Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void bt1Display_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+         if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                bt2Display.Focus(FocusState.Programmatic);
+                bt2Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void bt2Display_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                bt1Display.Focus(FocusState.Programmatic);
+                bt1Display.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight) 
+            {
+                bt3Display.Focus(FocusState.Programmatic);
+                bt3Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void bt3Display_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                bt2Display.Focus(FocusState.Programmatic);
+                bt2Display.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                bt4Display.Focus(FocusState.Programmatic);
+                bt4Display.Focus(FocusState.Keyboard);
+            }
+        }
+
+        private void bt4Display_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                bt3Display.Focus(FocusState.Programmatic);
+                bt3Display.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            {
+                bt5Display.Focus(FocusState.Programmatic);
+                bt5Display.Focus(FocusState.Keyboard);
+            }
+
+        }
+
+        private void bt5Display_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Left || e.Key == VirtualKey.GamepadDPadLeft)
+            {
+                bt4Display.Focus(FocusState.Programmatic);
+                bt4Display.Focus(FocusState.Keyboard);
+            }
+        }
     }
 }

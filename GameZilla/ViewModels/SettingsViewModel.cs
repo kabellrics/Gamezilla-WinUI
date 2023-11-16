@@ -117,6 +117,10 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         _navigationService = navigationService;
         _pageSkinService = pageSkinService;
         _assetService = assetService;
+        sysdisplays = new ObservableCollection<string>();
+        homedisplays = new ObservableCollection<string>();
+        gamesdisplays = new ObservableCollection<string>();
+        gamedetaildisplays = new ObservableCollection<string>();
     }
 
     private static string GetVersionDescription()
@@ -138,17 +142,18 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     }
     public async void OnNavigatedTo(object parameter)
     {
+
+        sysdisplays.Clear();
+        homedisplays.Clear();
+        gamesdisplays.Clear();
+        gamedetaildisplays.Clear();
         Bck = await _assetService.GetRandomBackground();
-        homedisplays = new ObservableCollection<string>();
         foreach(var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
         Home = await _pageSkinService.GetCurrentDisplayHome();
-        sysdisplays = new ObservableCollection<string>();
         foreach (var skin in _pageSkinService.GetDisplaysForSystems()) { sysdisplays.Add(skin); }
         Systems = await _pageSkinService.GetCurrentDisplaySystems();
-        gamesdisplays = new ObservableCollection<string>();
         foreach (var skin in _pageSkinService.GetDisplaysForGames()) { gamesdisplays.Add(skin); }
         Games = await _pageSkinService.GetCurrentDisplayGames();
-        gamedetaildisplays = new ObservableCollection<string>();
         foreach (var skin in _pageSkinService.GetDisplaysForGameDetail()) { gamedetaildisplays.Add(skin); }
         GameDetail = await _pageSkinService.GetCurrentDisplayGameDetail();
     }

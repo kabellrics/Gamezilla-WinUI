@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,6 +10,7 @@ using GameZilla.Core.Models;
 using GameZilla.FrontModel;
 using GameZilla.Services;
 using GameZilla.ViewModels.Object;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 
@@ -21,6 +23,8 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     private readonly IPageSkinService _pageSkinService;
     private readonly IAssetService _assetService;
     private readonly IItemBuilder _itemBuilder;
+    private DispatcherTimer bg;
+    private Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
     private ICommand _LoadedCommand;
     private ICommand _GotoFavCommand;
     private ICommand _GotoLastCommand;
@@ -56,6 +60,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         get => _display;
         set => SetProperty(ref _display, value);
     }
+    private String _displayDateTime;
+    public String DisplayDateTime
+    {
+        get => _displayDateTime;
+        set => SetProperty(ref _displayDateTime, value);
+    }
     private int _selectedIndex;
     public int SelectedIndex
     {
@@ -73,6 +83,12 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<ObsItem> FavorisDisplayList;
     public ObservableCollection<ObsItem> LastPlayedDisplayList;
     public ObservableCollection<ObsItem> NeverPlayedDisplayList;
+    public ObsItem Display1Item;
+    public ObsItem Display2Item;
+    public ObsItem Display3Item;
+    public ObsItem Display4Item;
+    public ObsItem Display5Item;
+
     public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, IItemBuilder itemBuilder,IAssetService assetService)
     {
         _navigationService = navigationService;
@@ -84,7 +100,18 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         FavorisDisplayList = new ObservableCollection<ObsItem>();
         LastPlayedDisplayList = new ObservableCollection<ObsItem>();
         NeverPlayedDisplayList = new ObservableCollection<ObsItem>();
+        dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         _itemBuilder = itemBuilder;
+        bg = new DispatcherTimer();
+        bg.Tick += (s, e) =>
+        {
+            this.dispatcherQueue.TryEnqueue(() =>
+            {
+                DisplayDateTime = DateTime.Now.ToString("F", new CultureInfo("fr-FR"));
+            });
+        };
+        bg.Interval = TimeSpan.FromMilliseconds(333); 
+        bg.Start();
         Menus.Clear();
         Menus.Add(new GamezillaMenuItem() { Text = "Favoris", IconPath = "\uE735", ImagePath = @"ms-appx:///Assets/specificlogo/auto-favorites-fr.png", Command = GotoFavCommand });
         Menus.Add(new GamezillaMenuItem() { Text = "Derniers jeux lancés", IconPath = "\uE81C", ImagePath = @"ms-appx:///Assets/specificlogo/auto-lastplayed-fr.png", Command = GotoLastCommand });
@@ -96,6 +123,11 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         Menus.Add(new GamezillaMenuItem() { Text = "Mettre en Veille", IconPath = "\uE708", ImagePath = @"ms-appx:///Assets/specificlogo/Veille.png", Command = SleepCommand });
         Menus.Add(new GamezillaMenuItem() { Text = "Redémarrage", IconPath = "\uF83E", ImagePath = @"ms-appx:///Assets/specificlogo/Redemarrer.png", Command = ReStartCommand });
         Menus.Add(new GamezillaMenuItem() { Text = "Eteindre", IconPath = "\uE7E8", ImagePath = @"ms-appx:///Assets/specificlogo/Shutdown.png", Command = ShutdownCommand });
+        Display1Item = null;
+        Display2Item = null;
+        Display3Item = null;
+        Display4Item = null;
+        Display5Item = null;
     }
     public void Loaded()
     {
@@ -123,9 +155,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         }
         else
         {
-            CurrentDisplayList.Clear();
-            foreach (var item in FavorisDisplayList)
-                CurrentDisplayList.Add(item);
+            FillCurrentList(FavorisDisplayList);
         }
     }
     public void GotoLast(string obj)
@@ -144,9 +174,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         }
         else
         {
-            CurrentDisplayList.Clear();
-            foreach(var item in LastPlayedDisplayList)
-                CurrentDisplayList.Add(item);
+            FillCurrentList(LastPlayedDisplayList);
         }
     }
     public void GotoNoPlay(string obj)
@@ -165,9 +193,7 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         }
         else
         {
-            CurrentDisplayList.Clear();
-            foreach (var item in NeverPlayedDisplayList)
-                CurrentDisplayList.Add(item);
+            FillCurrentList(NeverPlayedDisplayList);
         }
     }
     public void GoSystems()
@@ -221,22 +247,35 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         SelectedMenuIndex = 0;
         CurrentDisplayList.Clear();
         var favlist = await _executableService.GetExecutablesFavorite();
-        foreach(var favitem in favlist)
+        foreach (var favitem in favlist)
         {
             FavorisDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
-            CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
         }
         var lastlist = await _executableService.GetExecutablesLastStarted();
-        foreach(var lastitem in lastlist)
+        foreach (var lastitem in lastlist)
         {
             LastPlayedDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(lastitem)));
         }
         var neverlist = await _executableService.GetExecutablesNeverStarted();
-        foreach(var neveritem in neverlist)
+        foreach (var neveritem in neverlist)
         {
             NeverPlayedDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(neveritem)));
         }
+        FillCurrentList(FavorisDisplayList);
     }
+
+    private void FillCurrentList(ObservableCollection<ObsItem> list)
+    {
+        CurrentDisplayList.Clear();
+        foreach (var item in list)
+            CurrentDisplayList.Add(item);
+        Display1Item = CurrentDisplayList.ElementAtOrDefault(0) ?? null;
+        Display2Item = CurrentDisplayList.ElementAtOrDefault(1) ?? null;
+        Display3Item = CurrentDisplayList.ElementAtOrDefault(2) ?? null;
+        Display4Item = CurrentDisplayList.ElementAtOrDefault(3) ?? null;
+        Display5Item = CurrentDisplayList.ElementAtOrDefault(4) ?? null;
+    }
+
     public void OnNavigatedFrom()
     {
     }
