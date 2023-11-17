@@ -19,6 +19,7 @@ using Windows.Foundation.Collections;
 using WindowsInput.Native;
 using WindowsInput;
 using Windows.System;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -36,8 +37,20 @@ namespace GameZilla.Views.HomeView
             this.ViewModel = App.GetService<HomeViewModel>();
             this.DataContext = ViewModel;
             this.InitializeComponent();
+            Loaded += Hero_Loaded;
             btfav.Focus(FocusState.Programmatic);
             btfav.Focus(FocusState.Keyboard);
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+
+        }
+
+        private void Hero_Loaded(object sender, RoutedEventArgs e)
+        {
+            btfav.Focus(FocusState.Programmatic);
+            btfav.Focus(FocusState.Keyboard);
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
         }
 
         private void btsettings_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -118,7 +131,7 @@ namespace GameZilla.Views.HomeView
                 btrestart.Focus(FocusState.Programmatic);
                 btrestart.Focus(FocusState.Keyboard);
             }
-            else if(e.Key == VirtualKey.Down|| e.Key == VirtualKey.GamepadDPadDown)
+            else if (e.Key == VirtualKey.Down || e.Key == VirtualKey.GamepadDPadDown)
             {
                 btgames.Focus(FocusState.Programmatic);
                 btgames.Focus(FocusState.Keyboard);
@@ -136,6 +149,11 @@ namespace GameZilla.Views.HomeView
             {
                 bt2Display.Focus(FocusState.Programmatic);
                 bt2Display.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btsettings.Focus(FocusState.Programmatic);
+                btsettings.Focus(FocusState.Keyboard);
             }
         }
 
@@ -156,6 +174,11 @@ namespace GameZilla.Views.HomeView
                 bt2Display.Focus(FocusState.Programmatic);
                 bt2Display.Focus(FocusState.Keyboard);
             }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btsettings.Focus(FocusState.Programmatic);
+                btsettings.Focus(FocusState.Keyboard);
+            }
         }
 
         private void btnever_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -174,6 +197,11 @@ namespace GameZilla.Views.HomeView
             {
                 bt3Display.Focus(FocusState.Programmatic);
                 bt3Display.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btsettings.Focus(FocusState.Programmatic);
+                btsettings.Focus(FocusState.Keyboard);
             }
         }
 
@@ -194,6 +222,11 @@ namespace GameZilla.Views.HomeView
                 bt4Display.Focus(FocusState.Programmatic);
                 bt4Display.Focus(FocusState.Keyboard);
             }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btquit.Focus(FocusState.Programmatic);
+                btquit.Focus(FocusState.Keyboard);
+            }
         }
 
         private void btgames_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -208,11 +241,16 @@ namespace GameZilla.Views.HomeView
                 bt4Display.Focus(FocusState.Programmatic);
                 bt4Display.Focus(FocusState.Keyboard);
             }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btveille.Focus(FocusState.Programmatic);
+                btveille.Focus(FocusState.Keyboard);
+            }
         }
 
         private void bt1Display_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-         if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
+            if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
             {
                 bt2Display.Focus(FocusState.Programmatic);
                 bt2Display.Focus(FocusState.Keyboard);
@@ -226,10 +264,15 @@ namespace GameZilla.Views.HomeView
                 bt1Display.Focus(FocusState.Programmatic);
                 bt1Display.Focus(FocusState.Keyboard);
             }
-            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight) 
+            else if (e.Key == VirtualKey.Right || e.Key == VirtualKey.GamepadDPadRight)
             {
                 bt3Display.Focus(FocusState.Programmatic);
                 bt3Display.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btfav.Focus(FocusState.Programmatic);
+                btfav.Focus(FocusState.Keyboard);
             }
         }
 
@@ -245,6 +288,11 @@ namespace GameZilla.Views.HomeView
                 bt4Display.Focus(FocusState.Programmatic);
                 bt4Display.Focus(FocusState.Keyboard);
             }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btnever.Focus(FocusState.Programmatic);
+                btnever.Focus(FocusState.Keyboard);
+            }
         }
 
         private void bt4Display_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -259,6 +307,11 @@ namespace GameZilla.Views.HomeView
                 bt5Display.Focus(FocusState.Programmatic);
                 bt5Display.Focus(FocusState.Keyboard);
             }
+            else if (e.Key == VirtualKey.Up || e.Key == VirtualKey.GamepadDPadUp)
+            {
+                btgames.Focus(FocusState.Programmatic);
+                btgames.Focus(FocusState.Keyboard);
+            }
 
         }
 
@@ -269,6 +322,57 @@ namespace GameZilla.Views.HomeView
                 bt4Display.Focus(FocusState.Programmatic);
                 bt4Display.Focus(FocusState.Keyboard);
             }
+        }
+
+        private void btfav_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ViewModel.GotoFav("false");
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+        }
+
+        private void btlast_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ViewModel.GotoLast("false");
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+        }
+
+        private void btnever_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ViewModel.GotoNoPlay("false");
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+        }
+
+        private void bt4Display_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display4Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display4Item.Hero, UriKind.Absolute));
+        }
+
+        private void bt1Display_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+        }
+
+        private void bt2Display_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display2Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display2Item.Hero, UriKind.Absolute));
+        }
+
+        private void bt3Display_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display3Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display3Item.Hero, UriKind.Absolute));
+        }
+
+        private void bt5Display_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display5Item.Hero, UriKind.Absolute));
+            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display5Item.Hero, UriKind.Absolute));
         }
     }
 }

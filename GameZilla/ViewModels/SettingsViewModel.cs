@@ -7,6 +7,8 @@ using CommunityToolkit.Mvvm.Input;
 
 using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
+using GameZilla.Core.Contracts.Services;
+using GameZilla.Core.Models;
 using GameZilla.Helpers;
 using GameZilla.Services;
 using Microsoft.UI.Xaml;
@@ -22,6 +24,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IPageSkinService _pageSkinService;
     private readonly IAssetService _assetService;
+    private readonly IApplicationFinderService _applicationFinderService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
 
@@ -99,9 +102,11 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<string> sysdisplays;
     public ObservableCollection<string> gamesdisplays;
     public ObservableCollection<string> gamedetaildisplays;
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IAssetService assetService)
+    public ObservableCollection<InstalledProgram> installedPrograms;
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IAssetService assetService, IApplicationFinderService applicationFinderService)
     {
         _themeSelectorService = themeSelectorService;
+        _applicationFinderService = applicationFinderService;
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
 
@@ -121,6 +126,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         homedisplays = new ObservableCollection<string>();
         gamesdisplays = new ObservableCollection<string>();
         gamedetaildisplays = new ObservableCollection<string>();
+        installedPrograms = new ObservableCollection<InstalledProgram>();
     }
 
     private static string GetVersionDescription()
@@ -143,19 +149,37 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public async void OnNavigatedTo(object parameter)
     {
 
-        sysdisplays.Clear();
-        homedisplays.Clear();
-        gamesdisplays.Clear();
-        gamedetaildisplays.Clear();
-        Bck = await _assetService.GetRandomBackground();
-        foreach(var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
-        Home = await _pageSkinService.GetCurrentDisplayHome();
-        foreach (var skin in _pageSkinService.GetDisplaysForSystems()) { sysdisplays.Add(skin); }
-        Systems = await _pageSkinService.GetCurrentDisplaySystems();
-        foreach (var skin in _pageSkinService.GetDisplaysForGames()) { gamesdisplays.Add(skin); }
-        Games = await _pageSkinService.GetCurrentDisplayGames();
-        foreach (var skin in _pageSkinService.GetDisplaysForGameDetail()) { gamedetaildisplays.Add(skin); }
-        GameDetail = await _pageSkinService.GetCurrentDisplayGameDetail();
+        try
+        {
+            sysdisplays.Clear();
+            homedisplays.Clear();
+            gamesdisplays.Clear();
+            gamedetaildisplays.Clear();
+            installedPrograms.Clear();
+            Bck = await _assetService.GetRandomBackground();
+            foreach (var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
+            Home = await _pageSkinService.GetCurrentDisplayHome();
+            foreach (var skin in _pageSkinService.GetDisplaysForSystems()) { sysdisplays.Add(skin); }
+            Systems = await _pageSkinService.GetCurrentDisplaySystems();
+            foreach (var skin in _pageSkinService.GetDisplaysForGames()) { gamesdisplays.Add(skin); }
+            Games = await _pageSkinService.GetCurrentDisplayGames();
+            foreach (var skin in _pageSkinService.GetDisplaysForGameDetail()) { gamedetaildisplays.Add(skin); }
+            GameDetail = await _pageSkinService.GetCurrentDisplayGameDetail();
+
+            //_applicationFinderService.ListInstalledPrograms();
+            var prgs = _applicationFinderService.GetInstalledPrograms();
+            if(prgs != null)
+            {
+                foreach(var item in prgs.OrderBy(x=>x.Name).GroupBy(x=>x.ExecutablePath).Select(x=>x.First()))
+                {
+                    installedPrograms.Add(item);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            //throw;
+        }
     }
     public void OnNavigatedFrom()
     {

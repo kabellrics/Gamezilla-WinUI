@@ -28,10 +28,10 @@
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <controls:ConstrainedBox AspectRatio="1920:620" CornerRadius="25" Margin="2"
-                                     Grid.Row="1" Grid.RowSpan="3">
-                <Image Grid.Row="0" Grid.RowSpan="3" x:Name="CurrentHero" Stretch="Fill"></Image>
-            </controls:ConstrainedBox>
+            <!--<controls:ConstrainedBox AspectRatio="1920:620" CornerRadius="25" Margin="2"
+                                     Grid.Row="0" Grid.RowSpan="3">-->
+                <Image Grid.Row="0" Grid.RowSpan="3" Margin="2" x:Name="CurrentHero" Stretch="Fill"></Image>
+            <!--</controls:ConstrainedBox>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
                 <Button Grid.Column="1" Grid.Row="3" x:Name="btsettings" KeyDown="btsettings_KeyDown"
                         VerticalAlignment="Center" Margin=" 10 0"
@@ -83,49 +83,49 @@
                         FontSize="30" Margin="10"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
-                <Button Grid.Column="1" Grid.Row="1" x:Name="btfav" KeyDown="btfav_KeyDown" Command="{x:Bind ViewModel.Menus[0].Command}" CommandParameter="true"
-                        VerticalAlignment="Center" Margin=" 10 0">
+                <Button Grid.Column="1" Grid.Row="1" x:Name="btfav" KeyDown="btfav_KeyDown" GotFocus="btfav_GotFocus" Command="{x:Bind ViewModel.Menus[0].Command}" CommandParameter="true"
+                        VerticalAlignment="Center" Margin=" 10 0" Background="Gray">
                     <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                         <!--<Viewbox Stretch="Uniform">
                             <FontIcon Glyph="{x:Bind ViewModel.Menus[0].IconPath}" Margin="20"/>
                         </Viewbox>-->
-                        <TextBlock Text="{x:Bind ViewModel.Menus[0].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{x:Bind ViewModel.Menus[0].Text}" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="3" Grid.Row="1" x:Name="btlast" KeyDown="btlast_KeyDown" Command="{x:Bind ViewModel.Menus[1].Command}" CommandParameter="true"
-                        VerticalAlignment="Center" Margin=" 10 0">
+                <Button Grid.Column="3" Grid.Row="1" x:Name="btlast" KeyDown="btlast_KeyDown" GotFocus="btlast_GotFocus" Command="{x:Bind ViewModel.Menus[1].Command}" CommandParameter="true"
+                        VerticalAlignment="Center" Margin=" 10 0" Background="Gray">
                     <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                         <!--<Viewbox Stretch="Uniform">
                             <FontIcon Glyph="{x:Bind ViewModel.Menus[1].IconPath}" Margin="20"/>
                         </Viewbox>-->
-                        <TextBlock Text="{x:Bind ViewModel.Menus[1].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{x:Bind ViewModel.Menus[1].Text}" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="5" Grid.Row="1" x:Name="btnever" KeyDown="btnever_KeyDown" Command="{x:Bind ViewModel.Menus[2].Command}" CommandParameter="true"
-                        VerticalAlignment="Center" Margin=" 10 0">
+                <Button Grid.Column="5" Grid.Row="1" x:Name="btnever" KeyDown="btnever_KeyDown" GotFocus="btnever_GotFocus" Command="{x:Bind ViewModel.Menus[2].Command}" CommandParameter="true"
+                        VerticalAlignment="Center" Margin=" 10 0" Background="Gray">
                     <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                         <!--<Viewbox Stretch="Uniform">
                             <FontIcon Glyph="{x:Bind ViewModel.Menus[2].IconPath}" Margin="20"/>
                         </Viewbox>-->
-                        <TextBlock Text="{x:Bind ViewModel.Menus[2].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{x:Bind ViewModel.Menus[2].Text}" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Button>
                 <Button Grid.Column="7" Grid.Row="1" x:Name="btallsys" KeyDown="btallsys_KeyDown" Command="{x:Bind ViewModel.Menus[3].Command}" CommandParameter="true"
-                        VerticalAlignment="Center" Margin=" 10 0">
+                        VerticalAlignment="Center" Margin=" 10 0" Background="Gray">
                     <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                         <!--<Viewbox Stretch="Uniform">
                             <FontIcon Glyph="{x:Bind ViewModel.Menus[3].IconPath}" Margin="20"/>
                         </Viewbox>-->
-                        <TextBlock Text="{x:Bind ViewModel.Menus[3].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{x:Bind ViewModel.Menus[3].Text}" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Button>
                 <Button Grid.Column="9" Grid.Row="1" x:Name="btgames" KeyDown="btgames_KeyDown" Command="{x:Bind ViewModel.Menus[4].Command}" CommandParameter="true"
-                        VerticalAlignment="Center" Margin=" 10 0">
+                        VerticalAlignment="Center" Margin=" 10 0" Background="Gray">
                     <StackPanel Orientation="Vertical" Padding="0" Margin="0">
                         <!--<Viewbox Stretch="Uniform">
                             <FontIcon Glyph="{x:Bind ViewModel.Menus[4].IconPath}" Margin="20"/>
                         </Viewbox>-->
-                        <TextBlock Text="{x:Bind ViewModel.Menus[4].Text}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{x:Bind ViewModel.Menus[4].Text}" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </Button>
             </StackPanel>            
@@ -140,7 +140,8 @@
             </Grid.ColumnDefinitions>
             <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10" Grid.Column="0">
                 <Button Style="{StaticResource AccentButtonStyle}" Background="Transparent" CornerRadius="25"
-                        x:Name="bt1Display" KeyDown="bt1Display_KeyDown"
+                        x:Name="bt1Display" KeyDown="bt1Display_KeyDown" GotFocus="bt1Display_GotFocus"
+                        Command="{x:Bind ViewModel.GotoGameCommand}" CommandParameter="{x:Bind ViewModel.Display1Item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FocusVisualMargin="-10"
                     FocusVisualPrimaryThickness="10"
                     FocusVisualSecondaryThickness="10"
@@ -160,7 +161,8 @@
             </controls:ConstrainedBox>
             <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10" Grid.Column="1">
                 <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}" Background="Transparent" CornerRadius="25"
-                        x:Name="bt2Display" KeyDown="bt2Display_KeyDown"
+                        x:Name="bt2Display" KeyDown="bt2Display_KeyDown" GotFocus="bt2Display_GotFocus"
+                        Command="{x:Bind ViewModel.GotoGameCommand}" CommandParameter="{x:Bind ViewModel.Display2Item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FocusVisualMargin="-10"
                     FocusVisualPrimaryThickness="10"
                     FocusVisualSecondaryThickness="10"
@@ -180,7 +182,8 @@
             </controls:ConstrainedBox>
             <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10" Grid.Column="2">
                     <Button Grid.Column="2" Style="{StaticResource AccentButtonStyle}" Background="Transparent" CornerRadius="25"
-                            x:Name="bt3Display" KeyDown="bt3Display_KeyDown"
+                            x:Name="bt3Display" KeyDown="bt3Display_KeyDown" GotFocus="bt3Display_GotFocus"
+                        Command="{x:Bind ViewModel.GotoGameCommand}" CommandParameter="{x:Bind ViewModel.Display3Item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FocusVisualMargin="-10"
                     FocusVisualPrimaryThickness="10"
                     FocusVisualSecondaryThickness="10"
@@ -200,7 +203,8 @@
                 </controls:ConstrainedBox>
                     <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10" Grid.Column="3">
                         <Button Grid.Column="3" Style="{StaticResource AccentButtonStyle}" Background="Transparent" CornerRadius="25"
-                                x:Name="bt4Display" KeyDown="bt4Display_KeyDown"
+                                x:Name="bt4Display" KeyDown="bt4Display_KeyDown" GotFocus="bt4Display_GotFocus"
+                        Command="{x:Bind ViewModel.GotoGameCommand}" CommandParameter="{x:Bind ViewModel.Display4Item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FocusVisualMargin="-10"
                     FocusVisualPrimaryThickness="10"
                     FocusVisualSecondaryThickness="10"
@@ -220,7 +224,8 @@
                 </controls:ConstrainedBox>
                 <controls:ConstrainedBox AspectRatio="2:3" CornerRadius="25" Margin="10" Grid.Column="4">
                             <Button Grid.Column="4" Style="{StaticResource AccentButtonStyle}" Background="Transparent" CornerRadius="25"
-                                    x:Name="bt5Display" KeyDown="bt5Display_KeyDown"
+                                    x:Name="bt5Display" KeyDown="bt5Display_KeyDown" GotFocus="bt5Display_GotFocus"
+                        Command="{x:Bind ViewModel.GotoGameCommand}" CommandParameter="{x:Bind ViewModel.Display5Item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FocusVisualMargin="-10"
                     FocusVisualPrimaryThickness="10"
                     FocusVisualSecondaryThickness="10"

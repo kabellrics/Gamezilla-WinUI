@@ -36,6 +36,8 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     private ICommand _SleepCommand;
     private ICommand _ShutdownCommand;
     private ICommand _ReStartCommand;
+    private ICommand _GotoGameCommand;
+    public ICommand GotoGameCommand => _GotoGameCommand ?? (_GotoGameCommand = new RelayCommand<ObsItem>(GotoGame));
     public ICommand LoadedCommand => _LoadedCommand ?? (_LoadedCommand = new RelayCommand(Loaded));
     public ICommand GotoFavCommand => _GotoFavCommand ?? (_GotoFavCommand = new RelayCommand<string>(GotoFav));
     public ICommand GotoLastCommand => _GotoLastCommand ?? (_GotoLastCommand = new RelayCommand<string>(GotoLast));
@@ -83,11 +85,36 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<ObsItem> FavorisDisplayList;
     public ObservableCollection<ObsItem> LastPlayedDisplayList;
     public ObservableCollection<ObsItem> NeverPlayedDisplayList;
-    public ObsItem Display1Item;
-    public ObsItem Display2Item;
-    public ObsItem Display3Item;
-    public ObsItem Display4Item;
-    public ObsItem Display5Item;
+    private ObsItem _Display1Item;
+    public ObsItem Display1Item
+    {
+        get => _Display1Item;
+        set => SetProperty(ref _Display1Item, value);
+    }
+    private ObsItem _Display2Item;
+    public ObsItem Display2Item
+    {
+        get => _Display2Item;
+        set => SetProperty(ref _Display2Item, value);
+    }
+    private ObsItem _Display3Item;
+    public ObsItem Display3Item
+    {
+        get => _Display3Item;
+        set => SetProperty(ref _Display3Item, value);
+    }
+    private ObsItem _Display4Item;
+    public ObsItem Display4Item
+    {
+        get => _Display4Item;
+        set => SetProperty(ref _Display4Item, value);
+    }
+    private ObsItem _Display5Item;
+    public ObsItem Display5Item
+    {
+        get => _Display5Item;
+        set => SetProperty(ref _Display5Item, value);
+    }
 
     public HomeViewModel(INavigationService navigationService, IExecutableService executableService, IPageSkinService pageSkinService, IItemBuilder itemBuilder,IAssetService assetService)
     {
@@ -139,6 +166,18 @@ public partial class HomeViewModel : ObservableRecipient, INavigationAware
         Display = await _pageSkinService.GetCurrentDisplayHome();
         Bck = await _assetService.GetRandomBackground();
         SelectedMenuIndex = 0;
+    }
+
+    private void GotoGame(ObsItem item)
+    {
+        try
+        {
+            _navigationService.NavigateTo(typeof(ItemDetailViewModel).FullName!, item.Id);
+        }
+        catch (Exception ex)
+        {
+            //throw;
+        }
     }
     public void GotoFav(string obj)
     {
