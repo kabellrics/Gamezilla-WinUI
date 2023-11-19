@@ -92,6 +92,44 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             _pageSkinService.SetCurrentDisplayGameDetail(value);
         }
     }
+
+    private String _splashscreenfolder;
+    public String Splashscreenfolder
+    {
+        get => _splashscreenfolder;
+        set
+        {
+            SetProperty(ref _splashscreenfolder, value);
+        }
+    }
+    private String _splashvideofolder;
+    public String Splashvideofolder
+    {
+        get => _splashvideofolder;
+        set
+        {
+            SetProperty(ref _splashvideofolder, value);
+        }
+    }
+    private String _videowaitfolder;
+    public String Videowaitfolder
+    {
+        get => _videowaitfolder;
+        set
+        {
+            SetProperty(ref _videowaitfolder, value);
+        }
+    }
+    private String _backgroundfolder;
+    public String Backgroundfolder
+    {
+        get => _backgroundfolder;
+        set
+        {
+            SetProperty(ref _backgroundfolder, value);
+        }
+    }
+
     private StorageFile _bck;
     public StorageFile Bck
     {
@@ -166,11 +204,16 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             foreach (var skin in _pageSkinService.GetDisplaysForGameDetail()) { gamedetaildisplays.Add(skin); }
             GameDetail = await _pageSkinService.GetCurrentDisplayGameDetail();
 
+            Splashscreenfolder = await _assetService.GetSplashscreenFolder();
+            Splashvideofolder = await _assetService.GetSplashvideoFolder();
+            Videowaitfolder = await _assetService.GetVideoWaitFolder();
+            Backgroundfolder = await _assetService.GetBackgroundFolder();
+
             //_applicationFinderService.ListInstalledPrograms();
-            var prgs = _applicationFinderService.GetInstalledPrograms();
-            if(prgs != null)
+            var prgs = _applicationFinderService.GetFullListInstalledApplication();
+            if (prgs != null)
             {
-                foreach(var item in prgs.OrderBy(x=>x.Name).GroupBy(x=>x.ExecutablePath).Select(x=>x.First()))
+                foreach (var item in prgs.Where(x => !x.ExecutablePath.Contains("System32")).OrderBy(x => x.Name).GroupBy(x => x.ExecutablePath).Select(x => x.First()))
                 {
                     installedPrograms.Add(item);
                 }

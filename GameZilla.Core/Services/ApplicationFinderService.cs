@@ -36,6 +36,128 @@ public class ApplicationFinderService : IApplicationFinderService
             Debug.WriteLine($"Error: {ex.Message}");
         }
     }
+    public List<InstalledProgram> GetFullListInstalledApplication()
+    {
+        IEnumerable<InstalledProgram> finalList = new List<InstalledProgram>();
+
+        string registry_key_32 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+        string registry_key_64 = @"SOFTWARE\WoW6432Node\Microsoft\Windows\CurrentVersion\Uninstall";
+
+        List<InstalledProgram> win32AppsCU = GetInstalledApplication(Registry.CurrentUser, registry_key_32);
+        List<InstalledProgram> win32AppsLM = GetInstalledApplication(Registry.LocalMachine, registry_key_32);
+        List<InstalledProgram> win64AppsCU = GetInstalledApplication(Registry.CurrentUser, registry_key_64);
+        List<InstalledProgram> win64AppsLM = GetInstalledApplication(Registry.LocalMachine, registry_key_64);
+
+        finalList = win32AppsCU.Concat(win32AppsLM).Concat(win64AppsCU).Concat(win64AppsLM);
+
+        finalList = finalList.GroupBy(d => d.Name).Select(d => d.First());
+
+        return finalList.OrderBy(o => o.Name).ToList();
+    }
+
+    private List<InstalledProgram> GetInstalledApplication(RegistryKey regKey, string registryKey)
+    {
+        List<InstalledProgram> list = new List<InstalledProgram>();
+        using (Microsoft.Win32.RegistryKey key = regKey.OpenSubKey(registryKey))
+        {
+            if (key != null)
+            {
+                foreach (string name in key.GetSubKeyNames())
+                {
+                    using (RegistryKey subkey = key.OpenSubKey(name))
+                    {
+                        string displayName = (string)subkey.GetValue("DisplayName");
+                        string installLocation = (string)subkey.GetValue("InstallLocation");
+
+                        if (!string.IsNullOrEmpty(displayName)) // && !string.IsNullOrEmpty(installLocation)
+                        {
+                            var exefiles = GetExecutablePath(installLocation);
+                            if (exefiles != null)
+                            {
+                                foreach (var exe in GetExecutablePath(installLocation))
+                                {
+                                    list.Add(new InstalledProgram()
+                                    {
+                                        Name = displayName.Trim(),
+                                        ExecutableName = Path.GetFileName(exe),
+                                        ExecutablePath = exe,
+                                        Publisher = (string)subkey.GetValue("Publisher")
+                                    }); 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return list;
+    }
+    public List<InstalledProgram> GetInstalledProgramsV2()
+    {
+        List<InstalledProgram> installs = new List<InstalledProgram>();
+        List<string> keys = new List<string>() {
+  @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+  @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+};
+
+        // The RegistryView.Registry64 forces the application to open the registry as x64 even if the application is compiled as x86 
+        FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, installs);
+        FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, installs);
+        return installs;
+    }
+    private void FindInstalls(RegistryKey regKey, List<string> keys, List<InstalledProgram> installed)
+    {
+        foreach (string key in keys)
+        {
+            using (RegistryKey rk = regKey.OpenSubKey(key))
+            {
+                if (rk == null)
+                {
+                    continue;
+                }
+                foreach (string skName in rk.GetSubKeyNames())
+                {
+                    using (RegistryKey sk = rk.OpenSubKey(skName))
+                    {
+                        try
+                        {
+                            var installLocation = Convert.ToString(sk.GetValue("InstallLocation"));
+                            var exefiles = GetExecutablePath(installLocation);
+                            if(exefiles != null)
+                            {
+                                foreach (var exe in GetExecutablePath(installLocation))
+                                {
+                                    installed.Add(new InstalledProgram
+                                    {
+                                        Name = Convert.ToString(sk.GetValue("DisplayName")),
+                                        Version = Convert.ToString(sk.GetValue("DisplayVersion")),
+                                        //IconPath = iconPath,
+                                        ExecutableName = Path.GetFileName(exe),
+                                        ExecutablePath = exe,
+                                        Publisher = Convert.ToString(sk.GetValue("Publisher"))
+                                        //InstallationDate = installDate
+                                    });
+                                }
+                            }
+                            //installed.Add(
+                            //    new InstalledProgram() 
+                            //    {
+                            //        Name = Convert.ToString(sk.GetValue("DisplayName")),
+                            //        Version = Convert.ToString(sk.GetValue("DisplayVersion")),
+
+                            //    }
+                            //    //Convert.ToString(sk.GetValue("DisplayName"))
+                            //    );
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
     public List<InstalledProgram> GetInstalledPrograms()
     {
         const string uninstallKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
