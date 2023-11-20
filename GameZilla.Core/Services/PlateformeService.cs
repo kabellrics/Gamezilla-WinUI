@@ -28,6 +28,7 @@ public class PlateformeService : IPlateformeService
         {
             await InitValue();
         }
-        return plateformes.Where(x=>x.IsActif == "1");
+        //return plateformes.Where(x=>x.IsActif == "1");
+        return plateformes;
     }
 }

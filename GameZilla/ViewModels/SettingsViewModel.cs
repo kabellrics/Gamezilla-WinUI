@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO.Compression;
 using System.Reflection;
 using System.Windows.Input;
 
@@ -9,12 +10,15 @@ using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
+using GameZilla.Core.Services;
 using GameZilla.Helpers;
 using GameZilla.Services;
+using GameZilla.ViewModels.Object;
 using Microsoft.UI.Xaml;
 
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace GameZilla.ViewModels;
 
@@ -25,6 +29,8 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly IPageSkinService _pageSkinService;
     private readonly IAssetService _assetService;
     private readonly IApplicationFinderService _applicationFinderService;
+    private readonly IExecutableService _executableService;
+    private readonly IParameterService _parameterService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
 
@@ -33,6 +39,20 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         _navigationService.GoBack();
     }
     
+    private ICommand _SaveParamCommand;
+    public ICommand SaveParamCommand => _SaveParamCommand ?? (_SaveParamCommand = new RelayCommand(SaveParam));
+    
+    private ICommand _AddMultipleAppCommand;
+    public ICommand AddMultipleAppCommand => _AddMultipleAppCommand ?? (_AddMultipleAppCommand = new RelayCommand(AddMultipleApplication));
+
+    private async void SaveParam()
+    {
+        _assetService.SetSplashscreenFolder(Splashscreenfolder);
+        _assetService.SetSplashvideoFolder(Splashvideofolder);
+        _assetService.SetVideoWaitFolder(Videowaitfolder);
+        _assetService.SetBackgroundFolder(Backgroundfolder);
+    }
+
     private ICommand _GoHomeCommand;
     public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
 
@@ -40,7 +60,51 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     {
         _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
     }
+    public async void OpenFolderPicker(string obj,string folder)
+    {        
+        if (folder != null)
+        {
+            switch (obj)
+            {
+                case "0":
+                    Splashscreenfolder = folder;break;
+                    case "1":
+                    Splashvideofolder = folder;break;
+                    case "2":
+                    Videowaitfolder = folder;break;
+                    case "3":
+                    Backgroundfolder = folder;break;
+            }
+        }
+    }
 
+    public async void AddMultipleApplication()
+    {
+        var selectedprg = installedPrograms.Where(x => x.IsSelected);
+        foreach (var exepath in selectedprg)
+        {
+            var exe = new Executable() { };
+            exe.Name = exepath.Name;
+            exe.Path = exepath.ExecutablePath;
+            exe.PlateformeId = await _parameterService.GetParameterValue(ParamEnum.ApplicationPlateformeId); ;
+            await _executableService.CreateExecutable(exe);
+        }
+        _executableService.Reinit();
+        var param = new NavigateToListGameParameter() { Id = await _parameterService.GetParameterValue(ParamEnum.ApplicationPlateformeId), typeListGame = TypeListGame.Plateforme };
+        _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
+
+    }
+    public async void AddApplication(string exepath)
+    {
+        var exe = new Executable() { };
+        exe.Name = Path.GetFileNameWithoutExtension(exepath);
+        exe.Path = exepath;
+        exe.PlateformeId = await _parameterService.GetParameterValue(ParamEnum.ApplicationPlateformeId); ;
+        await _executableService.CreateExecutable(exe);
+        _executableService.Reinit();
+        var param = new NavigateToListGameParameter() { Id = await _parameterService.GetParameterValue(ParamEnum.ApplicationPlateformeId), typeListGame = TypeListGame.Plateforme };
+        _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
+    }
 
     [ObservableProperty]
     private ElementTheme _elementTheme;
@@ -141,7 +205,8 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<string> gamesdisplays;
     public ObservableCollection<string> gamedetaildisplays;
     public ObservableCollection<InstalledProgram> installedPrograms;
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IAssetService assetService, IApplicationFinderService applicationFinderService)
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService,
+        IAssetService assetService, IApplicationFinderService applicationFinderService, IExecutableService executableService, IParameterService parameterService)
     {
         _themeSelectorService = themeSelectorService;
         _applicationFinderService = applicationFinderService;
@@ -165,6 +230,8 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         gamesdisplays = new ObservableCollection<string>();
         gamedetaildisplays = new ObservableCollection<string>();
         installedPrograms = new ObservableCollection<InstalledProgram>();
+        _executableService = executableService;
+        _parameterService = parameterService;
     }
 
     private static string GetVersionDescription()

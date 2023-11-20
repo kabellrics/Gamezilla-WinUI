@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 namespace GameZilla.Core.Models;
 public class InstalledProgram
 {
+    public bool IsSelected
+    {
+        get; set;
+    } = false;
     public string Name
     {
         get; set;

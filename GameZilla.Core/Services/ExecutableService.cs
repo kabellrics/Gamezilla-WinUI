@@ -22,6 +22,10 @@ public class ExecutableService : IExecutableService
     {
         if (executables == null) { executables = await executableClient.GetExecutables(); }
     }
+    public void Reinit()
+    {
+        executables = null;
+    }
     public async Task<IEnumerable<Executable>> GetExecutables()
     {
         if(executables == null)

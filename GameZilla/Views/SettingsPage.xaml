@@ -147,28 +147,28 @@
                         <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultTextBoxStyle}" FontSize="40" Text="{x:Bind ViewModel.Videowaitfolder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource DefaultTextBoxStyle}" FontSize="40" Text="{x:Bind ViewModel.Backgroundfolder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <Viewbox  Grid.Row="0" Grid.Column="2">
-                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0">
+                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0" Click="Button_Click">
                                 <FontIcon Glyph="&#xE8B7;"/>
                             </Button>
                         </Viewbox>
                         <Viewbox  Grid.Row="1" Grid.Column="2">
-                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0">
+                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0" Click="Button_Click_1">
                                 <FontIcon Glyph="&#xE8B7;"/>
                             </Button>
                         </Viewbox>
                         <Viewbox  Grid.Row="2" Grid.Column="2">
-                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0">
+                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0" Click="Button_Click_2">
                                 <FontIcon Glyph="&#xE8B7;"/>
                             </Button>
                         </Viewbox>
                         <Viewbox  Grid.Row="3" Grid.Column="2">
-                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0">
+                            <Button Style="{StaticResource PivotTitleContentControlStyle}" Margin="0" Click="Button_Click_3">
                                 <FontIcon Glyph="&#xE8B7;"/>
                             </Button>
                         </Viewbox>
 
                     </Grid>
-                    <Button Grid.Row="1" HorizontalAlignment="Right" Content="Enregistrer les changements" FontSize="35" Style="{StaticResource AccentButtonStyle}" Margin="25"/>
+                    <Button Grid.Row="1" HorizontalAlignment="Right" Content="Enregistrer les changements" FontSize="35" Style="{StaticResource AccentButtonStyle}" Margin="25" Command="{x:Bind ViewModel.SaveParamCommand}"/>
                 </Grid>       
         </PivotItem>
         <PivotItem Header="Applications">
@@ -186,8 +186,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" HorizontalAlignment="Left" Content="Ajouter les Applications sélectionnés" Style="{StaticResource AccentButtonStyle}"></Button>
-                        <Button Grid.Column="1" HorizontalAlignment="Right" Content="Ajouter une application à partir de l'éxecutable" Style="{StaticResource AccentButtonStyle}"></Button>
+                        <Button Grid.Column="0" HorizontalAlignment="Left" Content="Ajouter les Applications sélectionnés" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.AddMultipleAppCommand}"></Button>
+                        <Button Grid.Column="1" HorizontalAlignment="Right" Content="Ajouter une application à partir de l'éxecutable" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_4"></Button>
                     </Grid>
                 </Grid>
         </PivotItem>
