@@ -30,9 +30,16 @@ public sealed partial class Hero : UserControl
     {
         this.ViewModel = App.GetService<ItemListViewModel>();
         this.DataContext = ViewModel;
+        Loaded += Hero_Loaded;
         this.InitializeComponent();
         itemListView.SelectedIndex = 0;
         SetFocusToFirstGridViewItem();
+    }
+
+    private void Hero_Loaded(object sender, RoutedEventArgs e)
+    {
+        itemListView.Focus(FocusState.Programmatic);
+        itemListView.Focus(FocusState.Keyboard);
     }
 
     private void SetFocusToFirstGridViewItem()

@@ -85,6 +85,7 @@ public partial class App : Application
             services.AddSingleton<IAssetService, AssetService>();
             services.AddSingleton<IStartProcessService, StartProcessService>();
             services.AddSingleton<IApplicationFinderService, ApplicationFinderService>();
+            services.AddSingleton<IEmulateurService, EmulateurService>();
 
             // Views and ViewModels
             services.AddSingleton<SettingsViewModel>();

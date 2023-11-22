@@ -29,8 +29,17 @@ public sealed partial class Flipview : UserControl
     {
         this.ViewModel = App.GetService<ContainerViewModel>();
         this.DataContext = ViewModel;
+        Loaded += Flipview_Loaded;
         this.InitializeComponent();
-        SetFocusToFirstGridViewItem();
+        //SetFocusToFirstGridViewItem();
+    }
+
+    private void Flipview_Loaded(object sender, RoutedEventArgs e)
+    {
+
+        this.flipview.Focus(FocusState.Programmatic);
+        this.flipview.Focus(FocusState.Keyboard);
+        //SetFocusToFirstGridViewItem();
     }
 
     private void SetFocusToFirstGridViewItem()
@@ -51,6 +60,7 @@ public sealed partial class Flipview : UserControl
                         {
                             gvi.IsSelected = true;
                             gvi.Focus(FocusState.Programmatic);
+                            gvi.Focus(FocusState.Keyboard);
                         }
                     });
         }

@@ -3,6 +3,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using GameZilla.Core.Models.Emulateur;
 
 namespace GameZilla.Views;
 
@@ -83,5 +84,19 @@ public sealed partial class SettingsPage : Page
         {
             ViewModel.AddApplication(file.Path);
         }
+    }
+
+    private void Button_Click_5(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        var bt = sender as Button;
+        var plats = bt.Tag as Platforms;
+        ViewModel.PickPlatforms(plats);
+    }
+
+    private void Button_Click_6(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        var bt = sender as Button;
+        var emu = bt.Tag as Emulateur;
+        ViewModel.PickProfiles(emu);
     }
 }

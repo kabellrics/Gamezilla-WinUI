@@ -10,6 +10,7 @@ using GameZilla.Contracts.Services;
 using GameZilla.Contracts.ViewModels;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
+using GameZilla.Core.Models.Emulateur;
 using GameZilla.Core.Services;
 using GameZilla.Helpers;
 using GameZilla.Services;
@@ -31,6 +32,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly IApplicationFinderService _applicationFinderService;
     private readonly IExecutableService _executableService;
     private readonly IParameterService _parameterService;
+    private readonly IEmulateurService _emulateurService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
 
@@ -41,7 +43,9 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     
     private ICommand _SaveParamCommand;
     public ICommand SaveParamCommand => _SaveParamCommand ?? (_SaveParamCommand = new RelayCommand(SaveParam));
-    
+    private ICommand _PickPlatformsCommand;
+    public ICommand PickPlatformsCommand => _PickPlatformsCommand ?? (_PickPlatformsCommand = new RelayCommand<Platforms>(PickPlatforms));
+
     private ICommand _AddMultipleAppCommand;
     public ICommand AddMultipleAppCommand => _AddMultipleAppCommand ?? (_AddMultipleAppCommand = new RelayCommand(AddMultipleApplication));
 
@@ -194,6 +198,33 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         }
     }
 
+    private Visibility _showEmulateurList;
+    public Visibility ShowEmulateurList
+    {
+        get => _showEmulateurList;
+        set
+        {
+            SetProperty(ref _showEmulateurList, value);
+        }
+    }
+    private Visibility _showEmuExePicker;
+    public Visibility ShowEmuExePicker
+    {
+        get => _showEmuExePicker;
+        set
+        {
+            SetProperty(ref _showEmuExePicker, value);
+        }
+    }
+    private Visibility _showEmuprofilesPicker;
+    public Visibility ShowEmuprofilesPicker
+    {
+        get => _showEmuprofilesPicker;
+        set
+        {
+            SetProperty(ref _showEmuprofilesPicker, value);
+        }
+    }
     private StorageFile _bck;
     public StorageFile Bck
     {
@@ -205,7 +236,11 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<string> gamesdisplays;
     public ObservableCollection<string> gamedetaildisplays;
     public ObservableCollection<InstalledProgram> installedPrograms;
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService,
+    public ObservableCollection<Platforms> Platforms;
+    public ObservableCollection<Emulateur> Emulateurs;
+    public ObservableCollection<Profile> Profiles;
+    private string plateformeid;
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IEmulateurService emulateurService,
         IAssetService assetService, IApplicationFinderService applicationFinderService, IExecutableService executableService, IParameterService parameterService)
     {
         _themeSelectorService = themeSelectorService;
@@ -230,10 +265,34 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         gamesdisplays = new ObservableCollection<string>();
         gamedetaildisplays = new ObservableCollection<string>();
         installedPrograms = new ObservableCollection<InstalledProgram>();
+        Platforms = new ObservableCollection<Platforms>();
+        Emulateurs = new ObservableCollection<Emulateur>();
+        Profiles = new ObservableCollection<Profile>();
         _executableService = executableService;
         _parameterService = parameterService;
+        _emulateurService = emulateurService;
     }
 
+    public async void PickPlatforms(Platforms plateforme)
+    {
+        Emulateurs.Clear();
+        ShowEmulateurList = Visibility.Visible;
+        plateformeid = plateforme.Id;
+        foreach (var emu in await _emulateurService.GetEmulateursForPlatformsAsync(plateforme.Emulators))
+        {
+            Emulateurs.Add(emu);
+        }
+    }
+    public async void PickProfiles(Emulateur emu)
+    {
+        Profiles.Clear();
+        ShowEmuprofilesPicker = Visibility.Visible;
+        var profiles = Emulateurs.SelectMany(x => x.Profiles);
+        foreach (var profile in profiles.Where(x=> x.Platforms.Contains(plateformeid)))
+        {
+            Profiles.Add(profile);
+        }
+    }
     private static string GetVersionDescription()
     {
         Version version;
@@ -253,14 +312,17 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     }
     public async void OnNavigatedTo(object parameter)
     {
-
         try
         {
+            ShowEmuExePicker = Visibility.Collapsed;
+            ShowEmulateurList = Visibility.Collapsed;
+            ShowEmuprofilesPicker = Visibility.Collapsed;
             sysdisplays.Clear();
             homedisplays.Clear();
             gamesdisplays.Clear();
             gamedetaildisplays.Clear();
             installedPrograms.Clear();
+            Platforms.Clear();
             Bck = await _assetService.GetRandomBackground();
             foreach (var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
             Home = await _pageSkinService.GetCurrentDisplayHome();
@@ -275,7 +337,10 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             Splashvideofolder = await _assetService.GetSplashvideoFolder();
             Videowaitfolder = await _assetService.GetVideoWaitFolder();
             Backgroundfolder = await _assetService.GetBackgroundFolder();
-
+            foreach(var platform in await _emulateurService.GetPlatformsAsync())
+            {
+                Platforms.Add(platform);
+            }
             //_applicationFinderService.ListInstalledPrograms();
             var prgs = _applicationFinderService.GetFullListInstalledApplication();
             if (prgs != null)
