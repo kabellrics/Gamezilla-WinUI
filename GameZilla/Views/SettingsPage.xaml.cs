@@ -97,6 +97,29 @@ public sealed partial class SettingsPage : Page
     {
         var bt = sender as Button;
         var emu = bt.Tag as Emulateur;
-        ViewModel.PickProfiles(emu);
+        ViewModel.PickEmu(emu);
+    }
+
+    private void Button_Click_7(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        var bt = sender as Button;
+        var profile = bt.Tag as Profile;
+        ViewModel.PickProfiles(profile);
+    }
+
+    private async void Button_Click_8(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        FileOpenPicker fileOpenPicker = new FileOpenPicker();
+        var hwnd = App.MainWindow.GetWindowHandle();
+        WinRT.Interop.InitializeWithWindow.Initialize(fileOpenPicker, hwnd);
+        fileOpenPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+        fileOpenPicker.ViewMode = PickerViewMode.Thumbnail;
+        var exeformat = ViewModel.profile.StartupExecutable.Replace("^", "").Replace("\\", "").Replace("$", "").Replace("*", "").Replace("..", ".");
+        fileOpenPicker.FileTypeFilter.Add(Path.GetExtension(exeformat));
+        StorageFile file = await fileOpenPicker.PickSingleFileAsync();
+        if (file != null && file.Name.ToUpper() == exeformat.ToUpper())
+        {
+            ViewModel.GetExecutablePath(file.Path);
+        }
     }
 }

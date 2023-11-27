@@ -45,9 +45,15 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ICommand SaveParamCommand => _SaveParamCommand ?? (_SaveParamCommand = new RelayCommand(SaveParam));
     private ICommand _PickPlatformsCommand;
     public ICommand PickPlatformsCommand => _PickPlatformsCommand ?? (_PickPlatformsCommand = new RelayCommand<Platforms>(PickPlatforms));
+    private ICommand _PickEmuCommand;
+    public ICommand PickEmuCommand => _PickEmuCommand ?? (_PickEmuCommand = new RelayCommand<Emulateur>(PickEmu));
+    private ICommand _PickProfilesCommand;
+    public ICommand PickProfilesCommand => _PickProfilesCommand ?? (_PickProfilesCommand = new RelayCommand<Profile>(PickProfiles));
 
     private ICommand _AddMultipleAppCommand;
     public ICommand AddMultipleAppCommand => _AddMultipleAppCommand ?? (_AddMultipleAppCommand = new RelayCommand(AddMultipleApplication));
+    private ICommand _AddEmuCommand;
+    public ICommand AddEmuCommand => _AddEmuCommand ?? (_AddEmuCommand = new RelayCommand(AddEmu));
 
     private async void SaveParam()
     {
@@ -160,6 +166,15 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             _pageSkinService.SetCurrentDisplayGameDetail(value);
         }
     }
+    private String _selectedExe;
+    public String SelectedExe
+    {
+        get => _selectedExe;
+        set
+        {
+            SetProperty(ref _selectedExe, value);
+        }
+    }
 
     private String _splashscreenfolder;
     public String Splashscreenfolder
@@ -225,6 +240,24 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             SetProperty(ref _showEmuprofilesPicker, value);
         }
     }
+    private Visibility _showSelectedData;
+    public Visibility ShowSelectedData
+    {
+        get => _showSelectedData;
+        set
+        {
+            SetProperty(ref _showSelectedData, value);
+        }
+    }
+    private Visibility _showAddingEmu;
+    public Visibility ShowAddingEmu
+    {
+        get => _showAddingEmu;
+        set
+        {
+            SetProperty(ref _showAddingEmu, value);
+        }
+    }
     private StorageFile _bck;
     public StorageFile Bck
     {
@@ -239,7 +272,33 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<Platforms> Platforms;
     public ObservableCollection<Emulateur> Emulateurs;
     public ObservableCollection<Profile> Profiles;
-    private string plateformeid;
+    private Platforms _plateforme;
+    public Platforms plateforme
+    {
+        get => _plateforme;
+        set
+        {
+            SetProperty(ref _plateforme, value);
+        }
+    }
+    private Profile _profile;
+    public Profile profile
+    {
+        get => _profile;
+        set
+        {
+            SetProperty(ref _profile, value);
+        }
+    }
+    private Emulateur _emulateur;
+    public Emulateur emulateur
+    {
+        get => _emulateur;
+        set
+        {
+            SetProperty(ref _emulateur, value);
+        }
+    }
     public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IEmulateurService emulateurService,
         IAssetService assetService, IApplicationFinderService applicationFinderService, IExecutableService executableService, IParameterService parameterService)
     {
@@ -276,22 +335,50 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public async void PickPlatforms(Platforms plateforme)
     {
         Emulateurs.Clear();
+        Profiles.Clear();
         ShowEmulateurList = Visibility.Visible;
-        plateformeid = plateforme.Id;
+        ShowEmuprofilesPicker = Visibility.Collapsed;
+        ShowSelectedData = Visibility.Collapsed;
+        ShowAddingEmu = Visibility.Collapsed;
+        this.plateforme = plateforme;
         foreach (var emu in await _emulateurService.GetEmulateursForPlatformsAsync(plateforme.Emulators))
         {
             Emulateurs.Add(emu);
         }
     }
-    public async void PickProfiles(Emulateur emu)
+    public async void PickEmu(Emulateur emu)
     {
         Profiles.Clear();
         ShowEmuprofilesPicker = Visibility.Visible;
-        var profiles = Emulateurs.SelectMany(x => x.Profiles);
-        foreach (var profile in profiles.Where(x=> x.Platforms.Contains(plateformeid)))
+        ShowSelectedData = Visibility.Collapsed;
+        ShowAddingEmu = Visibility.Collapsed;
+        this.emulateur = emu;
+        var profiles = emu.Profiles;
+        foreach (var profile in profiles.Where(x=> x.Platforms.ToList().Contains(plateforme.Id)))
         {
             Profiles.Add(profile);
         }
+    }
+    public async void PickProfiles(Profile profile)
+    {
+        this.profile = profile;
+        ShowSelectedData = Visibility.Visible;
+    }
+    public async void GetExecutablePath(string path)
+    {
+        SelectedExe = path;
+        ShowAddingEmu = Visibility.Visible;
+    }
+    private async void AddEmu()
+    {
+        Executable newemu = new Executable();
+        newemu.PlateformeId = await _parameterService.GetParameterValue(ParamEnum.EmulateurPlateformeId);
+        newemu.Name = $"{emulateur.Name} - {profile.Name}";
+        newemu.Path = SelectedExe;
+        newemu.StartParam = profile.StartupArguments;
+        await _executableService.CreateExecutable(newemu);
+        _executableService.Reinit();
+
     }
     private static string GetVersionDescription()
     {
@@ -317,6 +404,8 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             ShowEmuExePicker = Visibility.Collapsed;
             ShowEmulateurList = Visibility.Collapsed;
             ShowEmuprofilesPicker = Visibility.Collapsed;
+            ShowSelectedData = Visibility.Collapsed;
+            ShowAddingEmu = Visibility.Collapsed;
             sysdisplays.Clear();
             homedisplays.Clear();
             gamesdisplays.Clear();
@@ -337,7 +426,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             Splashvideofolder = await _assetService.GetSplashvideoFolder();
             Videowaitfolder = await _assetService.GetVideoWaitFolder();
             Backgroundfolder = await _assetService.GetBackgroundFolder();
-            foreach(var platform in await _emulateurService.GetPlatformsAsync())
+            foreach(var platform in await _emulateurService.GetPlatformsWithoutRetroarcAsync())
             {
                 Platforms.Add(platform);
             }

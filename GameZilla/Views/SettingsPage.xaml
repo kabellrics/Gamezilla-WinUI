@@ -11,6 +11,8 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <helpers:EmulateurExecutableConverter x:Key="EmulateurExecutableConverter"/>
+        <helpers:StringArrayConverter x:Key="StringArrayConverter"/>
     </Page.Resources>
     <Grid>
         <Grid.Background>
@@ -206,7 +208,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Choisissez une plateforme" FontSize="35"></TextBlock>
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="Choisissez un émulateur" FontSize="35" Visibility="{x:Bind ViewModel.ShowEmulateurList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                     <TextBlock Grid.Row="0" Grid.Column="2" Text="Choisissez le profil" FontSize="35" Visibility="{x:Bind ViewModel.ShowEmuprofilesPicker,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Veuillez fournir l'éxécutable" FontSize="35" Visibility="{x:Bind ViewModel.ShowEmuExePicker,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Veuillez fournir l'éxécutable" FontSize="35" Visibility="{x:Bind ViewModel.ShowSelectedData,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                     <ListView Grid.Row="1" Grid.Column="0"
                     ItemsSource="{x:Bind ViewModel.Platforms}"
                     BorderThickness="0">
@@ -236,12 +238,39 @@
                     BorderThickness="0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Button>
+                                <Button Tag="{Binding}" Click="Button_Click_7">
                                     <TextBlock Text="{Binding Name}"/>
                                 </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    <Grid Grid.Row="1" Grid.Column="3" Visibility="{x:Bind ViewModel.ShowSelectedData,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Console:"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Text="{x:Bind ViewModel.plateforme.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Emulateur:"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Text="{x:Bind ViewModel.emulateur.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Profile:"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Text="{x:Bind ViewModel.profile.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Extensions:"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Text="{x:Bind ViewModel.profile.ImageExtensions,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringArrayConverter}}"></TextBlock>
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Startup File:"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Text="{x:Bind ViewModel.profile.StartupExecutable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EmulateurExecutableConverter}}"></TextBlock>
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Startup Argument:"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Text="{x:Bind ViewModel.profile.StartupArguments,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <Button Style="{StaticResource AccentButtonStyle}" CornerRadius="30" Click="Button_Click_8">
+                                <TextBlock Style="{StaticResource PageTitleStyle}" Text="Sélectionnez l'émulateur"></TextBlock>
+                            </Button>
+                            <TextBlock Style="{StaticResource PageTitleStyle}" FontSize="25" Text="Chemin local de l'executable:" Visibility="{x:Bind ViewModel.ShowAddingEmu,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" FontSize="35" Visibility="{x:Bind ViewModel.ShowAddingEmu,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{x:Bind ViewModel.SelectedExe,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <Button Style="{StaticResource AccentButtonStyle}" CornerRadius="30"
+                                    Command="{x:Bind ViewModel.AddEmuCommand}"
+                                    Visibility="{x:Bind ViewModel.ShowAddingEmu,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                <TextBlock Style="{StaticResource PageTitleStyle}" Text="Valider"></TextBlock>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
         </PivotItem>
         <PivotItem Header="Retroarch Core"></PivotItem>

@@ -106,6 +106,24 @@ public class EmulateurService : IEmulateurService
     {
         platforms = null;
     }
+    public async Task<IEnumerable<Platforms>> GetPlatformsWithoutRetroarcAsync()
+    {
+        if (platforms == null)
+        {
+            await InitPlatforms();
+        }
+        var duplicatelist = platforms;
+        duplicatelist = platforms.Select(platform =>
+        {
+            if (platform.Emulators != null)
+            {
+                // Supprimer 'retroarch' du tableau "Emulators"
+                platform.Emulators = platform.Emulators.Where(emulator => emulator != "retroarch").ToArray();
+            }
+            return platform;
+        }).ToList();
+        return duplicatelist.Where(x=>x.Emulators != null && x.Emulators.Count() >0);
+    }
     public async Task<IEnumerable<Platforms>> GetPlatformsAsync()
     {
         if (platforms == null)
@@ -122,7 +140,14 @@ public class EmulateurService : IEmulateurService
         }
         return emulateurs;
     }
-
+    public async Task<IEnumerable<Emulateur>> GetEmulateursForPlatformsWithoutRetroarchAsync(string[] emulist)
+    {
+        if (emulateurs == null)
+        {
+            await InitEmulateur();
+        }
+        return emulateurs.Where(x => x.Name != "RetroArch" && emulist.Contains(x.Id));
+    }
     public async Task<IEnumerable<Emulateur>> GetEmulateursForPlatformsAsync(string[] emulist)
     {
         if (emulateurs == null)
