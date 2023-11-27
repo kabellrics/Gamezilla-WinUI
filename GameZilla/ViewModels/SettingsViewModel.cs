@@ -35,12 +35,10 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly IEmulateurService _emulateurService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
-
     private void GoBack()
     {
         _navigationService.GoBack();
-    }
-    
+    }    
     private ICommand _SaveParamCommand;
     public ICommand SaveParamCommand => _SaveParamCommand ?? (_SaveParamCommand = new RelayCommand(SaveParam));
     private ICommand _PickPlatformsCommand;
@@ -49,12 +47,10 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ICommand PickEmuCommand => _PickEmuCommand ?? (_PickEmuCommand = new RelayCommand<Emulateur>(PickEmu));
     private ICommand _PickProfilesCommand;
     public ICommand PickProfilesCommand => _PickProfilesCommand ?? (_PickProfilesCommand = new RelayCommand<Profile>(PickProfiles));
-
     private ICommand _AddMultipleAppCommand;
     public ICommand AddMultipleAppCommand => _AddMultipleAppCommand ?? (_AddMultipleAppCommand = new RelayCommand(AddMultipleApplication));
     private ICommand _AddEmuCommand;
     public ICommand AddEmuCommand => _AddEmuCommand ?? (_AddEmuCommand = new RelayCommand(AddEmu));
-
     private async void SaveParam()
     {
         _assetService.SetSplashscreenFolder(Splashscreenfolder);
@@ -62,10 +58,8 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         _assetService.SetVideoWaitFolder(Videowaitfolder);
         _assetService.SetBackgroundFolder(Backgroundfolder);
     }
-
     private ICommand _GoHomeCommand;
     public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
-
     private void GoHome()
     {
         _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);
@@ -87,7 +81,6 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             }
         }
     }
-
     public async void AddMultipleApplication()
     {
         var selectedprg = installedPrograms.Where(x => x.IsSelected);
@@ -115,13 +108,10 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         var param = new NavigateToListGameParameter() { Id = await _parameterService.GetParameterValue(ParamEnum.ApplicationPlateformeId), typeListGame = TypeListGame.Plateforme };
         _navigationService.NavigateTo(typeof(ItemListViewModel).FullName!, param);
     }
-
     [ObservableProperty]
     private ElementTheme _elementTheme;
-
     [ObservableProperty]
     private string _versionDescription;
-
     public ICommand SwitchThemeCommand
     {
         get;

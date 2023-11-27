@@ -47,6 +47,10 @@ public class Item
     {
         get; set;
     }
+    public string PlateformId
+    {
+        get; set;
+    }
     public bool IsExecutable
     {
         get; set;

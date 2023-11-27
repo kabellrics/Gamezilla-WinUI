@@ -86,6 +86,14 @@ public class ObsItem : ObservableObject
             SetProperty(Item.LastStart, value, Item, (syteme, item) => Item.LastStart = item);
         }
     }
+    public string PlateformId
+    {
+        get => Item.PlateformId;
+        set
+        {
+            SetProperty(Item.PlateformId, value, Item, (syteme, item) => Item.PlateformId = item);
+        }
+    }
     public bool Favori
     {
         get => Item.Favori;

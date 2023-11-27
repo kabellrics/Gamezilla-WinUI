@@ -70,8 +70,8 @@ public partial class ItemDetailViewModel : ObservableRecipient, INavigationAware
         Item.LastStart = DateTime.Now.ToString();
         Item.NbStart = (int.Parse(Item.NbStart) +1).ToString();
         await _executableService.UpdateExecutable(await _itemBuilder.ExecutableFromItem(Item.Item));
-        _startProcessService.Init(Item.StartingCommand);
-        _startProcessService.StartStoreGame();
+        _startProcessService.Init(Item.StartingCommand,Item.PlateformId);
+        _startProcessService.StartExe();
         
     }
     private async void ToggleFavorite()

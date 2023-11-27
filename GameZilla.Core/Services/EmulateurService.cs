@@ -90,6 +90,25 @@ public class EmulateurService : IEmulateurService
             //throw;
         }
     }
+    public async Task<string[]> GetImageExtensionFromExeEmuName(string emuName)
+    {
+        if (emulateurs == null)
+        {
+            await InitEmulateur();
+        }
+        var args = emuName.Split(" - ");
+        var emu = emulateurs.FirstOrDefault(x=>x.Name == args[0]);
+        if (emu != null)
+        {
+            var prof = emu.Profiles.FirstOrDefault(x => x.Name == args[1]);
+            if (prof != null)
+            {
+                return prof.ImageExtensions;
+            }
+            return new string[] { };
+        }
+        return new string[] { };
+    }
     private async Task InitEmulateur()
     {
         if (emulateurs == null) {  await InitializeEmulateurs(); }
