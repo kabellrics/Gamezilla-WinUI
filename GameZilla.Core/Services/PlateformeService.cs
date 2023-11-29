@@ -31,4 +31,8 @@ public class PlateformeService : IPlateformeService
         //return plateformes.Where(x=>x.IsActif == "1");
         return plateformes;
     }
+    public async Task CreatePlateforme(Plateforme item)
+    {
+        await plateformeClient.CreatePlateforme(item);
+    }
 }

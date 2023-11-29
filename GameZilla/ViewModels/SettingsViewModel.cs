@@ -29,10 +29,13 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IPageSkinService _pageSkinService;
     private readonly IAssetService _assetService;
+    private readonly IItemBuilder _itemBuilder;
     private readonly IApplicationFinderService _applicationFinderService;
     private readonly IExecutableService _executableService;
+    private readonly IPlateformeService _plateformeService;
     private readonly IParameterService _parameterService;
     private readonly IEmulateurService _emulateurService;
+    private readonly ISteamGridDBService _steamGridDBService;
     private ICommand _GoBackCommand;
     public ICommand GoBackCommand => _GoBackCommand ?? (_GoBackCommand = new RelayCommand(GoBack));
     private void GoBack()
@@ -262,6 +265,8 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<Platforms> Platforms;
     public ObservableCollection<Emulateur> Emulateurs;
     public ObservableCollection<Profile> Profiles;
+    public ObservableCollection<ObsItem> LocalEmulators;
+    public ObservableCollection<ImportedGame> ImportedGames;
     private Platforms _plateforme;
     public Platforms plateforme
     {
@@ -289,8 +294,9 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             SetProperty(ref _emulateur, value);
         }
     }
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService, IEmulateurService emulateurService,
-        IAssetService assetService, IApplicationFinderService applicationFinderService, IExecutableService executableService, IParameterService parameterService)
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService,
+        IEmulateurService emulateurService, IAssetService assetService, IApplicationFinderService applicationFinderService, IItemBuilder itemBuilder,
+        IExecutableService executableService, IParameterService parameterService, IPlateformeService plateformeService, ISteamGridDBService steamGridDBService)
     {
         _themeSelectorService = themeSelectorService;
         _applicationFinderService = applicationFinderService;
@@ -317,11 +323,27 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         Platforms = new ObservableCollection<Platforms>();
         Emulateurs = new ObservableCollection<Emulateur>();
         Profiles = new ObservableCollection<Profile>();
+        LocalEmulators = new ObservableCollection<ObsItem>();
+        ImportedGames = new ObservableCollection<ImportedGame>();
         _executableService = executableService;
         _parameterService = parameterService;
         _emulateurService = emulateurService;
+        _plateformeService = plateformeService;
+        _itemBuilder = itemBuilder;
+        _steamGridDBService = steamGridDBService;
     }
-
+    public async Task<string[]> getImageExtension(string emuName)
+    {
+        return await _emulateurService.GetImageExtensionFromExeEmuName(emuName);
+    }
+    public async Task InitImportedGames(IEnumerable<string> files)
+    {
+        ImportedGames.Clear();
+        foreach (var file in files)
+        {
+            ImportedGames.Add(new ImportedGame(_steamGridDBService,file));
+        }
+    }
     public async void PickPlatforms(Platforms plateforme)
     {
         Emulateurs.Clear();
@@ -366,9 +388,19 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         newemu.Name = $"{emulateur.Name} - {profile.Name}";
         newemu.Path = SelectedExe;
         newemu.StartParam = profile.StartupArguments;
+        var plats = await _plateformeService.GetPlateformes();
+        if (plats.Count(x=>x.Name == this.plateforme.Name) == 0)
+        {
+            var platitem = new Plateforme();
+            platitem.Name = this.plateforme.Name;
+            platitem.PlateformeTypeId = "2";
+            platitem.Fanart = @"uploads\console\background\" + this.plateforme.Id + ".jpg";
+            platitem.Logo = @"uploads\console\logo\" + this.plateforme.Id + ".svg";
+            platitem.IsActif = "1";
+            await _plateformeService.CreatePlateforme(platitem);
+        }
         await _executableService.CreateExecutable(newemu);
         _executableService.Reinit();
-
     }
     private static string GetVersionDescription()
     {
@@ -402,6 +434,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             gamedetaildisplays.Clear();
             installedPrograms.Clear();
             Platforms.Clear();
+            LocalEmulators.Clear();
             Bck = await _assetService.GetRandomBackground();
             foreach (var skin in _pageSkinService.GetDisplaysForHome()) { homedisplays.Add(skin); }
             Home = await _pageSkinService.GetCurrentDisplayHome();
@@ -419,6 +452,11 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             foreach(var platform in await _emulateurService.GetPlatformsWithoutRetroarcAsync())
             {
                 Platforms.Add(platform);
+            }
+            var lclemus = await _executableService.GetExecutablesByplatform(await _parameterService.GetParameterValue(ParamEnum.EmulateurPlateformeId));
+            foreach(var emu in lclemus)
+            {
+                LocalEmulators.Add(new ObsItem(_itemBuilder.FromExecutable(emu)));
             }
             //_applicationFinderService.ListInstalledPrograms();
             var prgs = _applicationFinderService.GetFullListInstalledApplication();

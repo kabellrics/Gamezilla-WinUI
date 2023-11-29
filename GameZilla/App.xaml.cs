@@ -86,6 +86,7 @@ public partial class App : Application
             services.AddSingleton<IStartProcessService, StartProcessService>();
             services.AddSingleton<IApplicationFinderService, ApplicationFinderService>();
             services.AddSingleton<IEmulateurService, EmulateurService>();
+            services.AddSingleton<ISteamGridDBService, SteamGridDBService>();
 
             // Views and ViewModels
             services.AddSingleton<SettingsViewModel>();

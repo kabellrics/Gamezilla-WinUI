@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using GameZilla.Core.Models.Emulateur;
+using System.Text;
+using GameZilla.Core.Models.SteamGridDb;
 
 namespace GameZilla.Views;
 
@@ -122,4 +124,28 @@ public sealed partial class SettingsPage : Page
             ViewModel.GetExecutablePath(file.Path);
         }
     }
+
+    private async void Button_Click_9(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        var bt = sender as Button;
+        var emuname = bt.Tag as String;
+        var extensions =await ViewModel.getImageExtension(emuname);
+        FileOpenPicker fileOpenPicker = new FileOpenPicker();
+        var hwnd = App.MainWindow.GetWindowHandle();
+        WinRT.Interop.InitializeWithWindow.Initialize(fileOpenPicker, hwnd);
+        fileOpenPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+        fileOpenPicker.ViewMode = PickerViewMode.Thumbnail;
+        foreach ( var extension in extensions )
+        {
+            fileOpenPicker.FileTypeFilter.Add("."+extension);
+        }
+        IReadOnlyList<StorageFile> files = await fileOpenPicker.PickMultipleFilesAsync();
+        if (files.Count > 0)
+        {
+            await ViewModel.InitImportedGames(files.Select(x=>x.Path));
+            addromsplitview.IsPaneOpen = false;
+        }
+
+    }
+
 }
