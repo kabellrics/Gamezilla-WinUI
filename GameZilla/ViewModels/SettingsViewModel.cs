@@ -63,6 +63,22 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     }
     private ICommand _GoHomeCommand;
     public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
+    private ICommand _SelectALLCommand;
+    public ICommand SelectALLCommand => _SelectALLCommand ?? (_SelectALLCommand = new RelayCommand(SelectALL));
+
+    private void SelectALL()
+    {
+        foreach(var imp in ImportedGames) { imp.IsSelected = !imp.IsSelected; }
+    }
+
+    private ICommand _ResolveALLCommand;
+    public ICommand ResolveALLCommand => _ResolveALLCommand ?? (_ResolveALLCommand = new RelayCommand(ResolveALL));
+
+    private async void ResolveALL()
+    {
+        foreach (var imp in ImportedGames) { await imp.Init(); }
+    }
+
     private void GoHome()
     {
         _navigationService.NavigateTo(typeof(HomeViewModel).FullName!);

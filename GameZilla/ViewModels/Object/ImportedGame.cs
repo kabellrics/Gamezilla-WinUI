@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
 using GameZilla.Core.Models.SteamGridDb;
@@ -14,17 +16,26 @@ public class ImportedGame : ObservableObject
 {
     private readonly ISteamGridDBService _steamGridDBService;
     public ObservableCollection<SGDBGame> Proposals = new ObservableCollection<SGDBGame>();
+    private ICommand _ResolveCommand;
+    public ICommand ResolveCommand => _ResolveCommand ?? (_ResolveCommand = new RelayCommand(Resolve));
+
     public ImportedGame(ISteamGridDBService steamGridDBService, string path)
     {
         _steamGridDBService = steamGridDBService;
         Proposals.Clear();
-        Init(path);
-    }
-
-    private async void Init(string path)
-    {
         Path = path;
         Name = System.IO.Path.GetFileNameWithoutExtension(path);
+        ResolveText = "Résoudre";
+        //Init(path);
+    }
+
+    public async void Resolve()
+    {
+        await Init();
+    }
+    public async Task Init()
+    {
+        ResolveText = "Résolution en cours";
         var props = await _steamGridDBService.SearchGamesByName(Name);
         if(props != null)
         {
@@ -35,6 +46,7 @@ public class ImportedGame : ObservableObject
             SteamgridDBID = Proposals.First().Id.ToString();
             Name = Proposals.First().Name;
         }
+        ResolveText = "Résolu";
     }
 
     private bool _isSelected;
@@ -47,6 +59,15 @@ public class ImportedGame : ObservableObject
         }
     }
 
+    private string _resolveText;
+    public string ResolveText
+    {
+        get => _resolveText;
+        set
+        {
+            SetProperty(ref _resolveText, value);
+        }
+    }
     private string _path;
     public string Path
     {
