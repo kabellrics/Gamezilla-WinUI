@@ -376,7 +376,7 @@
                                 </ctWinUI:DataGridTemplateColumn>
                             </ctWinUI:DataGrid.Columns>
                         </ctWinUI:DataGrid>
-                        <Button Grid.Row="2" Style="{StaticResource AccentButtonStyle}" Margin="0 10" Content="Importer les Roms sélectionnée(s)"></Button>
+                        <Button Grid.Row="2" Style="{StaticResource AccentButtonStyle}" Margin="0 10" Content="Importer les Roms sélectionnée(s)" Command="{x:Bind ViewModel.ImportNonExecutableCommand}"></Button>
                     </Grid>
                 </SplitView>
             </PivotItem>

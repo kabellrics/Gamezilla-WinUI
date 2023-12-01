@@ -74,6 +74,7 @@ public partial class App : Application
             services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<IExecutableService, ExecutableService>();
+            services.AddSingleton<INonExecutableService, NonExecutableService>();
             services.AddSingleton<IPlateformeService, PlateformeService>();
             services.AddSingleton<IParameterService, ParameterService>();
             services.AddSingleton<ISteamGameFinderService, SteamGameFinderService>();

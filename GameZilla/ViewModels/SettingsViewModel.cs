@@ -63,6 +63,14 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     }
     private ICommand _GoHomeCommand;
     public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
+    private ICommand _ImportNonExecutableCommand;
+    public ICommand ImportNonExecutableCommand => _ImportNonExecutableCommand ?? (_ImportNonExecutableCommand = new RelayCommand(ImportNonExecutable));
+
+    private void ImportNonExecutable()
+    {
+        var toimport = ImportedGames.Where(x => x.IsSelected == true);
+    }
+
     private ICommand _SelectALLCommand;
     public ICommand SelectALLCommand => _SelectALLCommand ?? (_SelectALLCommand = new RelayCommand(SelectALL));
 
