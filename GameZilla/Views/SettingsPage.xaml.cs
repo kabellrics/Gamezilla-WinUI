@@ -21,6 +21,7 @@ public sealed partial class SettingsPage : Page
     {
         ViewModel = App.GetService<SettingsViewModel>();
         InitializeComponent();
+        ViewModel.ImportedGames.Clear();
     }
 
     private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -129,6 +130,7 @@ public sealed partial class SettingsPage : Page
     {
         var bt = sender as Button;
         var emuname = bt.Tag as String;
+        ViewModel.SetEmuForAddingGame(emuname);
         var extensions =await ViewModel.getImageExtension(emuname);
         FileOpenPicker fileOpenPicker = new FileOpenPicker();
         var hwnd = App.MainWindow.GetWindowHandle();

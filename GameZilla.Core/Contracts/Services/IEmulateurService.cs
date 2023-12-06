@@ -9,4 +9,5 @@ public interface IEmulateurService
     Task<IEnumerable<Platforms>> GetPlatformsWithoutRetroarcAsync();
     Task<IEnumerable<Emulateur>> GetEmulateursForPlatformsWithoutRetroarchAsync(string[] emulist);
     Task<string[]> GetImageExtensionFromExeEmuName(string emuName);
+    Task<String> GetPlatformsNamefromEmulatorName(string emuname);
 }

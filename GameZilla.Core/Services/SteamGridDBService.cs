@@ -68,17 +68,41 @@ public class SteamGridDBService : ISteamGridDBService
     }
     public async Task<String> GetDefaultCoverUrl(string steamgriddbId)
     {
-        var response = await GetCoverBySteamgriddbId(steamgriddbId);
-        return response.Data.First().Url ?? string.Empty;
+        try
+        {
+            var response = await GetCoverBySteamgriddbId(steamgriddbId);
+            return response.Data.First().Url ?? string.Empty;
+        }
+        catch (Exception ex)
+        {
+            //throw;
+            return null;
+        }
     }
     public async Task<String> GetDefaultHeroUrl(string steamgriddbId)
     {
-        var response = await GetHeroBySteamgriddbId(steamgriddbId);
-        return response.Data.First().Url ?? string.Empty;
+        try
+        {
+            var response = await GetHeroBySteamgriddbId(steamgriddbId);
+            return response.Data.First().Url ?? string.Empty;
+        }
+        catch (Exception ex)
+        {
+            //throw;
+            return null;
+        }
     }
     public async Task<String> GetDefaultLogoUrl(string steamgriddbId)
     {
-        var response = await GetLogoBySteamgriddbId(steamgriddbId);
-        return response.Data.First().Url ?? string.Empty;
+        try
+        {
+            var response = await GetLogoBySteamgriddbId(steamgriddbId);
+            return response.Data.First().Url ?? string.Empty;
+        }
+        catch (Exception ex)
+        {
+            //throw;
+            return null;
+        }
     }
 }

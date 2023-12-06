@@ -125,6 +125,33 @@ public class EmulateurService : IEmulateurService
     {
         platforms = null;
     }
+    public async Task<String> GetPlatformsNamefromEmulatorName(string emuname)
+    {
+        if (platforms == null)
+        {
+            await InitPlatforms();
+        }
+        if (emulateurs == null)
+        {
+            await InitEmulateur();
+        }
+        var args = emuname.Split(" - ");
+        var emu = emulateurs.FirstOrDefault(x => x.Name == args[0]);
+        if (emu != null)
+        {
+            var prof = emu.Profiles.FirstOrDefault(x => x.Name == args[1]);
+            if (prof != null)
+            {
+                var platformID = prof.Platforms.FirstOrDefault();
+                if (platformID != null)
+                {
+                    var platform = platforms.FirstOrDefault(x=> x.Id == platformID);
+                    return platform.Name;
+                }
+            }
+        }
+        return string.Empty;
+    }
     public async Task<IEnumerable<Platforms>> GetPlatformsWithoutRetroarcAsync()
     {
         if (platforms == null)

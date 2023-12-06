@@ -18,6 +18,7 @@ using GameZilla.ViewModels.Object;
 using Microsoft.UI.Xaml;
 
 using Windows.ApplicationModel;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -32,6 +33,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     private readonly IItemBuilder _itemBuilder;
     private readonly IApplicationFinderService _applicationFinderService;
     private readonly IExecutableService _executableService;
+    private readonly INonExecutableService _nonexecutableService;
     private readonly IPlateformeService _plateformeService;
     private readonly IParameterService _parameterService;
     private readonly IEmulateurService _emulateurService;
@@ -65,11 +67,6 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
     public ICommand GoHomeCommand => _GoHomeCommand ?? (_GoHomeCommand = new RelayCommand(GoHome));
     private ICommand _ImportNonExecutableCommand;
     public ICommand ImportNonExecutableCommand => _ImportNonExecutableCommand ?? (_ImportNonExecutableCommand = new RelayCommand(ImportNonExecutable));
-
-    private void ImportNonExecutable()
-    {
-        var toimport = ImportedGames.Where(x => x.IsSelected == true);
-    }
 
     private ICommand _SelectALLCommand;
     public ICommand SelectALLCommand => _SelectALLCommand ?? (_SelectALLCommand = new RelayCommand(SelectALL));
@@ -318,9 +315,27 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             SetProperty(ref _emulateur, value);
         }
     }
+    private Executable _emulateurToAddGame;
+    public Executable EmulateurToAddGame
+    {
+        get => _emulateurToAddGame;
+        set
+        {
+            SetProperty(ref _emulateurToAddGame, value);
+        }
+    }
+    private Plateforme _plateformeToAddGame;
+    public Plateforme PlateformeToAddGame
+    {
+        get => _plateformeToAddGame;
+        set
+        {
+            SetProperty(ref _plateformeToAddGame, value);
+        }
+    }
     public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService, IPageSkinService pageSkinService,
         IEmulateurService emulateurService, IAssetService assetService, IApplicationFinderService applicationFinderService, IItemBuilder itemBuilder,
-        IExecutableService executableService, IParameterService parameterService, IPlateformeService plateformeService, ISteamGridDBService steamGridDBService)
+        IExecutableService executableService, INonExecutableService nonExecutableService, IParameterService parameterService, IPlateformeService plateformeService, ISteamGridDBService steamGridDBService)
     {
         _themeSelectorService = themeSelectorService;
         _applicationFinderService = applicationFinderService;
@@ -355,6 +370,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         _plateformeService = plateformeService;
         _itemBuilder = itemBuilder;
         _steamGridDBService = steamGridDBService;
+        _nonexecutableService = nonExecutableService;
     }
     public async Task<string[]> getImageExtension(string emuName)
     {
@@ -425,6 +441,33 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         }
         await _executableService.CreateExecutable(newemu);
         _executableService.Reinit();
+    }
+    private void ImportNonExecutable()
+    {
+        var toimport = ImportedGames.Where(x => x.IsSelected == true);
+        foreach (var item in toimport)
+        {
+            var nonexeitem = new NonExecutable();
+            nonexeitem.Name = item.Name;
+            nonexeitem.IsActif = "1";
+            nonexeitem.Favorite = "0";
+            nonexeitem.Path = item.Path;
+            nonexeitem.Logo = item.Logo;
+            nonexeitem.Cover = item.Cover;
+            nonexeitem.Heroe = item.Hero;
+            nonexeitem.ExecutableId = EmulateurToAddGame.Id;
+            nonexeitem.PlateformeId = PlateformeToAddGame.Id;
+            //_nonexecutableService.CreateNonExecutable(nonexeitem);
+        }
+    }
+    public async void SetEmuForAddingGame(string emuname)
+    {
+        var exes = await _executableService.GetExecutables();
+            EmulateurToAddGame = exes.First(x => x.Name == emuname);
+
+        var platformName = await _emulateurService.GetPlatformsNamefromEmulatorName(emuname);
+        var platforms = await _plateformeService.GetPlateformes();
+        PlateformeToAddGame = platforms.First(x => x.Name == platformName);
     }
     private static string GetVersionDescription()
     {

@@ -35,6 +35,7 @@ public class ImportedGame : ObservableObject
     }
     public async Task Init()
     {
+        Proposals.Clear();
         ResolveText = "Résolution en cours";
         var props = await _steamGridDBService.SearchGamesByName(Name);
         if(props != null)
