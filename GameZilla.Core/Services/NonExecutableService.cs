@@ -59,7 +59,7 @@ namespace GameZilla.Core.Services
             }
             return nonexecutables.Where(x => x.IsActif == "1").OrderByDescending(x => x.LastStartDate).Take(10);
         }
-        public async Task<IEnumerable<NonExecutable>> GeNontExecutablesFavorite()
+        public async Task<IEnumerable<NonExecutable>> GetNonExecutablesFavorite()
         {
             if (nonexecutables == null)
             {

@@ -40,7 +40,13 @@ public class ObsItem : ObservableObject
     }
     public string Logo
     {
-        get => $"http://192.168.1.17:900{Item.Logo}";
+        get
+        {
+            if (Item.Logo.Contains("upload"))
+                return $"http://192.168.1.17:900{Item.Logo}";
+            else
+                return Item.Logo;
+        }
         set
         {
             SetProperty(Item.Logo, value, Item, (syteme, item) => Item.Logo = item);
@@ -48,7 +54,13 @@ public class ObsItem : ObservableObject
     }
     public string Hero
     {
-        get => $"http://192.168.1.17:900{Item.Hero}";
+        get
+        {
+            if (Item.Hero.Contains("upload"))
+                return $"http://192.168.1.17:900{Item.Hero}";
+            else
+                return Item.Hero;
+        }
         set
         {
             SetProperty(Item.Hero, value, Item, (syteme, item) => Item.Hero = item);
@@ -56,7 +68,13 @@ public class ObsItem : ObservableObject
     }
     public string Cover
 {
-    get => $"http://192.168.1.17:900{Item.Cover}";
+        get
+        {
+            if (Item.Cover.Contains("upload"))
+                return $"http://192.168.1.17:900{Item.Cover}";
+            else
+                return Item.Cover;
+        }
         set
         {
             SetProperty(Item.Cover, value, Item, (syteme, item) => Item.Cover = item);
@@ -64,8 +82,14 @@ public class ObsItem : ObservableObject
     }
     public string Vidéo
 {
-    get => $"http://192.168.1.17:900{Item.Vidéo}";
-        set
+        get
+        {
+            if (Item.Vidéo.Contains("upload"))
+                return $"http://192.168.1.17:900{Item.Vidéo}";
+            else
+                return Item.Vidéo;
+        }
+            set
         {
             SetProperty(Item.Vidéo, value, Item, (syteme, item) => Item.Vidéo = item);
         }

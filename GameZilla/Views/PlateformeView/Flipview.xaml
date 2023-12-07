@@ -27,7 +27,9 @@
                             <RowDefinition Height="2*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="0" Grid.RowSpan="3" Source="{x:Bind Fanart,Mode=OneWay}" Stretch="Fill"/>
-                        <Image Grid.Row="1" Source="{x:Bind Logo,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Center"/>
+                        <Viewbox Grid.Row="1">
+                            <Image Source="{x:Bind Logo,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Center"/>
+                        </Viewbox>
                     </Grid>
                 </DataTemplate>
             </FlipView.ItemTemplate>

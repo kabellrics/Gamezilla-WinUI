@@ -457,7 +457,7 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
             nonexeitem.Heroe = item.Hero;
             nonexeitem.ExecutableId = EmulateurToAddGame.Id;
             nonexeitem.PlateformeId = PlateformeToAddGame.Id;
-            //_nonexecutableService.CreateNonExecutable(nonexeitem);
+            _nonexecutableService.CreateNonExecutable(nonexeitem);
         }
     }
     public async void SetEmuForAddingGame(string emuname)

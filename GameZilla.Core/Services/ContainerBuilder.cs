@@ -10,10 +10,12 @@ namespace GameZilla.Core.Services;
 public class ContainerBuilder : IContainerBuilder
 {
     private readonly IExecutableService _executableService;
+    private readonly INonExecutableService _nonexecutableService;
     private readonly IItemBuilder _itemBuilder;
-    public ContainerBuilder(IExecutableService executableService, IItemBuilder itemBuilder)
+    public ContainerBuilder(IExecutableService executableService,INonExecutableService nonExecutableService, IItemBuilder itemBuilder)
     {
         _executableService = executableService;
+        _nonexecutableService = nonExecutableService;
         _itemBuilder = itemBuilder;
     }
     public async Task<Container> FromPlateforme(Plateforme plateforme)
@@ -28,11 +30,18 @@ public class ContainerBuilder : IContainerBuilder
         container.Logo = plateforme.Logo;
         container.IsActif = plateforme.IsActif;
         var exeitems = await _executableService.GetExecutablesByplatform(container.Id);
+        var nonexeitems = await _nonexecutableService.GetNonExecutablesByplatform(container.Id);
         foreach (var exeitem in exeitems)
         {
             container.Items.Add(_itemBuilder.FromExecutable(exeitem));
         }
+        foreach (var nonexeitem in nonexeitems)
+        {
+            container.Items.Add(await _itemBuilder.FromNonExecutable(nonexeitem));
+        }
         container.IsActif = exeitems.Count() == 0 ? "0" : "1";
+        if(container.IsActif == "0")
+            container.IsActif = nonexeitems.Count() == 0 ? "0" : "1";
         return container;
     }
 }

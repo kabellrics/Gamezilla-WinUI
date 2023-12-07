@@ -20,6 +20,7 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
     private readonly IPageSkinService _pageSkinService;
     private readonly IItemBuilder _itemBuilder;
     private readonly IExecutableService _executableService;
+    private readonly INonExecutableService _nonexecutableService;
     private readonly IAssetService _assetService;
     private readonly IPlateformeService _plateformeService;
     private ICommand _GoBackCommand;
@@ -56,7 +57,7 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
     }
     public ObservableCollection<ObsItem> CurrentDisplayList;
 
-    public ItemListViewModel(INavigationService navigationService, IPageSkinService pageSkinService,
+    public ItemListViewModel(INavigationService navigationService, IPageSkinService pageSkinService, INonExecutableService nonexecutableService,
         IItemBuilder itemBuilder, IExecutableService executableService, IPlateformeService plateformeService, IAssetService assetService)
     {
         _navigationService = navigationService;
@@ -66,6 +67,7 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         _plateformeService = plateformeService;
         _assetService = assetService;
         CurrentDisplayList = new ObservableCollection<ObsItem>();
+        _nonexecutableService = nonexecutableService;
     }
 
     public void OnNavigatedTo(object parameter)
@@ -100,6 +102,11 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         {
             CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
         }
+        var nonexefavlist = await _nonexecutableService.GetNonExecutables();
+        foreach (var nonexe in nonexefavlist)
+        {
+            CurrentDisplayList.Add(new ObsItem(await _itemBuilder.FromNonExecutable(nonexe)));
+        }
     }
     private async Task LoadFavGames()
     {
@@ -108,6 +115,11 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         foreach (var favitem in favlist)
         {
             CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(favitem)));
+        }
+        var nonexefavlist = await _nonexecutableService.GetNonExecutablesFavorite();
+        foreach (var nonexe in nonexefavlist)
+        {
+            CurrentDisplayList.Add(new ObsItem(await _itemBuilder.FromNonExecutable(nonexe)));
         }
     }
     private async Task LoadLastGames()
@@ -118,6 +130,11 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         {
             CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(lastitem)));
         }
+        var nonexefavlist = await _nonexecutableService.GetNonExecutablesLastStarted();
+        foreach (var nonexe in nonexefavlist)
+        {
+            CurrentDisplayList.Add(new ObsItem(await _itemBuilder.FromNonExecutable(nonexe)));
+        }
     }
     private async Task LoadNevaGames()
     {
@@ -127,6 +144,11 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         {
             CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(neveritem)));
         }
+        var nonexefavlist = await _nonexecutableService.GetNonExecutablesNeverStarted();
+        foreach (var nonexe in nonexefavlist)
+        {
+            CurrentDisplayList.Add(new ObsItem(await _itemBuilder.FromNonExecutable(nonexe)));
+        }
     }
     private async Task LoadPlateformeGames(string plateformeId)
     {
@@ -135,6 +157,11 @@ public partial class ItemListViewModel : ObservableRecipient, INavigationAware
         foreach (var item in list)
         {
             CurrentDisplayList.Add(new ObsItem(_itemBuilder.FromExecutable(item)));
+        }
+        var nonexefavlist = await _nonexecutableService.GetNonExecutablesByplatform(plateformeId);
+        foreach (var nonexe in nonexefavlist)
+        {
+            CurrentDisplayList.Add(new ObsItem(await _itemBuilder.FromNonExecutable(nonexe)));
         }
     }
     public void OnNavigatedFrom()
