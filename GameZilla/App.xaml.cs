@@ -7,6 +7,7 @@ using GameZilla.Helpers;
 using GameZilla.Models;
 using GameZilla.Services;
 using GameZilla.ViewModels;
+using GameZilla.ViewModels.Settings;
 using GameZilla.Views;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -92,6 +93,7 @@ public partial class App : Application
             // Views and ViewModels
             services.AddSingleton<SettingsViewModel>();
             services.AddSingleton<SettingsPage>();
+            services.AddSingleton<NewSettingsPage>();
             services.AddSingleton<ItemDetailViewModel>();
             services.AddSingleton<ItemDetailPage>();
             services.AddSingleton<ItemListViewModel>();
@@ -102,6 +104,17 @@ public partial class App : Application
             services.AddSingleton<HomePage>();
             services.AddSingleton<SplashViewModel>();
             services.AddSingleton<SplashPage>();
+
+            // Settings ViewModel
+            services.AddSingleton<SettingsAffichageViewModel>();
+            services.AddSingleton<SettingsApplicationViewModel>();
+            services.AddSingleton<SettingsEmulateurViewModel>();
+            services.AddSingleton<SettingsParamViewModel>();
+            services.AddSingleton<SettingsPegasusAndroidViewModel>();
+            services.AddSingleton<SettingsPegasusWindowsViewModel>();
+            services.AddSingleton<SettingsRetroarchViewModel>();
+            services.AddSingleton<SettingsRomViewModel>();
+            services.AddSingleton<SettingsStoreViewModel>();
 
         }).
         Build();

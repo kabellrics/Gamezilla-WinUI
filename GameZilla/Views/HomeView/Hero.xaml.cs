@@ -40,17 +40,24 @@ namespace GameZilla.Views.HomeView
             Loaded += Hero_Loaded;
             btfav.Focus(FocusState.Programmatic);
             btfav.Focus(FocusState.Keyboard);
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            //bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            //CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
 
         }
 
         private void Hero_Loaded(object sender, RoutedEventArgs e)
         {
             btfav.Focus(FocusState.Programmatic);
-            btfav.Focus(FocusState.Keyboard);
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            btfav.Focus(FocusState.Keyboard); try
+            {
+
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void btsettings_KeyDown(object sender, KeyRoutedEventArgs e)

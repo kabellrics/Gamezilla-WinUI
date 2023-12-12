@@ -28,6 +28,19 @@ public class ImportedGame : ObservableObject
         ResolveText = "Résoudre";
         //Init(path);
     }
+    public ImportedGame(ISteamGridDBService steamGridDBService, Executable exe)
+    {
+
+        _steamGridDBService = steamGridDBService;
+        Proposals.Clear();
+        Path = exe.Path;
+        PlateformId = exe.PlateformeId;
+        Name = exe.Name;
+        Hero = exe.Heroe;
+        Cover = exe.Cover;
+        Logo = exe.Logo;
+        ResolveText = "Résoudre";
+    }
 
     public async void Resolve()
     {
@@ -98,6 +111,15 @@ public class ImportedGame : ObservableObject
         }
     }
 
+    private string _plateformId;
+    public string PlateformId
+    {
+        get => _plateformId;
+        set
+        {
+            SetProperty(ref _plateformId, value);
+        }
+    }
     public async void ChangeAsset(SGDBGame game)
     {
         Name = game.Name;

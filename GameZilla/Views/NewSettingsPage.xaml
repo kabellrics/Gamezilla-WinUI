@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="GameZilla.Views.NewSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GameZilla.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    KeyDown="Page_KeyDown"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Bck.Path,Mode=OneWay}"></ImageBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.RowSpan="2">
+            <Rectangle Fill="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" Opacity="0.8" />
+        </Border>
+        <StackPanel Orientation="Horizontal">
+            <Button  Margin="25 0 0 0" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.GoBackCommand}">
+                <SymbolIcon Symbol="Back" />
+            </Button>
+            <Viewbox>
+                <TextBlock Text="Paramètres" Margin="50 0 0 0"></TextBlock>
+            </Viewbox>
+        </StackPanel>
+        <NavigationView x:Name="settingNavigationView" Grid.Row="1"
+                         PaneDisplayMode="Top" IsBackButtonVisible="Collapsed"
+                        IsPaneToggleButtonVisible="False" IsSettingsVisible="False"
+                        ItemInvoked="settingNavigationView_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Affichage" x:Name="itemAffichage"/>
+                <NavigationViewItem Content="Paramètres" x:Name="itemParamètres"/>
+                <NavigationViewItem Content="Applications" x:Name="itemApplications"/>
+                <NavigationViewItem Content="Emulateurs" x:Name="itemEmulateurs"/>
+                <NavigationViewItem Content="Retroarch Core" x:Name="itemRetroarch"/>
+                <NavigationViewItem Content="Store Game" x:Name="itemStore"/>
+                <NavigationViewItem Content="Roms" x:Name="itemRoms"/>
+                <NavigationViewItem Content="Export vers Pegasus Windows" x:Name="itemPegasusWindows"/>
+                <NavigationViewItem Content="Export vers Pegasus Android" x:Name="itemPegasusAndroid"/>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" />
+        </NavigationView>
+    </Grid>
+</Page>

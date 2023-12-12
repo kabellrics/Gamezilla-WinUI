@@ -183,10 +183,10 @@ public partial class SplashViewModel : ObservableRecipient
     private async Task LoadStoreGamesAsync()
     {
         LabelTraitement = "Traitement en cours";
-        var steamtask = LoadSteamGamesAsync();
-        var origintask = LoadOriginGamesAsync();
-        var epictask = LoadEpicGamesAsync();
-        await Task.WhenAll(steamtask,origintask,epictask);
+        //var steamtask = LoadSteamGamesAsync();
+        //var origintask = LoadOriginGamesAsync();
+        //var epictask = LoadEpicGamesAsync();
+        //await Task.WhenAll(steamtask,origintask,epictask);
     }
 
     private async Task LoadEpicGamesAsync()

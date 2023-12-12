@@ -19,7 +19,8 @@ public class PageService : IPageService
         Configure<ContainerViewModel, ContainerPage>();
         Configure<ItemListViewModel, ItemListPage>();
         Configure<ItemDetailViewModel, ItemDetailPage>();
-        Configure<SettingsViewModel, SettingsPage>();
+        //Configure<SettingsViewModel, SettingsPage>();
+        Configure<SettingsViewModel, NewSettingsPage>();
     }
 
     public Type GetPageType(string key)

@@ -10,6 +10,7 @@ using GameZilla.Core.Models;
 using GameZilla.FrontModel;
 using GameZilla.Services;
 using GameZilla.ViewModels.Object;
+using GameZilla.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;

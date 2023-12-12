@@ -35,8 +35,18 @@
     <None Remove="Views\GamesView\Hero.xaml" />
     <None Remove="Views\HomeView\Basic.xaml" />
     <None Remove="Views\HomeView\Hero.xaml" />
+    <None Remove="Views\NewSettingsPage.xaml" />
     <None Remove="Views\PlateformeView\Flipview.xaml" />
     <None Remove="Views\PlateformeView\GridView.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingAffichagePage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsApplicationPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsEmulateurPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsParamPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsPegasusAndroidPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsPegasusWindowsPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsRetroarchPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsRomsPage.xaml" />
+    <None Remove="Views\SettingsSplitPage\SettingsStorePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -161,6 +171,36 @@
     <None Update="Assets\specificlogo\Xbox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\SettingsPage\SettingsPegasusAndroidPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsPegasusWindowsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsRomsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsStorePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsRetroarchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsEmulateurPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsApplicationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingsParamPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage\SettingAffichagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\NewSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\GameDetail\Basic.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
