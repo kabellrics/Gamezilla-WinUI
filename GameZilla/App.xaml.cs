@@ -32,12 +32,20 @@ public partial class App : Application
     public static T GetService<T>()
         where T : class
     {
-        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+        try
+        {
+            if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+            {
+                throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
+            }
+            return service;
+        }
+        catch (Exception ex)
         {
             throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
         }
 
-        return service;
+        
     }
 
     public static WindowEx MainWindow { get; } = new MainWindow();
@@ -110,11 +118,11 @@ public partial class App : Application
             services.AddSingleton<SettingsApplicationViewModel>();
             services.AddSingleton<SettingsEmulateurViewModel>();
             services.AddSingleton<SettingsParamViewModel>();
+            services.AddSingleton<SettingsRomViewModel>();
+            services.AddSingleton<SettingsStoreViewModel>();
             services.AddSingleton<SettingsPegasusAndroidViewModel>();
             services.AddSingleton<SettingsPegasusWindowsViewModel>();
             services.AddSingleton<SettingsRetroarchViewModel>();
-            services.AddSingleton<SettingsRomViewModel>();
-            services.AddSingleton<SettingsStoreViewModel>();
 
         }).
         Build();

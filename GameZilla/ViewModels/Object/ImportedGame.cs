@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using GameZilla.Core.Contracts.Services;
 using GameZilla.Core.Models;
 using GameZilla.Core.Models.SteamGridDb;
+using GameZilla.ViewModels.Settings;
 
 namespace GameZilla.ViewModels.Object;
 public class ImportedGame : ObservableObject
@@ -19,19 +20,19 @@ public class ImportedGame : ObservableObject
     private ICommand _ResolveCommand;
     public ICommand ResolveCommand => _ResolveCommand ?? (_ResolveCommand = new RelayCommand(Resolve));
 
-    public ImportedGame(ISteamGridDBService steamGridDBService, string path)
+    public ImportedGame(string path)
     {
-        _steamGridDBService = steamGridDBService;
+        _steamGridDBService = App.GetService<ISteamGridDBService>();
         Proposals.Clear();
         Path = path;
         Name = System.IO.Path.GetFileNameWithoutExtension(path);
         ResolveText = "Résoudre";
         //Init(path);
     }
-    public ImportedGame(ISteamGridDBService steamGridDBService, Executable exe)
+    public ImportedGame(Executable exe)
     {
-
-        _steamGridDBService = steamGridDBService;
+        _steamGridDBService = App.GetService<ISteamGridDBService>();
+        //_steamGridDBService = steamGridDBService;
         Proposals.Clear();
         Path = exe.Path;
         PlateformId = exe.PlateformeId;

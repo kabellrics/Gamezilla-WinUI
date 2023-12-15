@@ -276,7 +276,7 @@
             </PivotItem>
             <PivotItem Header="Retroarch Core"></PivotItem>
             <PivotItem Header="Store Game">
-                --><!--<Grid>
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -355,7 +355,7 @@
                         </ctWinUI:DataGrid.Columns>
                     </ctWinUI:DataGrid>
                     <Button Grid.Row="2" Style="{StaticResource AccentButtonStyle}" Margin="0 10" Content="Importer les Jeux sélectionnée(s)" Command="{x:Bind ViewModel.ImportStoreGameCommand}"></Button>
-                </Grid>--><!--
+                </Grid>
             </PivotItem>
             <PivotItem Header="Roms">
                 <SplitView x:Name="addromsplitview" IsPaneOpen="True" OpenPaneLength="500" DisplayMode="Inline" PaneBackground="Transparent">

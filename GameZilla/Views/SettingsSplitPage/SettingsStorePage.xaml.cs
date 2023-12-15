@@ -32,4 +32,5 @@ public sealed partial class SettingsStorePage : Page
         ViewModel = App.GetService<SettingsStoreViewModel>();
         this.InitializeComponent();
     }
+    protected override void OnNavigatedTo(NavigationEventArgs e) { base.OnNavigatedTo(e);ViewModel.OnNavigatedTo(e.Parameter); }
 }

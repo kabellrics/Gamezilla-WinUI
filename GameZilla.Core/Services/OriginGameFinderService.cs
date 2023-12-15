@@ -168,6 +168,7 @@ public class OriginGameFinderService : IOriginGameFinderService
                 }
             }
         }
+        resultlist = resultlist.GroupBy(x => x.Path).Select(x => x.First()).ToList();
         return resultlist;
     }
 

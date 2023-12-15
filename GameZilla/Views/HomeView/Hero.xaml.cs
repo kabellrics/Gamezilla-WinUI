@@ -51,8 +51,8 @@ namespace GameZilla.Views.HomeView
             btfav.Focus(FocusState.Keyboard); try
             {
 
-                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel?.Display1Item?.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel?.Display1Item?.Hero, UriKind.Absolute));
             }
             catch (Exception ex)
             {
@@ -334,52 +334,108 @@ namespace GameZilla.Views.HomeView
         private void btfav_GotFocus(object sender, RoutedEventArgs e)
         {
             ViewModel.GotoFav("false");
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            try
+            {
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel?.Display1Item?.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel?.Display1Item?.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void btlast_GotFocus(object sender, RoutedEventArgs e)
         {
-            ViewModel.GotoLast("false");
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            try
+            {
+                ViewModel.GotoLast("false");
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void btnever_GotFocus(object sender, RoutedEventArgs e)
         {
-            ViewModel.GotoNoPlay("false");
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            try
+            {
+                ViewModel.GotoNoPlay("false");
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void bt4Display_GotFocus(object sender, RoutedEventArgs e)
         {
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display4Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display4Item.Hero, UriKind.Absolute));
+            try
+            {
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display4Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display4Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void bt1Display_GotFocus(object sender, RoutedEventArgs e)
         {
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            try
+            {
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display1Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void bt2Display_GotFocus(object sender, RoutedEventArgs e)
         {
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display2Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display2Item.Hero, UriKind.Absolute));
+            try
+            {
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display2Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display2Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void bt3Display_GotFocus(object sender, RoutedEventArgs e)
         {
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display3Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display3Item.Hero, UriKind.Absolute));
+            try
+            {
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display3Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display3Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
 
         private void bt5Display_GotFocus(object sender, RoutedEventArgs e)
         {
-            bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display5Item.Hero, UriKind.Absolute));
-            CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display5Item.Hero, UriKind.Absolute));
+            try
+            {
+                bckBrush.ImageSource = new BitmapImage(new Uri(ViewModel.Display5Item.Hero, UriKind.Absolute));
+                CurrentHero.Source = new BitmapImage(new Uri(ViewModel.Display5Item.Hero, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
     }
 }

@@ -6,10 +6,26 @@
     xmlns:local="using:GameZilla.Views.SettingsSplitPage"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
 
-    <Grid Background="Blue">
-
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <ctWinUI:DataGrid Grid.Row="0" ItemsSource="{x:Bind ViewModel.installedPrograms,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                      AutoGenerateColumns="True"
+                          CanUserSortColumns="False"
+                                      SelectionMode="Extended" Margin="0 10"></ctWinUI:DataGrid>
+        <Grid Grid.Row="1" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" HorizontalAlignment="Left" Content="Ajouter les Applications sélectionnés" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.AddMultipleAppCommand}"></Button>
+            <Button Grid.Column="1" HorizontalAlignment="Right" Content="Ajouter une application à partir de l'éxecutable" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_4"></Button>
+        </Grid>
     </Grid>
 </Page>

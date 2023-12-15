@@ -409,7 +409,7 @@ public partial class SettingsViewModelOld : ObservableRecipient, INavigationAwar
         ImportedGames.Clear();
         foreach (var file in files)
         {
-            ImportedGames.Add(new ImportedGame(_steamGridDBService,file));
+            ImportedGames.Add(new ImportedGame(file));
         }
     }
     public async void PickPlatforms(Platforms plateforme)

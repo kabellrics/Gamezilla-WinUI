@@ -32,4 +32,9 @@ public sealed partial class SettingAffichagePage : Page
         ViewModel = App.GetService<SettingsAffichageViewModel>();
         this.InitializeComponent();
     }
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+        ViewModel.OnNavigatedTo(e.Parameter);
+    }
 }
